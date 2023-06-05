@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-guest-layout>
     <section class="bg-gray-50">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div
@@ -34,4 +34,4 @@
             </div>
         </div>
     </section>
-</x-app-layout>
+</x-guest-layout>
