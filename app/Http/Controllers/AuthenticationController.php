@@ -43,8 +43,6 @@ class AuthenticationController extends Controller
         ];
 
         return new AuthResponseResource($data);
-
-        return $authService->responseData($user, $userCompany, $token);
     }
 
     public function adminLogin(Request $request): JsonResponse
@@ -62,7 +60,11 @@ class AuthenticationController extends Controller
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
+        $data  = [
+            'token' => $token,
+            'user'  => $user,
+        ];
 
-        return response()->json(['user' => $user, 'token' => $token]);
+        return new AuthResponseResource($data);
     }
 }
