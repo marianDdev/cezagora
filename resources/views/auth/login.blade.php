@@ -1,11 +1,6 @@
-<x-layout>
+<x-app-layout>
     <section class="bg-gray-50">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
-                <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-                     alt="logo">
-                CezAgora
-            </a>
             <div
                 class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -29,11 +24,14 @@
                             {{ __('Login') }}
                         </x-primary-button>
                         <p class="text-sm font-light text-gray-500">
-                            Forgot your password? <a href="{{ route('password.request') }} class="font-medium text-primary-600 hover:underline"> Click here</a>
+                            Don't have an account? <a href="{{ route('password.request') }}" class="font-medium text-blue-500"> Signup here</a>
+                        </p>
+                        <p class="text-sm font-light text-gray-500">
+                            Forgot your password? <a href="{{ route('password.request') }}" class="font-medium text-primary-600 text-blue-500"> Reset here</a>
                         </p>
                     </form>
                 </div>
             </div>
         </div>
     </section>
-</x-layout>
+</x-app-layout>
