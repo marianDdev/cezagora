@@ -18,14 +18,6 @@
 
                         <!-- Filters -->
                         <form class="mt-4 border-t border-gray-200">
-                            <h3 class="sr-only">Categories</h3>
-                            <ul role="list" class="px-2 py-3 font-medium text-gray-900">
-                                @foreach($categories as $category)
-                                <li>
-                                    <a href="#" class="block px-2 py-3">{{ $category->name }}</a>
-                                </li>
-                                @endforeach
-                            </ul>
 
                             <div class="border-t border-gray-200 px-4 py-6">
                                 <h3 class="-mx-2 -my-3 flow-root">
@@ -231,14 +223,6 @@
                     <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
                         <!-- Filters -->
                         <form class="hidden lg:block">
-                            <h3 class="sr-only">Categories</h3>
-                            <ul role="list" class="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                                @foreach($categories as $category)
-                                <li>
-                                    <a href="#">{{ ucfirst($category->name) }}</a>
-                                </li>
-                                @endforeach
-                            </ul>
 
                             <div class="border-b border-gray-200 py-6">
                                 <h3 class="-my-3 flow-root">

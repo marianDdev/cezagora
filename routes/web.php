@@ -23,6 +23,22 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
+Route::get('/services', function () {
+    return view('pages.services');
+})->name('services');
+
+Route::get('/pricing', function () {
+    return view('pages.pricing');
+})->name('pricing');
+
+Route::get('/contact', function () {
+    return view('pages.contact');
+})->name('contact');
+
+Route::get('/help', function () {
+    return view('pages.help');
+})->name('help');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
