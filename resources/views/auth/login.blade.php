@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-guest-layout>
     <section class="bg-gray-50">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div
@@ -24,7 +24,7 @@
                             {{ __('Login') }}
                         </x-primary-button>
                         <p class="text-sm font-light text-gray-500">
-                            Don't have an account? <a href="{{ route('password.request') }}" class="font-medium text-blue-500"> Signup here</a>
+                            Don't have an account? <a href="{{ route('register') }}" class="font-medium text-blue-500"> Signup here</a>
                         </p>
                         <p class="text-sm font-light text-gray-500">
                             Forgot your password? <a href="{{ route('password.request') }}" class="font-medium text-primary-600 text-blue-500"> Reset here</a>
@@ -34,4 +34,4 @@
             </div>
         </div>
     </section>
-</x-app-layout>
+</x-guest-layout>
