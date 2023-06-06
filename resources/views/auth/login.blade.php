@@ -24,7 +24,7 @@
                             {{ __('Login') }}
                         </x-primary-button>
                         <p class="text-sm font-light text-gray-500">
-                            Don't have an account? <a href="{{ route('password.request') }}" class="font-medium text-blue-500"> Signup here</a>
+                            Don't have an account? <a href="{{ route('register') }}" class="font-medium text-blue-500"> Signup here</a>
                         </p>
                         <p class="text-sm font-light text-gray-500">
                             Forgot your password? <a href="{{ route('password.request') }}" class="font-medium text-primary-600 text-blue-500"> Reset here</a>
