@@ -1,4 +1,5 @@
-{{--@if ($errors->has($field))--}}
-        <p class="mt-2 text-sm text-red-600"> {{ $errors->first($field) }} </p>
-<p>vasile</p>
-{{--@endif--}}
+@if ($errors->has($field))
+    <div class="text-red-500">
+        {{ $errors->first($field) }}
+    </div>
+@endif

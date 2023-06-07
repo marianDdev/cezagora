@@ -17,12 +17,11 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company_id' => ['nullable', 'integer', Rule::exists(Company::class, 'id')],
             'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email'         => ['required', 'email', 'max:255'],
-            'is_admin' => ['nullable', 'boolean'],
-            'password'           => ['required', 'confirmed', Password::defaults()],
+            'last_name'  => ['required', 'string', 'max:255'],
+            'email'      => ['required', 'email', 'unique:users'],
+            'is_admin'   => ['nullable', 'boolean'],
+            'password'   => ['required', 'confirmed', Password::defaults()],
         ];
     }
 }

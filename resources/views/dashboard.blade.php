@@ -8,6 +8,7 @@
         <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
             @include('components.card', ['name' => 'My company', 'imagePath' => 'https://picsum.photos/200', 'title' => "Manage your company's details", 'description' => null])
             @include('components.card', ['name' => 'My products and services', 'imagePath' => 'https://picsum.photos/200', 'title' => "Manage your products", 'description' => null])
+            @include('components.card', ['name' => 'My messages', 'imagePath' => 'https://picsum.photos/200', 'title' => "Manage your private nessages", 'description' => null])
         </div>
     </div>
 </section>

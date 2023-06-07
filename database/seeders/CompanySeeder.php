@@ -28,7 +28,6 @@ class CompanySeeder extends Seeder
         Address::create(
             [
                 'company_id' => $myCompany->id,
-                'continent'  => 'Europe',
                 'country'    => 'Romania',
                 'city'       => 'Bucharest',
             ]
