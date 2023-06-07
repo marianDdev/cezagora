@@ -12,51 +12,25 @@ class ProductsCategory extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    public const CATEGORIES = [
-        'skin cream',
-        'skin emulsion',
-        'skin lotion',
-        'skin gel',
-        'skin oil',
-        'face mask',
-        'tinted base',
-        'powder',
-        'after bath',
-        'soap',
-        'perfume',
-        'toilet water',
-        'eau de cologne',
-        'bath salt',
-        'bath foam',
-        'bath oil',
-        'bath gel',
-        'shower foam',
-        'shower oil',
-        'shower gel',
-        'depilatory',
-        'deodorant',
-        'antiperspirant',
-        'hair colorant',
-        'hair lotion',
-        'hair powder',
-        'shampoo',
-        'hair conditioner',
-        'shaving cream',
-        'shaving foam',
-        'shaving lotion',
-        'make up',
-        'make up removal',
-        'for lips',
-        'for teeth',
-        'for nails',
-        'for intimate hygiene',
-        'sunbathing',
-        'tanning',
-        'skin whitening',
-        'anti wrinkle',
-    ];
-
     protected $fillable = ['name'];
+
+    public const ORAL_CARE = 'oral care';
+    public const SKIN_CARE = 'skin care';
+    public const SUN_CARE = 'sun care';
+    public const HAIR_CARE = 'hair care';
+    public const DECORATIVE_COSMETICS = 'decorative cosmetics';
+    public const BODY_CARE = 'body care';
+    public const PERFUMES = 'perfumes';
+
+    public const COSMETICS_CATEGORIES = [
+        self::ORAL_CARE,
+        self::SKIN_CARE,
+        self::SUN_CARE,
+        self::HAIR_CARE,
+        self::DECORATIVE_COSMETICS,
+        self::BODY_CARE,
+        self::PERFUMES,
+    ];
 
     public function products(): HasMany
     {

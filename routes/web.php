@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\CompanyCategory;
 use App\Models\ProductsCategory;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,10 @@ Route::get('/contact', function () {
 
 Route::get('/help', function () {
     return view('pages.help');
+})->name('help');
+
+Route::get('/company-categories', function () {
+    return view('components.company-categories-page', ['categories' => CompanyCategory::TYPES]);
 })->name('help');
 
 Route::get('/dashboard', function () {
