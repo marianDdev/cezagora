@@ -24,7 +24,6 @@ class AddressFactory extends Factory
 
         return [
             'company_id' => Company::inRandomOrder()->take(1)->first()->id,
-            'continent' => null,
             'country' => $country->name,
             'city' => $city ? $city->name : null,
             'state' => $state ? $state->name : null,

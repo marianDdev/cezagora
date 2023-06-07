@@ -12,7 +12,6 @@ class Address extends Model
 
     protected $fillable = [
         'company_id',
-        'continent',
         'country',
         'state',
         'city',

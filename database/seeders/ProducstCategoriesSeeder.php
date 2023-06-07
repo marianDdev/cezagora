@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\ProductsCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ProducstCategoriesSeeder extends Seeder
@@ -13,7 +12,7 @@ class ProducstCategoriesSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (ProductsCategory::CATEGORIES as $category) {
+        foreach (ProductsCategory::COSMETICS_CATEGORIES as $category) {
             ProductsCategory::create(['name' => $category]);
         }
     }

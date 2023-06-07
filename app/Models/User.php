@@ -13,7 +13,8 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
- * @property boolean $is_admin
+ * @property boolean   $is_admin
+ * @property int $company_id
  */
 class User extends Authenticatable implements HasMedia
 {
