@@ -4,14 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCompanyRequest;
 use App\Models\CompanyCategory;
+use App\Models\User;
 use App\Services\AddressServiceInterface;
 use App\Services\CompanyServiceInterface;
 use App\Services\UserServiceInterface;
-use Exception;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
+    public function showMyCompany(): View
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        return view('components.company', ['company' => $user->company()]);
+    }
+
     public function create(): View
     {
         return view('forms.company.create', ['categories' => CompanyCategory::all()]);
@@ -22,24 +34,21 @@ class CompanyController extends Controller
         CompanyServiceInterface $companyService,
         AddressServiceInterface $addressService,
         UserServiceInterface    $userService
-    )
+    ): RedirectResponse {
+        $validated = $request->validated();
+        $company   = $companyService->create($validated);
+        $addressService->create($validated, $company->id);
+        $userService->updateCompany($company->id);
+
+        return redirect('/dashboard');
+    }
+
+    public function edit(): View
     {
-        try {
-            $validated = $request->validated();
-            $company = $companyService->create($validated);
-            $addressService->create($validated, $company->id);
-            $userService->updateCompany($company->id);
+        /** @var User $user */
+        $user = Auth::user();
+        $company = $user->company;
 
-            //return redirect('/dashboard');
-
-            return response()->json('succes', 204);
-
-        } catch (Exception $e) {
-            return response()->json($e->getMessage());
-//            return redirect('/')->with(
-//                'status',
-//                sprintf('Coud not create company. Got this error: %s', $e->getMessage())
-//            );
-        }
+        return view('forms.company.edit', ['company' => $company]);
     }
 }

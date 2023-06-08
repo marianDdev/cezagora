@@ -72,7 +72,7 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(Company::class);
     }
 
-    public function category(): BelongsTo
+    public function productCategory(): BelongsTo
     {
         return $this->belongsTo(ProductsCategory::class);
     }

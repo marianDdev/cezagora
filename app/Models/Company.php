@@ -5,13 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use mysql_xdevapi\Collection;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
- * @property int $id
+ * @property int             $id
+ * @property Collection      $products
+ * @property Collection      $services
+ * @property Collection      $ingredients
+ * @property Collection      $addresses
+ * @property CompanyCategory $companyCategory
+ * @property string          $name
  */
 class Company extends Model implements HasMedia
 {
@@ -35,7 +43,7 @@ class Company extends Model implements HasMedia
         return array_key_exists($key, $this->getAttributes());
     }
 
-    public function category(): BelongsTo
+    public function companyCategory(): BelongsTo
     {
         return $this->belongsTo(CompanyCategory::class);
     }
@@ -50,8 +58,13 @@ class Company extends Model implements HasMedia
         return $this->hasMany(Product::class);
     }
 
-    public function services(): HasMany
+    public function services(): BelongsToMany
     {
-        return $this->hasMany(Service::class);
+        return $this->belongsToMany(Service::class);
+    }
+
+    public function ingredients(): BelongsToMany
+    {
+        return $this->belongsToMany(Ingredient::class);
     }
 }

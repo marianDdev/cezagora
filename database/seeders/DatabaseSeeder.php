@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         User::factory(50)->create();
         Address::factory(50)->create();
         $this->call(IngredientsSeeder::class);
+        $this->call(CompanyIngredientSeeder::class);
     }
 }
