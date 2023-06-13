@@ -9,9 +9,7 @@ use App\Services\AddressServiceInterface;
 use App\Services\CompanyServiceInterface;
 use App\Services\UserServiceInterface;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
@@ -26,7 +24,7 @@ class CompanyController extends Controller
 
     public function create(): View
     {
-        return view('forms.company.create', ['categories' => CompanyCategory::all()]);
+        return view('company.forms.create', ['categories' => CompanyCategory::all()]);
     }
 
     public function store(
@@ -49,6 +47,6 @@ class CompanyController extends Controller
         $user = Auth::user();
         $company = $user->company;
 
-        return view('forms.company.edit', ['company' => $company]);
+        return view('company.forms.edit', ['company' => $company]);
     }
 }

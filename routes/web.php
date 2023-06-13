@@ -48,6 +48,7 @@ Route::get('/company-categories', function () {
 })->name('help');
 
 Route::get('/dashboard', [PagesController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [PagesController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -65,10 +66,10 @@ Route::middleware('auth')->group(function () {
     //ingredients
     Route::group(['prefix' => '/ingredients'], function () {
         Route::get('/', [IngredientController::class, 'list'])->name('ingredients');
-        Route::get('/', [IngredientController::class, 'list'])->name('ingredients');
         Route::get('/create', [IngredientController::class, 'create'])->name('ingredient.create');
         Route::post('/', [CompanyController::class, 'store'])->name('company.store');
         Route::get('/edit', [CompanyController::class, 'edit'])->name('company.edit');
+        Route::post('/upload', [IngredientController::class, 'upload'])->name('ingredients.upload');
     });
 
     Route::get('/my-ingredients', [IngredientController::class, 'listMyIngredients'])->name('my-ingredients');
