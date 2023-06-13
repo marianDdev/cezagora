@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
-use App\Services\FileService;
+use App\Services\File\FileService;
+use App\Services\Ingredient\IngredientService;
+use App\Services\Product\ProductService;
 use Illuminate\Support\ServiceProvider;
 
 class FileServiceProvider extends ServiceProvider
@@ -12,8 +14,8 @@ class FileServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind('App\Services\FileServiceInterface', function () {
-            return new FileService();
+        $this->app->bind('App\Services\File\FileServiceInterface', function () {
+            return new FileService((new IngredientService), (new ProductService()) );
         });
     }
 

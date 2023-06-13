@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Ingredient;
-use App\Services\FileServiceInterface;
+use App\Services\File\FileServiceInterface;
 use Illuminate\Database\Seeder;
 
 class IngredientsSeeder extends Seeder
@@ -17,7 +17,6 @@ class IngredientsSeeder extends Seeder
 
     public function run(): void
     {
-        $ingredient = new Ingredient();
-        $this->fileService->storeContent($ingredient, public_path('ingredients_2.csv'));
+        $this->fileService->storeContent('ingredient', public_path('ingredients_2.csv'));
     }
 }
