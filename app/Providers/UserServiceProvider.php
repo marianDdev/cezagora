@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\UserService;
+use App\Services\User\UserService;
 use Illuminate\Support\ServiceProvider;
 
 class UserServiceProvider extends ServiceProvider
@@ -12,7 +12,7 @@ class UserServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind('App\Services\UserServiceInterface', function () {
+        $this->app->bind('App\Services\User\UserServiceInterface', function () {
             return new UserService();
         });
     }

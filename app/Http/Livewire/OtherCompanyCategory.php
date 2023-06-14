@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Company;
 use App\Models\CompanyCategory;
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -14,7 +13,7 @@ class OtherCompanyCategory extends Component
 
     public function mount()
     {
-        $this->categories = Company::TYPES;
+        $this->categories = CompanyCategory::TYPES;
         $this->otherCategory      = null;
     }
 

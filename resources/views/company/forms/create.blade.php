@@ -1,5 +1,5 @@
 <x-app-layout>
-    <form method="POST" action="{{ route('company.store') }}">
+    <form method="POST" action="{{ route('company.store') }}" class="w-4/5">
         @csrf
         <livewire:other-company-category />
         <div class="mb-6">
