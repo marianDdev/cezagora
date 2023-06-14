@@ -45,7 +45,7 @@ Route::get('/help', function () {
 
 Route::get('/company-categories', function () {
     return view('components.company-categories-page', ['categories' => CompanyCategory::TYPES]);
-})->name('help');
+})->name('company-categories');
 
 Route::get('/dashboard', [PagesController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -65,10 +65,9 @@ Route::middleware('auth')->group(function () {
     //ingredients
     Route::group(['prefix' => '/ingredients'], function () {
         Route::get('/', [IngredientController::class, 'list'])->name('ingredients');
-        Route::get('/', [IngredientController::class, 'list'])->name('ingredients');
         Route::get('/create', [IngredientController::class, 'create'])->name('ingredient.create');
-        Route::post('/', [CompanyController::class, 'store'])->name('company.store');
-        Route::get('/edit', [CompanyController::class, 'edit'])->name('company.edit');
+        Route::post('/', [IngredientController::class, 'store'])->name('ingredient.store');
+        Route::get('/edit', [IngredientController::class, 'edit'])->name('ingredient.edit');
     });
 
     Route::get('/my-ingredients', [IngredientController::class, 'listMyIngredients'])->name('my-ingredients');
