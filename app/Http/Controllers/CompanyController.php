@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Models\CompanyCategory;
 use App\Models\User;
-use App\Services\AddressServiceInterface;
-use App\Services\CompanyServiceInterface;
-use App\Services\UserServiceInterface;
+use App\Services\Address\AddressServiceInterface;
+use App\Services\Company\CompanyServiceInterface;
+use App\Services\User\UserServiceInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +52,6 @@ class CompanyController extends Controller
         $user = Auth::user();
         $company = $user->company;
 
-        return view('forms.company.edit', ['company' => $company]);
+        return view('company.forms.edit', ['company' => $company]);
     }
 }

@@ -68,6 +68,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [IngredientController::class, 'create'])->name('ingredient.create');
         Route::post('/', [IngredientController::class, 'store'])->name('ingredient.store');
         Route::get('/edit', [IngredientController::class, 'edit'])->name('ingredient.edit');
+        Route::post('/upload', [IngredientController::class, 'upload'])->name('ingredients.upload');
     });
 
     Route::get('/my-ingredients', [IngredientController::class, 'listMyIngredients'])->name('my-ingredients');

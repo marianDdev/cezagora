@@ -2,18 +2,18 @@
 
 namespace App\Providers;
 
-use App\Services\Company\CompanyService;
+use App\Services\Ingredient\ProductService;
 use Illuminate\Support\ServiceProvider;
 
-class CompanyServiceProvider extends ServiceProvider
+class IngredientServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
      */
     public function register(): void
     {
-        $this->app->bind('App\Services\Company\CompanyServiceInterface', function () {
-            return new CompanyService();
+        $this->app->bind('App\Services\Ingredient\IngredientServiceInterface', function () {
+            return new ProductService();
         });
     }
 

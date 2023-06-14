@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\AddressService;
+use App\Services\Address\AddressService;
 use Illuminate\Support\ServiceProvider;
 
 class AddressServiceProvider extends ServiceProvider
@@ -12,7 +12,7 @@ class AddressServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind('App\Services\AddressServiceInterface', function () {
+        $this->app->bind('App\Services\Address\AddressServiceInterface', function () {
             return new AddressService();
         });
     }
