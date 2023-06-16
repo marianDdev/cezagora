@@ -24,7 +24,12 @@ class CompanyController extends Controller
 
     public function create(): View
     {
-        return view('company.forms.create', ['categories' => CompanyCategory::all()]);
+        return view(
+            'forms.company.create',
+            [
+                'categories' => CompanyCategory::all()
+            ]
+        );
     }
 
     public function store(

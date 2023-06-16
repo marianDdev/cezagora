@@ -13,7 +13,7 @@ class OtherCompanyCategory extends Component
 
     public function mount()
     {
-        $this->categories = CompanyCategory::TYPES;
+        $this->categories = CompanyCategory::all();
         $this->otherCategory      = null;
     }
 
