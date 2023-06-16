@@ -64,7 +64,7 @@ Route::middleware('auth')->group(function () {
 
     //ingredients
     Route::group(['prefix' => '/ingredients'], function () {
-        Route::get('/', [IngredientController::class, 'list'])->name('ingredients');
+        Route::get('/', [IngredientController::class, 'listMyIngredients'])->name('ingredients');
         Route::get('/create', [IngredientController::class, 'create'])->name('ingredient.create');
         Route::post('/', [IngredientController::class, 'store'])->name('ingredient.store');
         Route::get('/edit', [IngredientController::class, 'edit'])->name('ingredient.edit');
