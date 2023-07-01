@@ -16,21 +16,43 @@ use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class IngredientController extends Controller
 {
+    public function index(): View
+    {
+        return view(
+            'ingredients.index',
+            [
+                'ingredients' => CompanyIngredient::all(),
+            ]
+        );
+    }
+
     public function listMyIngredients(): View
     {
         /** @var User $user */
-        $user        = Auth::user();
-        $company     = $user->company;
-        $ingredients = $company->ingredients;
+        $user = Auth::user();
+        $ingredients = CompanyIngredient::where('company_id', $user->company->id)->get();
 
-        $ingredients->map(function ($ingredient) use ($company) {
-            $companyIngredient    = CompanyIngredient::where('company_id', $company->id)->where('ingredient_id', $ingredient->id)->first();
-            $ingredient->price    = $companyIngredient->price;
-            $ingredient->quantity = $companyIngredient->quantity;
-            $ingredient->company  = $company->name;
-        });
+        return view(
+            'ingredients.index',
+            [
+                'ingredients' => $ingredients,
+            ]
+        );
+    }
 
-        return view('ingredients.index', ['ingredients' => $ingredients]);
+    public function show(Ingredient $ingredient): View
+    {
+        $user = $this->getAuthUserModel();
+
+        $paymentIntent = $user->createSetupIntent();
+
+        return view(
+            'layouts.checkout',
+            [
+                'ingredient' => $ingredient,
+                'intent'     => $paymentIntent,
+            ]
+        );
     }
 
     public function create(): View
@@ -61,16 +83,23 @@ class IngredientController extends Controller
      */
     public function upload(FileServiceInterface $fileService): Application|Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
-        /** @var User $user */
-        $user = Auth::user();
+        $user = $this->getAuthUserModel();
 
         $file = $user->addMediaFromRequest('import_file')
-                       ->toMediaCollection('imports');
+                     ->toMediaCollection('imports');
 
         $filename = storage_path('app/public/' . $file->id . '/' . $file->file_name);
 
         $fileService->storeContent('ingredient', $filename);
 
         return redirect('/ingredients');
+    }
+
+    private function getAuthUserModel(): User
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        return $user;
     }
 }

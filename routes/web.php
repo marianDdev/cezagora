@@ -3,6 +3,7 @@
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Models\CompanyCategory;
 use App\Models\ProductsCategory;
@@ -64,14 +65,21 @@ Route::middleware('auth')->group(function () {
 
     //ingredients
     Route::group(['prefix' => '/ingredients'], function () {
-        Route::get('/', [IngredientController::class, 'listMyIngredients'])->name('ingredients');
+        Route::get('/', [IngredientController::class, 'index'])->name('ingredients');
+        Route::get('/{id}', [IngredientController::class, 'show'])->name('ingredient.show');
         Route::get('/create', [IngredientController::class, 'create'])->name('ingredient.create');
         Route::post('/', [IngredientController::class, 'store'])->name('ingredient.store');
-        Route::get('/edit', [IngredientController::class, 'edit'])->name('ingredient.edit');
+        Route::get('/{id}/edit', [IngredientController::class, 'edit'])->name('ingredient.edit');
         Route::post('/upload', [IngredientController::class, 'upload'])->name('ingredients.upload');
+        Route::post('/{id}/purchase', [IngredientController::class, 'purchase'])->name('ingredients.purchase');
     });
 
     Route::get('/my-ingredients', [IngredientController::class, 'listMyIngredients'])->name('my-ingredients');
+
+
+    //dummmy routes
+    Route::get('/payment/{string}/{price}', [PaymentController::class, 'charge'])->name('goToPayment');
+    Route::post('payment/process-payment/{string}/{price}', [PaymentController::class, 'processPayment'])->name('processPayment');
 });
 
 require __DIR__ . '/auth.php';

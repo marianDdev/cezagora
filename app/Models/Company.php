@@ -68,3 +68,4 @@ class Company extends Model implements HasMedia
         return $this->belongsToMany(Ingredient::class);
     }
 }
+

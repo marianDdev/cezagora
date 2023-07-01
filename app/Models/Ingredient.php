@@ -4,8 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property int $id
+ */
 class Ingredient extends Model
 {
     use HasFactory;
@@ -26,3 +30,4 @@ class Ingredient extends Model
         return $this->belongsToMany(Company::class);
     }
 }
+
