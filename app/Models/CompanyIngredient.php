@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class CompanyIngredient extends Pivot
@@ -19,13 +19,13 @@ class CompanyIngredient extends Pivot
 
     public $timestamps = false;
 
-    public function company(): HasOne
+    public function company(): BelongsTo
     {
-        return $this->hasOne(Company::class);
+        return $this->belongsTo(Company::class);
     }
 
-    public function ingredient(): HasOne
+    public function ingredient(): BelongsTo
     {
-        return $this->hasOne(Ingredient::class);
+        return $this->belongsTo(Ingredient::class);
     }
 }
