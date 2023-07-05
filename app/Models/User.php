@@ -28,6 +28,17 @@ class User extends Authenticatable implements HasMedia
 
     public array $translatable = ['name'];
 
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'company_id',
+        'email',
+        'stripe_connect_id',
+        'completed_stripe_onboarding',
+        'password',
+        'is_admin',
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -46,18 +57,10 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'completed_stripe_onboarding' => 'bool'
     ];
 
     use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
-
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'company_id',
-        'email',
-        'password',
-        'is_admin',
-    ];
 
     public function company(): BelongsTo
     {
