@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Ingredient;
 use App\Services\File\FileServiceInterface;
 use Illuminate\Database\Seeder;
 

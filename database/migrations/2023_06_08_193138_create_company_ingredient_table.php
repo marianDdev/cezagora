@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('company_ingredient', function (Blueprint $table) {
             $table->foreignId('company_id');
             $table->foreignId('ingredient_id');
-            $table->integer('price');
+            $table->unsignedInteger('price');
             $table->integer('quantity');
         });
     }

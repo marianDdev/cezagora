@@ -5,6 +5,7 @@ namespace App\Services\Ingredient;
 use App\Models\CompanyIngredient;
 use App\Models\Ingredient;
 use App\Traits\AuthUser;
+use Illuminate\Support\Str;
 
 class IngredientService implements IngredientServiceInterface
 {
@@ -19,6 +20,7 @@ class IngredientService implements IngredientServiceInterface
                 'name' => $data['name'],
                 'description' => $data['description'],
                 'function' => $data['function'],
+                'slug' => Str::slug(strtolower($data['name']))
             ]
         );
 

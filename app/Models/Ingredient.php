@@ -17,7 +17,8 @@ class Ingredient extends Model
     protected $fillable = [
       'name',
       'description',
-      'function'
+      'function',
+      'slug',
     ];
 
     public function hasAttribute(string $key): bool

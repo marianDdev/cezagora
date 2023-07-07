@@ -28,7 +28,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia, Billable, HasRoles, HasTranslations;
+    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia, HasRoles, HasTranslations;
 
     public array $translatable = ['name'];
 
