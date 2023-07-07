@@ -20,13 +20,28 @@ use Spatie\Translatable\HasTranslations;
  * @property int     $company_id
  * @property string  $first_name
  * @property string  $last_name
- * @property Company   $company
+ * @property Company $company
+ * @property boolean $stripe_account_enabled
+ * @property int     $id
+ * @property int     $stripe_account_id
+ * @property string   $email
  */
 class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia, Billable, HasRoles, HasTranslations;
+    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia, HasRoles, HasTranslations;
 
     public array $translatable = ['name'];
+
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'company_id',
+        'email',
+        'stripe_account_id',
+        'stripe_account_enabled',
+        'password',
+        'is_admin',
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,18 +61,10 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'completed_stripe_onboarding' => 'bool'
     ];
 
     use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
-
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'company_id',
-        'email',
-        'password',
-        'is_admin',
-    ];
 
     public function company(): BelongsTo
     {

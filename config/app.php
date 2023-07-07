@@ -174,6 +174,7 @@ return [
         App\Providers\CompanyServiceProvider::class,
         App\Providers\IngredientServiceProvider::class,
         App\Providers\ProductServiceProvider::class,
+        App\Providers\StripeServiceProvider::class,
     ])->toArray(),
 
     /*
