@@ -5,6 +5,8 @@ use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StripeOnboardingController;
+use App\Http\Middleware\RedirectIfUserHasNotEnabledStripe;
 use App\Models\CompanyCategory;
 use App\Models\ProductsCategory;
 use Illuminate\Support\Facades\Route;
@@ -20,38 +22,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.home', ['categories' => ProductsCategory::all()]);
-})->name('home');
-
-Route::get('/about', function () {
-    return view('pages.about');
-})->name('about');
-
-Route::get('/services', function () {
-    return view('pages.services');
-})->name('services');
-
-Route::get('/pricing', function () {
-    return view('pages.pricing');
-})->name('pricing');
-
-Route::get('/contact', function () {
-    return view('pages.contact');
-})->name('contact');
-
-Route::get('/help', function () {
-    return view('pages.help');
-})->name('help');
+Route::get('/', [PagesController::class, 'home'])->name('home');
+Route::get('/about', [PagesController::class, 'about'])->name('about');
+Route::get('/services', [PagesController::class, 'services'])->name('services');
+Route::get('/pricing', [PagesController::class, 'pricing'])->name('pricing');
+Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
+Route::get('/help', [PagesController::class, 'help'])->name('help');
 
 Route::get('/company-categories', function () {
     return view('components.company-categories-page', ['categories' => CompanyCategory::TYPES]);
 })->name('company-categories');
 
-Route::get('/dashboard', [PagesController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/dashboard', [PagesController::class, 'dashboard'])
+         ->middleware(RedirectIfUserHasNotEnabledStripe::class, 'verified')
+         ->name('dashboard');
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->middleware(RedirectIfUserHasNotEnabledStripe::class)
+         ->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
@@ -76,10 +64,20 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/my-ingredients', [IngredientController::class, 'listMyIngredients'])->name('my-ingredients');
 
+    //stripe
+    Route::get('/onboarding', [StripeOnboardingController::class, 'index'])->name('onboarding');
+    Route::get('/onboarding/redirect', [StripeOnboardingController::class, 'redirect'])->name('onboarding.redirect');
+    Route::get('/onboarding/verify', [StripeOnboardingController::class, 'verify'])->name('onboarding.verify');
+
 
     //dummmy routes
     Route::get('/payment/{string}/{price}', [PaymentController::class, 'charge'])->name('goToPayment');
     Route::post('payment/process-payment/{string}/{price}', [PaymentController::class, 'processPayment'])->name('processPayment');
+
+    Route::get('/seller', [ProfileController::class, 'show'])->name('seller.profile');
+    Route::get('stripe', [ProfileController::class, 'redirectToStripe'])->name('redirect.stripe');
+    Route::get('connect/{token}', [ProfileController::class, 'saveStripeAccount'])->name('save.stripe');
+    Route::post('charge', [ProfileController::class, 'purchase'])->name('complete.purchase');
 });
 
 require __DIR__ . '/auth.php';

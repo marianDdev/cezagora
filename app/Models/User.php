@@ -20,7 +20,11 @@ use Spatie\Translatable\HasTranslations;
  * @property int     $company_id
  * @property string  $first_name
  * @property string  $last_name
- * @property Company   $company
+ * @property Company $company
+ * @property boolean $stripe_account_enabled
+ * @property int     $id
+ * @property int     $stripe_account_id
+ * @property string   $email
  */
 class User extends Authenticatable implements HasMedia
 {
@@ -33,8 +37,8 @@ class User extends Authenticatable implements HasMedia
         'last_name',
         'company_id',
         'email',
-        'stripe_connect_id',
-        'completed_stripe_onboarding',
+        'stripe_account_id',
+        'stripe_account_enabled',
         'password',
         'is_admin',
     ];
