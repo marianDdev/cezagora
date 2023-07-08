@@ -14,17 +14,19 @@ class IngredientService implements IngredientServiceInterface
     public function create(array $data): void
     {
         $company = $this->authUserCompany();
+        $slug = Str::slug(substr($data['name'], 0, 20));
 
         $ingredient = Ingredient::create(
             [
                 'name' => $data['name'],
                 'description' => $data['description'],
                 'function' => $data['function'],
-                'slug' => Str::slug(strtolower($data['name']))
             ]
         );
 
-        //todo replace dummy values from company id, price and quantity
+        $ingredient->update(['slug' => sprintf('%s-%d', $slug, $ingredient->id)]);
+
+        //todo replace dummy values from companies id, price and quantity
         CompanyIngredient::create(
             [
                 'company_id' => $company->id ?? rand(1,10),

@@ -5,9 +5,10 @@ namespace Database\Factories;
 use App\Models\Company;
 use App\Models\CompanyCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Company>
+ * @extends Factory<Company>
  */
 class CompanyFactory extends Factory
 {
@@ -18,11 +19,16 @@ class CompanyFactory extends Factory
      */
     public function definition(): array
     {
+        $name = $this->faker->company;
+        $category = CompanyCategory::inRandomOrder()->first();
+        $slug = sprintf('%s-%s', Str::slug($name), $category->name);
+
         return [
-            'company_category_id' => CompanyCategory::inRandomOrder()->first()->id,
-            'name' => $this->faker->company,
+            'company_category_id' => $category->id,
+            'name' => $name,
             'email' => $this->faker->companyEmail,
             'phone' => $this->faker->phoneNumber,
+            'slug' => $slug,
         ];
     }
 }

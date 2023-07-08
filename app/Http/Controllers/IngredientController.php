@@ -36,17 +36,22 @@ class IngredientController extends Controller
         );
     }
 
-    public function show(Ingredient $ingredient): View
+    public function show(string $slug): View
     {
-        $user = $this->authUser();
+        $ingredient = Ingredient::where('slug', $slug)->first();
+        $companyIngredients = CompanyIngredient::where('ingredient_id', $ingredient->id)->get();
 
-        $paymentIntent = $user->createSetupIntent();
+        if (is_null($ingredient)) {
+            abort(404, 'Ingredient not found.');
+        }
 
         return view(
-            'layouts.checkout',
+            'ingredients.show',
             [
-                'ingredient' => $ingredient,
-                'intent'     => $paymentIntent,
+                'ingredients' => $companyIngredients,
+                'name' => $ingredient->name,
+                'description' => $ingredient->description,
+                'function' => $ingredient->function,
             ]
         );
     }
@@ -68,7 +73,7 @@ class IngredientController extends Controller
 
     public function store()
     {
-        //
+        //todo create RedirectIfUserHasNotAddedCompanyDetails
     }
 
     /**

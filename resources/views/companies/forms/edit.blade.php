@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg flex justify-center items-center">
-        <form method="POST" action="{{ route('company.store') }}" class="w-4/5 ">
+        <form method="POST" action="{{ route('companies.store') }}" class="w-4/5 ">
         @csrf
         <livewire:other-company-category />
         <div class="mb-6">
@@ -17,7 +17,7 @@
         </div>
         <livewire:country-dropdown />
         <x-primary-button class="ml-4">
-            {{ __('Add company') }}
+            {{ __('Add companies') }}
         </x-primary-button>
     </form>
     </div>

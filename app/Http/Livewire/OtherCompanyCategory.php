@@ -19,6 +19,6 @@ class OtherCompanyCategory extends Component
 
     public function render()
     {
-        return view('livewire.other-company-category');
+        return view('livewire.other-companies-category');
     }
 }

@@ -1,9 +1,13 @@
+<div class="bg-white py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:text-center">
+            <p class="mt-2 bold tracking-tight text-gray-900 sm:text-4xl">{{ $company->name }}'s ingredients</p>
+        </div>
+    </div>
+</div>
 <table class="w-4/5 text-sm text-left text-gray-500 dark:text-gray-400">
     <thead class="text-sm text-blue-500 uppercase bg-gray-200">
         <tr>
-            <th scope="col" class="px-6 py-3">
-                Supplier
-            </th>
             <th scope="col" class="px-6 py-3">
                 Name
             </th>
@@ -54,13 +58,9 @@
     <tbody>
         @foreach($ingredients as $ingredient)
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-
-                        {{ $ingredient->company->name ?? ''}}
-                </th>
                 <td class="px-6 py-4 text-indigo-500">
                     <a href="{{ route('ingredient.show', $ingredient->ingredient->slug) }}">
-                    {{ $ingredient->ingredient->name ?? '' }}
+                        {{ $ingredient->ingredient->name ?? '' }}
                     </a>
                 </td>
                 <td class="px-6 py-4">
@@ -76,12 +76,7 @@
                     ${{ $ingredient->price ?? '' }}
                 </td>
                 <td class="px-6 py-6 text-right">
-                    @if($ingredient->company->id === \Illuminate\Support\Facades\Auth::user()->company_id)
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                    @else
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Add to cart</a>
-                    @endif
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Add to cart</a>
                 </td>
             </tr>
         @endforeach

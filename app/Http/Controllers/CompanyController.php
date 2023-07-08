@@ -3,29 +3,54 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCompanyRequest;
+use App\Models\Company;
 use App\Models\CompanyCategory;
-use App\Models\User;
+use App\Models\CompanyIngredient;
 use App\Services\Address\AddressServiceInterface;
 use App\Services\Company\CompanyServiceInterface;
 use App\Services\User\UserServiceInterface;
+use App\Traits\AuthUser;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
+    use AuthUser;
+
+    public function index(): View
+    {
+        return view('companies.index', ['companies' => Company::all()]);
+    }
+
+    public function show(string $slug): View
+    {
+        $company = Company::where('slug', $slug)->first();
+
+        if (is_null($company)) {
+            abort(404, 'Company not found.');
+        }
+
+        $companyIngredients = CompanyIngredient::where('company_id', $company->id)->get();
+
+        return view('companies.show', [
+            'company' => $company,
+            'ingredients' => $companyIngredients ?? null,
+            'products' => $company->products ?? null,
+            'services' => $company->services ?? null,
+        ]);
+    }
+
     public function showMyCompany(): View
     {
-        /** @var User $user */
-        $user = Auth::user();
+        $user = $this->authUser();
 
-        return view('components.company', ['company' => $user->company()]);
+        return view('components.companies', ['companies' => $user->company()]);
     }
 
     public function create(): View
     {
         return view(
-            'forms.company.create',
+            'forms.companies.create',
             [
                 'categories' => CompanyCategory::all()
             ]
@@ -48,10 +73,8 @@ class CompanyController extends Controller
 
     public function edit(): View
     {
-        /** @var User $user */
-        $user = Auth::user();
-        $company = $user->company;
+        $company = $this->authUserCompany();
 
-        return view('company.forms.edit', ['company' => $company]);
+        return view('companies.forms.edit', ['companies' => $company]);
     }
 }
