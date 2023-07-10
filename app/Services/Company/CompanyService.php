@@ -3,6 +3,7 @@
 namespace App\Services\Company;
 
 use App\Models\Company;
+use Illuminate\Support\Str;
 
 class CompanyService implements CompanyServiceInterface
 {
@@ -14,6 +15,7 @@ class CompanyService implements CompanyServiceInterface
                 'name'                => $validated['name'],
                 'email'               => $validated['email'],
                 'phone'               => $validated['phone'],
+                'slug' => Str::slug($validated['name'])
             ]
         );
     }

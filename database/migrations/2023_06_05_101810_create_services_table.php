@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('services_category_id');
             $table->string('name');
-            $table->integer('price');
             $table->text('description');
             $table->timestamps();
         });

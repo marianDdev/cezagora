@@ -175,6 +175,7 @@ return [
         App\Providers\IngredientServiceProvider::class,
         App\Providers\ProductServiceProvider::class,
         App\Providers\StripeServiceProvider::class,
+        App\Providers\CheckoutServiceProvider::class,
     ])->toArray(),
 
     /*

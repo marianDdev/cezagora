@@ -2,20 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\CompanyCategory;
+use App\Models\Service;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CompanyCategorySeeder extends Seeder
+class ServiceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        foreach (CompanyCategory::TYPES as $type)
-        {
-            CompanyCategory::create(['name' => $type]);
-        }
+        Service::factory(30)->create();
     }
 }

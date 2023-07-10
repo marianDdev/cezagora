@@ -31,6 +31,7 @@ class Company extends Model implements HasMedia
         'email',
         'phone',
         'has_details_completed',
+        'slug',
     ];
 
     public function user(): HasOne
@@ -65,7 +66,12 @@ class Company extends Model implements HasMedia
 
     public function ingredients(): BelongsToMany
     {
-        return $this->belongsToMany(Ingredient::class);
+        return $this->belongsToMany(Ingredient::class)->withPivot('quantity', 'price');
+    }
+
+    public function packingProducts(): HasMany
+    {
+        return $this->hasMany(PackingProduct::class);
     }
 }
 

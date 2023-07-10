@@ -20,7 +20,7 @@ use Spatie\Translatable\HasTranslations;
  * @property int     $company_id
  * @property string  $first_name
  * @property string  $last_name
- * @property Company $company
+ * @property Company $companies
  * @property boolean $stripe_account_enabled
  * @property int     $id
  * @property int     $stripe_account_id

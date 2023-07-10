@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\PagesController;
@@ -8,7 +9,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeOnboardingController;
 use App\Http\Middleware\RedirectIfUserHasNotEnabledStripe;
 use App\Models\CompanyCategory;
-use App\Models\ProductsCategory;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,9 +29,9 @@ Route::get('/pricing', [PagesController::class, 'pricing'])->name('pricing');
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/help', [PagesController::class, 'help'])->name('help');
 
-Route::get('/company-categories', function () {
-    return view('components.company-categories-page', ['categories' => CompanyCategory::TYPES]);
-})->name('company-categories');
+Route::get('/companies-categories', function () {
+    return view('components.companies-categories-page', ['categories' => CompanyCategory::TYPES]);
+})->name('companies-categories');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [PagesController::class, 'dashboard'])
@@ -42,24 +42,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::group(['prefix' => '/companies'], function () {
-        Route::get('/create', [CompanyController::class, 'create'])->name('company.create');
-        Route::post('/', [CompanyController::class, 'store'])->name('company.store');
-        Route::get('/edit', [CompanyController::class, 'edit'])->name('company.edit');
+        Route::get('/', [CompanyController::class, 'index'])->name('companies');
+        Route::get('/{slug}', [CompanyController::class, 'show'])->name('company.show');
+        Route::get('/create', [CompanyController::class, 'create'])->name('companies.create');
+        Route::post('/', [CompanyController::class, 'store'])->name('companies.store');
+        Route::get('/edit', [CompanyController::class, 'edit'])->name('companies.edit');
     });
 
-    Route::get('my-company', [CompanyController::class, 'showMyCompany'])->name('my-company');
+    Route::get('my-companies', [CompanyController::class, 'showMyCompany'])->name('my-companies');
 
     //ingredients
     Route::group(['prefix' => '/ingredients'], function () {
         Route::get('/', [IngredientController::class, 'index'])->name('ingredients');
-        Route::get('/{id}', [IngredientController::class, 'show'])->name('ingredient.show');
+        Route::get('/{slug}', [IngredientController::class, 'show'])->name('ingredient.show');
         Route::get('/create', [IngredientController::class, 'create'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.create');
         Route::post('/', [IngredientController::class, 'store'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.store');
-        Route::get('/{id}/edit', [IngredientController::class, 'edit'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.edit');
+        Route::get('/{slug}/edit', [IngredientController::class, 'edit'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.edit');
         Route::post('/upload', [IngredientController::class, 'upload'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredients.upload');
     });
 
     Route::get('/my-ingredients', [IngredientController::class, 'listMyIngredients'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('my-ingredients');
+
+    Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
+    Route::post('/checkout', [CheckoutController::class, 'execute'])->name('checkout');
+    Route::get('/checkout/success', [CheckoutController::class, 'showSucess'])->name('checkout.success');
 
     //stripe
     Route::get('/onboarding', [StripeOnboardingController::class, 'index'])->name('onboarding');

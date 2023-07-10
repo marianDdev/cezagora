@@ -21,6 +21,6 @@ class Company extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.company');
+        return view('components.companies');
     }
 }

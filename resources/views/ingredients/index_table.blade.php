@@ -2,7 +2,7 @@
     <thead class="text-sm text-blue-500 uppercase bg-gray-200">
         <tr>
             <th scope="col" class="px-6 py-3">
-                Company
+                Supplier
             </th>
             <th scope="col" class="px-6 py-3">
                 Name
@@ -55,12 +55,13 @@
         @foreach($ingredients as $ingredient)
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <a href="{{ route('ingredient.show', $ingredient->ingredient->id) }}">
+
                         {{ $ingredient->company->name ?? ''}}
-                    </a>
                 </th>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 text-indigo-500">
+                    <a href="{{ route('ingredient.show', $ingredient->ingredient->slug) }}">
                     {{ $ingredient->ingredient->name ?? '' }}
+                    </a>
                 </td>
                 <td class="px-6 py-4">
                     {{ $ingredient->ingredient->description ?? '' }}

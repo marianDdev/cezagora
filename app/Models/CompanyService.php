@@ -20,11 +20,11 @@ class CompanyService extends Pivot
 
     public function company(): HasOne
     {
-        return $this->hasOne(Company::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function service(): HasOne
     {
-        return $this->hasOne(Service::class);
+        return $this->belongsTo(Service::class);
     }
 }
