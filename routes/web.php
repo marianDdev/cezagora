@@ -63,9 +63,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/my-ingredients', [IngredientController::class, 'listMyIngredients'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('my-ingredients');
 
+    Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
     Route::post('/checkout', [CheckoutController::class, 'execute'])->name('checkout');
     Route::get('/checkout/success', [CheckoutController::class, 'showSucess'])->name('checkout.success');
-
 
     //stripe
     Route::get('/onboarding', [StripeOnboardingController::class, 'index'])->name('onboarding');

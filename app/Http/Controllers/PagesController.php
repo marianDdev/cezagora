@@ -60,7 +60,7 @@ class PagesController extends Controller
 
         return view('dashboard', [
             'user'    => $user,
-            'companies' => $company ?? null,
+            'company' => $company ?? null,
             'text'    => $company && $company->companyCategory
                 ? $companyBusinesstextMap[$company->companyCategory->name]
                 : '',

@@ -1,5 +1,5 @@
 <?php
 return [
-  'publishable' => env('STRIPE_KEY'),
+  'publishable' => env('PUBLISHABLE_KEY'),
   'secret' => env('STRIPE_SECRET')
 ];

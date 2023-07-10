@@ -9,8 +9,8 @@ class CheckoutService implements CheckoutServiceInterface
 
     public function prepareCheckoutData(Collection $cartItems, ?int $fee = 0): array
     {
-        $lineItems        = [];
-        $stripeAccountIds = [];
+        $lineItems = [];
+        $productIds = [];
 
         foreach ($cartItems as $item) {
             $lineItems[] = [
@@ -24,10 +24,11 @@ class CheckoutService implements CheckoutServiceInterface
                 'quantity'   => $item->quantity,
             ];
 
-            $stripeAccountIds['stripe_account'] = $item->company->user->stripe_account_id;
+            $productIds[] = $item->id;
+
         }
 
-        $data = [
+        return [
             'mode'                => self::PAYMENT_MODE,
             'line_items'          => $lineItems,
             'payment_intent_data' => [
@@ -36,13 +37,8 @@ class CheckoutService implements CheckoutServiceInterface
             'success_url'         => route('checkout.success'),
             'cancel_url'          => route('ingredients'),
             'metadata'            => [
-                'cart_items' => $cartItems,
+                'product_id' => implode(',', $productIds),
             ],
-        ];
-
-        return [
-            'data'               => $data,
-            'stripe_account_ids' => $stripeAccountIds,
         ];
     }
 }

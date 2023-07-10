@@ -12,5 +12,5 @@ class Setting extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['transaction_fee'];
+    protected $fillable = ['name', 'value'];
 }

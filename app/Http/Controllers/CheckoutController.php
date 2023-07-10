@@ -18,6 +18,15 @@ class CheckoutController extends Controller
     public function show(): View
     {
         $cartItems = CartItem::all();
+        $total = CartItem::sum('price');
+
+        return view(
+            'cart.show',
+            [
+                'items' => $cartItems,
+                'total' => $total
+            ]
+        );
     }
 
     public function showSucess(): View
@@ -30,24 +39,22 @@ class CheckoutController extends Controller
      */
     public function execute(
         CheckoutServiceInterface $checkoutService,
-        Setting                  $setting,
         StripeClient             $stripeClient
     ): RedirectResponse
     {
-        $fee       = $setting->transaction_fee;
+        $fee       = (int)Setting::where('name', 'transaction_fee')->first()->value;
         $cartItems = CartItem::all();
-
-        if ($cartItems->count() === 0) {
-            dd('cart empty');
-        }
-
+        $accountId = $cartItems->first()->company->user->stripe_account_id;
         $checkoutData = $checkoutService->prepareCheckoutData($cartItems, $fee);
 
         $response = $stripeClient->checkout
             ->sessions
             ->create(
-                $checkoutData['data'],
-                $checkoutData['stripe_account_ids']
+                $checkoutData,
+                [
+                    'stripe_account' => $accountId,
+                    'api_key' => env('STRIPE_SECRET')
+                ]
             );
 
         return redirect($response->url);
