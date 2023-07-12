@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\AuthUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,10 +21,14 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property Collection      $addresses
  * @property CompanyCategory $companyCategory
  * @property string          $name
+ * @property boolean         $has_details_completed
+ * @property Collection      $orders
+ * @property Collection      $sales
+ * @property string           $email
  */
 class Company extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, AuthUser;
 
     protected $fillable = [
         'company_category_id',
@@ -73,5 +78,14 @@ class Company extends Model implements HasMedia
     {
         return $this->hasMany(PackingProduct::class);
     }
-}
 
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
+
+    public function sales(): HasMany
+    {
+        return $this->hasMany(Order::class, 'seller_id', 'id');
+    }
+}

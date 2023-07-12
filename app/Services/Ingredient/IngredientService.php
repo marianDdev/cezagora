@@ -31,8 +31,8 @@ class IngredientService implements IngredientServiceInterface
             [
                 'company_id' => $company->id ?? rand(1,10),
                 'ingredient_id' => $ingredient->id,
-                'price' => $data['price'] ?? rand(110, 220202),
-                'quantity' => $data['quantity'] ?? rand(134, 7202),
+                'price' => $data['price'] ?? rand(1, 10),
+                'quantity' => $data['quantity'] ?? rand(1, 10),
             ]
         );
     }

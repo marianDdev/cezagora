@@ -23,12 +23,17 @@ class StripeOnboardingController extends Controller
     {
         $user = $this->authUser();
 
-        $response = $stripeClient->accountLinks->create([
-            'account' => $user->stripe_account_id,
-            'type' => 'account_onboarding',
-            'refresh_url' => route('onboarding.redirect'),
-            'return_url' => route('onboarding.verify'),
-        ]);
+        $response = $stripeClient->accountLinks->create(
+            [
+                'account' => $user->stripe_account_id,
+                'type' => 'account_onboarding',
+                'refresh_url' => route('onboarding.redirect'),
+                'return_url' => route('onboarding.verify'),
+            ],
+            [
+                'api_key' => config('stripe.secret'),
+            ]
+        );
 
         return redirect($response->url);
     }
@@ -40,11 +45,17 @@ class StripeOnboardingController extends Controller
     {
         $user = $this->authUser();
 
-        $response = $stripeClient->accounts->retrieve($user->stripe_account_id, []);
+        $response = $stripeClient->accounts->retrieve(
+            $user->stripe_account_id,
+            [],
+            [
+                'api_key' => config('stripe.secret')
+            ]
+        );
 
         $user->update([
-            'stripe_account_enabled' => $response->payouts_enabled
-        ]);
+                          'stripe_account_enabled' => $response->payouts_enabled,
+                      ]);
 
         return redirect()->route('dashboard');
     }

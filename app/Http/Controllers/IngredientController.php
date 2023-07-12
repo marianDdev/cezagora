@@ -19,14 +19,14 @@ class IngredientController extends Controller
         return view(
             'ingredients.index',
             [
-                'ingredients' => CompanyIngredient::all(),
+                'ingredients' => CompanyIngredient::paginate(20),
             ]
         );
     }
 
     public function listMyIngredients(): View
     {
-        $ingredients = CompanyIngredient::where('company_id', $this->authUserCompany()->id)->get();
+        $ingredients = CompanyIngredient::where('company_id', $this->authUserCompany()->id)->paginate(20);
 
         return view(
             'ingredients.index',

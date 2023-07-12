@@ -16,15 +16,16 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Translatable\HasTranslations;
 
 /**
- * @property boolean $is_admin
- * @property int     $company_id
- * @property string  $first_name
- * @property string  $last_name
- * @property Company $companies
- * @property boolean $stripe_account_enabled
- * @property int     $id
- * @property int     $stripe_account_id
- * @property string   $email
+ * @property boolean    $is_admin
+ * @property int        $company_id
+ * @property string     $first_name
+ * @property string     $last_name
+ * @property Company    $companies
+ * @property boolean    $stripe_account_enabled
+ * @property int        $id
+ * @property int        $stripe_account_id
+ * @property string     $email
+ * @property Company|null $company
  */
 class User extends Authenticatable implements HasMedia
 {

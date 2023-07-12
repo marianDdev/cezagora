@@ -50,7 +50,7 @@ class CompanyController extends Controller
     public function create(): View
     {
         return view(
-            'forms.companies.create',
+            'companies.forms.create',
             [
                 'categories' => CompanyCategory::all()
             ]
@@ -67,6 +67,7 @@ class CompanyController extends Controller
         $company   = $companyService->create($validated);
         $addressService->create($validated, $company->id);
         $userService->updateCompany($company->id);
+        $company->update(['has_details_completed' => true]);
 
         return redirect('/dashboard');
     }
@@ -76,5 +77,10 @@ class CompanyController extends Controller
         $company = $this->authUserCompany();
 
         return view('companies.forms.edit', ['companies' => $company]);
+    }
+
+    public function update()
+    {
+        //
     }
 }

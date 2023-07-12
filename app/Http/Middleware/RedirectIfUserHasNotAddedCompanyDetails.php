@@ -7,9 +7,10 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RedirectIfUserHasNotEnabledStripe
+class RedirectIfUserHasNotAddedCompanyDetails
 {
     use AuthUser;
+
     /**
      * Handle an incoming request.
      *
@@ -20,8 +21,8 @@ class RedirectIfUserHasNotEnabledStripe
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$this->authUser()->stripe_account_enabled) {
-            return redirect()->route('onboarding');
+        if (is_null($this->authUserCompany()) || !$this->authUserCompany()->has_details_completed) {
+            return redirect()->route('companies.create');
         }
 
         return $next($request);
