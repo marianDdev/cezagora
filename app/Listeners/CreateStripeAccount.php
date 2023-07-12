@@ -24,10 +24,19 @@ class CreateStripeAccount
      */
     public function handle(object $event): void
     {
-        $response = $this->stripeClient->accounts->create(['type' => 'standard']);
+        $response = $this->stripeClient->accounts->create(
+            [
+                'type' => 'standard',
+            ],
+            [
+                'api_key' => config('stripe.secret'),
+            ]
+        );
 
-        $event->user->update([
-                                 'stripe_account_id' => $response->id,
-                             ]);
+        $event->user->update(
+            [
+                'stripe_account_id' => $response->id,
+            ]
+        );
     }
 }

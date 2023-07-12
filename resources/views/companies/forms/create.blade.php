@@ -8,7 +8,7 @@
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
             <div class="mb-6">
-                <x-text-input id="name" type="text" name="name" :value="old('name')" autofocus autocomplete="name" placeholder="Your Company LTD" />
+                <x-text-input id="name" type="text" name="name" :value="old('name')" autofocus autocomplete="name" placeholder="Your Company's name" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
             <div class="mb-6">
@@ -17,7 +17,7 @@
             </div>
             <livewire:country-dropdown />
             <x-primary-button class="ml-4">
-                {{ __('Add companies') }}
+                {{ __('Add company') }}
             </x-primary-button>
         </form>
     </div>

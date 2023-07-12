@@ -42,10 +42,9 @@ class CheckoutController extends Controller
         StripeClient             $stripeClient
     ): RedirectResponse
     {
-        $fee       = (int)Setting::where('name', 'transaction_fee')->first()->value;
+        $percentage = (int)Setting::where('name', 'transaction_fee')->first()->value;
         $cartItems = CartItem::all();
-        $accountId = $cartItems->first()->company->user->stripe_account_id;
-        $checkoutData = $checkoutService->prepareCheckoutData($cartItems, $fee);
+        $checkoutData = $checkoutService->prepareCheckoutData($cartItems, $percentage);
 
         $response = $stripeClient->checkout
             ->sessions
@@ -58,5 +57,33 @@ class CheckoutController extends Controller
             );
 
         return redirect($response->url);
+    }
+
+    public function trasnfers()
+    {
+        $stripe = new StripeClient(config('stripe.secret'));
+        $cartItems = CartItem::all();
+        $total = 0;
+
+        foreach ($cartItems as $item) {
+            $total += $item->price * $item->quantity;
+        }
+
+        $stripe->paymentIntents->create([
+                                            'amount' => $total,
+                                            'currency' => 'usd',
+                                            'transfer_group' => 'ORDER10',
+                                        ]);
+
+        $percentage = (int)Setting::where('name', 'transaction_fee')->first()->value;
+        foreach ($cartItems as $item) {
+            $amount = $item->price * $item->quantity;
+            $stripe->transfers->create([
+                                           'amount' => $amount-($amount * $percentage / 100),
+                                           'currency' => 'usd',
+                                           'destination' => $item->company->user->stripe_account_id,
+                                           'transfer_group' => 'ORDER10',
+                                       ]);
+        }
     }
 }

@@ -3,10 +3,13 @@
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeOnboardingController;
+use App\Http\Middleware\RedirectIfUserHasNotAddedCompanyDetails;
 use App\Http\Middleware\RedirectIfUserHasNotEnabledStripe;
 use App\Models\CompanyCategory;
 use Illuminate\Support\Facades\Route;
@@ -43,13 +46,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::group(['prefix' => '/companies'], function () {
         Route::get('/', [CompanyController::class, 'index'])->name('companies');
-        Route::get('/{slug}', [CompanyController::class, 'show'])->name('company.show');
         Route::get('/create', [CompanyController::class, 'create'])->name('companies.create');
         Route::post('/', [CompanyController::class, 'store'])->name('companies.store');
+        Route::get('/{slug}', [CompanyController::class, 'show'])->name('company.show');
         Route::get('/edit', [CompanyController::class, 'edit'])->name('companies.edit');
+        Route::put('/update', [CompanyController::class, 'update'])->name('companies.edit');
     });
 
-    Route::get('my-companies', [CompanyController::class, 'showMyCompany'])->name('my-companies');
+    Route::get('my-company', [CompanyController::class, 'showMyCompany'])->name('my-companies');
 
     //ingredients
     Route::group(['prefix' => '/ingredients'], function () {
@@ -61,11 +65,58 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/upload', [IngredientController::class, 'upload'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredients.upload');
     });
 
-    Route::get('/my-ingredients', [IngredientController::class, 'listMyIngredients'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('my-ingredients');
+    Route::get('/my-ingredients', [IngredientController::class, 'listMyIngredients'])
+         ->middleware(
+             [
+                 RedirectIfUserHasNotEnabledStripe::class,
+                 RedirectIfUserHasNotAddedCompanyDetails::class
+             ]
+         )
+         ->name('my-ingredients');
 
     Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
-    Route::post('/checkout', [CheckoutController::class, 'execute'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'trasnfers'])->name('checkout');
     Route::get('/checkout/success', [CheckoutController::class, 'showSucess'])->name('checkout.success');
+
+    //orders
+    Route::group(['prefix' => '/orders'], function () {
+        Route::get('/', [OrderController::class, 'index'])->name('orders');
+        Route::get('/{id}', [OrderController::class, 'show'])->name('order.show');
+        Route::get('/create', [OrderController::class, 'create'])
+            ->middleware(
+                [
+                    RedirectIfUserHasNotEnabledStripe::class,
+                    RedirectIfUserHasNotAddedCompanyDetails::class
+                ]
+            )
+             ->name('order.create');
+        Route::post('/', [OrderController::class, 'store'])
+            ->middleware(
+                [
+                    RedirectIfUserHasNotEnabledStripe::class,
+                    RedirectIfUserHasNotAddedCompanyDetails::class
+                ]
+            )
+             ->name('order.store');
+        Route::get('/{id}/edit', [OrderController::class, 'edit'])->name('order.edit');
+        Route::put('/{id}', [OrderController::class, 'update'])->name('order.update');
+    });
+
+    Route::get('/my-orders', [OrderController::class, 'listMyOrders'])->name('myOrders');
+
+    //order items
+    Route::group(['prefix' => '/order-items'], function () {
+        Route::get('/{orderId}', [OrderItemController::class, 'index'])->name('order-items');
+        Route::get('/{id}', [OrderItemController::class, 'show'])->name('order-item.show');
+        Route::post('/', [OrderItemController::class, 'store'])
+             ->middleware(
+                 [
+                     RedirectIfUserHasNotEnabledStripe::class,
+                     RedirectIfUserHasNotAddedCompanyDetails::class
+                 ]
+             )
+             ->name('order-item.store');
+    });
 
     //stripe
     Route::get('/onboarding', [StripeOnboardingController::class, 'index'])->name('onboarding');

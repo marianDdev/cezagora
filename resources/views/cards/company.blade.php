@@ -16,7 +16,7 @@
         @else
             <p class="text-gray-500 dark:text-gray-400">You didn't add your company details.</p>
             <p class="text-blue-500 dark:text-gray-400 mt-2"><a
-                    href="{{ route('companies.edit') }}">click to create your company's profile</a></p>
+                    href="{{ route('companies.create') }}">click to create your company's profile</a></p>
         @endif
     </div>
 </div>

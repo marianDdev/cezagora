@@ -56,11 +56,11 @@
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 
-                        {{ $ingredient->company->name ?? ''}}
+                    {{ $ingredient->company->name ?? ''}}
                 </th>
                 <td class="px-6 py-4 text-indigo-500">
                     <a href="{{ route('ingredient.show', $ingredient->ingredient->slug) }}">
-                    {{ $ingredient->ingredient->name ?? '' }}
+                        {{ $ingredient->ingredient->name ?? '' }}
                     </a>
                 </td>
                 <td class="px-6 py-4">
@@ -80,10 +80,27 @@
                         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
                     @else
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Add to cart</a>
+                        <form action="{{ route('order-item.store') }}" method="post">
+                            @csrf
+                            <input id="customer_id" name="customer_id"
+                                   value="{{ \Illuminate\Support\Facades\Auth::user()->company_id }}" type="hidden" />
+                            <input id="seller_id" name="seller_id" value="{{ $ingredient->company->id }}"
+                                   type="hidden" />
+                            <input id="seller_id" name="seller_id" value="{{ $ingredient->company->id }}"
+                                   type="hidden" />
+                            <input id="item_id" name="item_id" value="{{ $ingredient->ingredient->id }}"
+                                   type="hidden" />
+                            <input id="item_type" name="item_type" value="ingredient" type="hidden" />
+                            <input id="price" name="price" value="{{ $ingredient->price }}" type="hidden" />
+                            <input id="quantity" name="quantity" value="{{ $ingredient->quantity }}" type="hidden" />
+                            <button type="submit"
+                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Add to cart
+                            </button>
+                        </form>
                     @endif
                 </td>
             </tr>
         @endforeach
     </tbody>
 </table>
+{{ $ingredients->links() }}
