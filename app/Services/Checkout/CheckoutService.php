@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 class CheckoutService implements CheckoutServiceInterface
 {
 
-    public function prepareCheckoutData(Collection $cartItems, ?int $feePercentage = 0): array
+    public function prepareCheckoutData(Collection $cartItems, int $orderId, ?int $feePercentage = 0): array
     {
         $lineItems = [];
         $productIds = [];
@@ -16,7 +16,7 @@ class CheckoutService implements CheckoutServiceInterface
         foreach ($cartItems as $item) {
             $lineItems[] = [
                 'price_data' => [
-                    'currency'     => 'eur',
+                    'currency'     => 'ron',
                     'unit_amount'  => $item->price,
                     'product_data' => [
                         'name' => $item->name,
@@ -39,7 +39,7 @@ class CheckoutService implements CheckoutServiceInterface
             'success_url'         => route('checkout.success'),
             'cancel_url'          => route('ingredients'),
             'metadata'            => [
-                'product_id' => implode(',', $productIds),
+                'order_id' => implode(',', $productIds),
             ],
         ];
     }

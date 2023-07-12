@@ -24,6 +24,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property boolean         $has_details_completed
  * @property Collection      $orders
  * @property Collection      $sales
+ * @property string           $email
  */
 class Company extends Model implements HasMedia
 {

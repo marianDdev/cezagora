@@ -9,6 +9,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeOnboardingController;
+use App\Http\Controllers\WebhookController;
 use App\Http\Middleware\RedirectIfUserHasNotAddedCompanyDetails;
 use App\Http\Middleware\RedirectIfUserHasNotEnabledStripe;
 use App\Models\CompanyCategory;
@@ -75,7 +76,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
          ->name('my-ingredients');
 
     Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
-    Route::post('/checkout', [CheckoutController::class, 'trasnfers'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'collectPayment'])->name('checkout');
     Route::get('/checkout/success', [CheckoutController::class, 'showSucess'])->name('checkout.success');
 
     //orders
@@ -122,6 +123,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/onboarding', [StripeOnboardingController::class, 'index'])->name('onboarding');
     Route::get('/onboarding/redirect', [StripeOnboardingController::class, 'redirect'])->name('onboarding.redirect');
     Route::get('/onboarding/verify', [StripeOnboardingController::class, 'verify'])->name('onboarding.verify');
+
+    //webhooks
+    Route::post('/webhooks/payment-intent', [WebhookController::class, 'handlePaymentIntentSucceeded'])->name('webhook.paymentIntent');
+    Route::post('/webhooks/transfers', [WebhookController::class, 'handleTransfers'])->name('webhook.trasfers');
 });
 
 require __DIR__ . '/auth.php';
