@@ -20,16 +20,23 @@ class OrderItem extends Model
 
     protected $fillable = [
         'order_id',
+        'seller_id',
         'shipping_id',
         'item_id',
         'item_type',
         'price',
         'quantity',
+        'name',
     ];
 
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function seller(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'seller_id', 'id');
     }
 
     public function shipping(): BelongsTo

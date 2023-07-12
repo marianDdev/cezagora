@@ -1,9 +1,9 @@
 <x-guest-layout>
 <ul>
     @foreach($items as $item)
-        <li>{{ $item->company->name }}</li>
-        <li>{{ $item->type }}</li>
-        <li>{{ $item->name }}</li>
+        <li>{{ $item->seller->name }}</li>
+        <li>{{ $item->item_type }}</li>
+        <li>{{ $item->name ?? 'vasile'}}</li>
         <li>{{ $item->price }}</li>
         <li>{{ $item->quantity }}</li>
     @endforeach
@@ -12,7 +12,7 @@
     <form class="text-center space-y-6" method="post" action="{{ route('checkout') }}">
         @csrf
         <x-primary-button class="w-full justify-center">
-            Buy now for {{ $total }}
+            Buy now for ${{ $order->total_price }}
         </x-primary-button>
 
     </form>

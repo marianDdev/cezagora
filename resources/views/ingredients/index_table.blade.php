@@ -86,13 +86,12 @@
                                    value="{{ \Illuminate\Support\Facades\Auth::user()->company_id }}" type="hidden" />
                             <input id="seller_id" name="seller_id" value="{{ $ingredient->company->id }}"
                                    type="hidden" />
-                            <input id="seller_id" name="seller_id" value="{{ $ingredient->company->id }}"
-                                   type="hidden" />
                             <input id="item_id" name="item_id" value="{{ $ingredient->ingredient->id }}"
                                    type="hidden" />
                             <input id="item_type" name="item_type" value="ingredient" type="hidden" />
                             <input id="price" name="price" value="{{ $ingredient->price }}" type="hidden" />
                             <input id="quantity" name="quantity" value="{{ $ingredient->quantity }}" type="hidden" />
+                            <input id="name" name="name" value="{{ $ingredient->ingredient->name }}" type="hidden" />
                             <button type="submit"
                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Add to cart
                             </button>

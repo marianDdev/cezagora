@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Setting extends Model
 {
+    public const TRANSACTION_FEE_PERCENTAGE = 'transaction_fee_percentage';
     use HasFactory;
 
     protected $fillable = ['name', 'value'];

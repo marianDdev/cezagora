@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CartItem;
+use App\Models\Order;
 use App\Models\Setting;
 use App\Services\Checkout\CheckoutServiceInterface;
 use App\Traits\AuthUser;
@@ -17,14 +18,19 @@ class CheckoutController extends Controller
 
     public function show(): View
     {
-        $cartItems = CartItem::all();
-        $total = CartItem::sum('price');
+        $pendingOrder = Order::where('customer_id', $this->authUserCompany()->id)->where('status', Order::STATUS_PENDING)->first();
+
+        if (is_null($pendingOrder)) {
+            abort(404, 'There is no pending order for you');
+        }
+
+        $orderItems = $pendingOrder->items;
 
         return view(
             'cart.show',
             [
-                'items' => $cartItems,
-                'total' => $total
+                'order' => $pendingOrder,
+                'items' => $orderItems,
             ]
         );
     }
@@ -43,15 +49,21 @@ class CheckoutController extends Controller
     ): RedirectResponse
     {
         $percentage = (int)Setting::where('name', 'transaction_fee')->first()->value;
-        $cartItems = CartItem::all();
-        $checkoutData = $checkoutService->prepareCheckoutData($cartItems, $percentage);
+        $pendingOrder = Order::where('customer_id', $this->authUserCompany()->id)->where('status', Order::STATUS_PENDING)->first();
+
+        if (is_null($pendingOrder)) {
+            abort(404, 'There is no pending order for you');
+        }
+
+        $orderItems = $pendingOrder->items;
+        $checkoutData = $checkoutService->prepareCheckoutData($orderItems, $percentage);
 
         $response = $stripeClient->checkout
             ->sessions
             ->create(
                 $checkoutData,
                 [
-                    'stripe_account' => $accountId,
+                    'stripe_account' => $pendingOrder->seller->user->stripe_account_id,
                     'api_key' => env('STRIPE_SECRET')
                 ]
             );
@@ -62,27 +74,28 @@ class CheckoutController extends Controller
     public function trasnfers()
     {
         $stripe = new StripeClient(config('stripe.secret'));
-        $cartItems = CartItem::all();
-        $total = 0;
+        $pendingOrder = Order::where('customer_id', $this->authUserCompany()->id)->where('status', Order::STATUS_PENDING)->first();
 
-        foreach ($cartItems as $item) {
-            $total += $item->price * $item->quantity;
+        if (is_null($pendingOrder)) {
+            abort(404, 'There is no pending order for you');
         }
 
+        $orderItems = $pendingOrder->items;
+
         $stripe->paymentIntents->create([
-                                            'amount' => $total,
-                                            'currency' => 'usd',
-                                            'transfer_group' => 'ORDER10',
+                                            'amount' => $pendingOrder->total_price * 100,
+                                            'currency' => 'ron',
+                                            'transfer_group' => $pendingOrder->id,
                                         ]);
 
-        $percentage = (int)Setting::where('name', 'transaction_fee')->first()->value;
-        foreach ($cartItems as $item) {
-            $amount = $item->price * $item->quantity;
+        $percentage = (int)Setting::where('name', Setting::TRANSACTION_FEE_PERCENTAGE)->first()->value;
+        foreach ($orderItems as $item) {
+            $amount = $item->price * $item->quantity * 100;
             $stripe->transfers->create([
                                            'amount' => $amount-($amount * $percentage / 100),
-                                           'currency' => 'usd',
-                                           'destination' => $item->company->user->stripe_account_id,
-                                           'transfer_group' => 'ORDER10',
+                                           'currency' => 'ron',
+                                           'destination' => $item->seller->user->stripe_account_id,
+                                           'transfer_group' => $pendingOrder->id,
                                        ]);
         }
     }

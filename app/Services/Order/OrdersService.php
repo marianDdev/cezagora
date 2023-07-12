@@ -19,7 +19,6 @@ class OrdersService implements OrdersServiceInterface
             return Order::create(
                 [
                     'customer_id' => $this->authUserCompany()->id,
-                    'seller_id' => $validated['seller_id'],
                 ]
             );
         }

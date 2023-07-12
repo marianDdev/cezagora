@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Models\Company;
-use App\Models\Order;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -24,6 +23,7 @@ class StoreOrderItemRequest extends FormRequest
             'item_type' => ['required', Rule::in(['ingredient', 'product'])],
             'price' => ['required', 'integer'],
             'quantity' => ['required', 'integer'],
+            'name' => ['required', 'string']
         ];
     }
 }

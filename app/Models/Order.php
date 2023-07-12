@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ */
 class Order extends Model
 {
     use HasFactory;
@@ -22,7 +25,6 @@ class Order extends Model
 
     protected $fillable = [
         'customer_id',
-        'seller_id',
         'status',
         'total_price',
     ];
@@ -30,11 +32,6 @@ class Order extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Company::class, 'customer_id', 'id');
-    }
-
-    public function seller(): BelongsTo
-    {
-        return $this->belongsTo(Company::class, 'seller_id', 'id');
     }
 
     public function items(): HasMany
