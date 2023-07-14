@@ -4,16 +4,25 @@ namespace App\Services\Order;
 
 use App\Models\Order;
 use App\Traits\AuthUser;
+use Exception;
 
 class OrdersService implements OrdersServiceInterface
 {
     use AuthUser;
 
-    public function getCurrentOrder(array $validated): ?Order
+
+    private ?Order $pendingOrder;
+
+    public function __construct()
     {
-        $order = Order::where('customer_id', $this->authUserCompany()->id)
-                      ->where('status', Order::STATUS_PENDING)
-                      ->first();
+        $this->pendingOrder = Order::where('customer_id', $this->authUserCompany()->id)
+                                   ->where('status', Order::STATUS_PENDING)
+                                   ->first();
+    }
+
+    public function getCurrentOrder(): ?Order
+    {
+        $order = $this->pendingOrder;
 
         if (is_null($order)) {
             return Order::create(
@@ -24,5 +33,17 @@ class OrdersService implements OrdersServiceInterface
         }
 
         return $order;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getPendingOrder(): Order
+    {
+        if (is_null($this->pendingOrder)) {
+            throw new Exception('there is no pending order.');
+        }
+
+        return $this->pendingOrder;
     }
 }

@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property int $price
+ * @property int $quantity
+ * @property Order $order
+ * @property Company $seller
+ */
 class OrderItem extends Model
 {
     use HasFactory;
