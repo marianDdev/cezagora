@@ -23,7 +23,7 @@ class OrderItemController extends Controller
     {
         $validated = $request->validated();
 
-        $order = $ordersService->getCurrentOrder($validated);
+        $order = $ordersService->getCurrentOrder();
 
         $order->update(['total_price' => $validated['price'] * $validated['quantity']]);
         $data = array_merge($validated, ['order_id' => $order->id]);

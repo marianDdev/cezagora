@@ -76,7 +76,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
          ->name('my-ingredients');
 
     Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
-    Route::post('/checkout', [CheckoutController::class, 'collectPayment'])->name('checkout');
     Route::get('/checkout/success', [CheckoutController::class, 'showSucess'])->name('checkout.success');
 
     //orders
@@ -117,6 +116,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                  ]
              )
              ->name('order-item.store');
+    });
+
+    Route::group(['prefix' => '/payments'], function () {
+        Route::post('/', [PaymentController::class, 'execute'])->name('payment.execute');
     });
 
     //stripe
