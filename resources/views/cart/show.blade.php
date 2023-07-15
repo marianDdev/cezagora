@@ -22,7 +22,7 @@
             @endforeach
         </ul>
 
-        <form class="text-center space-y-6" method="post" action="{{ route('payment.execute') }}">
+        <form class="text-center space-y-6" method="post" action="{{ route('payment.charge') }}">
             @csrf
             <x-primary-button class="w-full justify-center">
                 Buy now for {{ $order->total_price / 100}} LEI

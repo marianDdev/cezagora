@@ -9,6 +9,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeOnboardingController;
+use App\Http\Controllers\TransferController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Middleware\RedirectIfUserHasNotAddedCompanyDetails;
 use App\Http\Middleware\RedirectIfUserHasNotEnabledStripe;
@@ -119,7 +120,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::group(['prefix' => '/payments'], function () {
-        Route::post('/', [PaymentController::class, 'execute'])->name('payment.execute');
+        Route::post('/', [PaymentController::class, 'chargeCustomer'])->name('payment.charge');
+    });
+
+    Route::group(['prefix' => '/transfers'], function () {
+        Route::get('/{orderId}', [TransferController::class, 'getTransferPage'])->name('transfer.show');
+        Route::post('/', [TransferController::class, 'transferToSellers'])->name('transfer.create');
     });
 
     //stripe

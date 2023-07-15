@@ -5,6 +5,7 @@ namespace App\Services\Stripe\Payment;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Setting;
+use Exception;
 use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentIntent;
@@ -52,9 +53,14 @@ class PaymentService implements PaymentServiceInterface
 
     /**
      * @throws ApiErrorException
+     * @throws Exception
      */
     public function executeTransfers(Order $order, Customer $stripeCustomer)
     {
+        if ($order->status !== Order::STATUS_PAYMENT_COLLECTED) {
+            throw new Exception('customer was not charged for this order.');
+        }
+
         $orderItems = $order->items;
 
         /** @var OrderItem $item */

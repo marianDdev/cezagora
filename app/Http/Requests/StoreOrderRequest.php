@@ -20,7 +20,7 @@ class StoreOrderRequest extends FormRequest
         return [
             'customer_id' => ['required', 'integer', Rule::exists(Company::class, 'id')],
             'seller_id' => ['required', 'integer', Rule::exists(Company::class, 'id')],
-            'status' => ['required', 'string', Rule::in(Order::STATUSES)],
+            'status' => ['required', 'string', Rule::in(Order::getStatuses())],
             'total_price' => ['required', 'integer'],
         ];
     }

@@ -179,6 +179,7 @@ return [
         App\Providers\OrderServiceProvider::class,
         App\Providers\PaymentServiceProvider::class,
         App\Providers\CustomerServiceProvider::class,
+        App\Providers\NotificationServiceProvider::class,
     ])->toArray(),
 
     /*
