@@ -2,38 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrderItem;
-use App\Notifications\OrderProcessed;
+use App\Models\Order;
 use App\Services\Order\OrdersServiceInterface;
-use App\Services\Stripe\Customer\CustomerServiceInterface;
 use App\Services\Stripe\Payment\PaymentServiceInterface;
 use Exception;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class PaymentController extends Controller
 {
-    public function execute(
+    public function chargeCustomer(
         PaymentServiceInterface  $paymentService,
         OrdersServiceInterface   $ordersService,
-        CustomerServiceInterface $customerService
-    ): RedirectResponse
+    ): View
     {
+        $order = $ordersService->getPendingOrder();
+
         try {
-            $order = $ordersService->getPendingOrder();
             $paymentService->createPaymentIntent($order);
-            $stripeCustomer = $customerService->create($order);
-            $paymentService->executeTransfers($order, $stripeCustomer);
         } catch (Exception $e) {
-            return view('payment.error', ['error' => $e->getMessage()]);
+            return view(
+                'payments.error',
+                [
+                    'error' => $e->getMessage(),
+                    'orderId' => $order->id,
+                ]
+            );
         }
 
-        $order->customer->user->notify(new OrderProcessed());
+        $order->update(['status' => Order::STATUS_PAYMENT_COLLECTED]);
 
-        /** @var OrderItem $orderItem */
-        foreach ($order->items as $orderItem) {
-            $orderItem->seller->user->notify(new OrderProcessed());
-        }
-
-        return redirect(route('checkout.success'));
+        return view(
+            'payments.success',
+            [
+                'order' => $order,
+            ]
+        );
     }
 }

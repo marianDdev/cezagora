@@ -25,7 +25,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property Collection      $orders
  * @property Collection      $sales
  * @property string          $email
- * @property User           $user
+ * @property User            $user
  */
 class Company extends Model implements HasMedia
 {
@@ -88,5 +88,10 @@ class Company extends Model implements HasMedia
     public function sales(): HasMany
     {
         return $this->hasMany(Order::class, 'seller_id', 'id');
+    }
+
+    public function getPendingOrder(): ?Order
+    {
+        return self::$orders->where('status', Order::STATUS_PENDING)->first();
     }
 }

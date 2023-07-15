@@ -10,12 +10,18 @@ class OrderProcessed extends Notification
 {
     use Queueable;
 
+    private int    $amount;
+    private string $customer;
+    private string $seller;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(int $amount, string $customer, string $seller)
     {
-        //
+        $this->amount = $amount;
+        $this->customer = $customer;
+        $this->seller = $seller;
     }
 
     /**
@@ -35,9 +41,9 @@ class OrderProcessed extends Notification
     {
         return (new MailMessage)
             ->from(env('MAIL_FROM_ADDRESS'))
-            ->greeting('Hi')
+            ->greeting(sprintf('Hi %s', $this->seller))
             ->subject('your order is processed')
-            ->line('your order is processed.')
+            ->line(sprintf('You have received %d from CezAgora on behalf of %s', $this->amount, $this->customer))
             ->line('Thank you for using CezAgora!');
     }
 
