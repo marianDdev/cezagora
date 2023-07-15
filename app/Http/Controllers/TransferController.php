@@ -44,6 +44,6 @@ class TransferController extends Controller
             );
         }
 
-        $notificationService->sendEmailToOrderUsers($order);
+        $notificationService->notifySellersAboutMoneyTransfers($order);
     }
 }
