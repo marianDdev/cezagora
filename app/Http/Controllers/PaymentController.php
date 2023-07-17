@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Notifications\CustomerCharged;
 use App\Services\Order\OrdersServiceInterface;
 use App\Services\Stripe\Payment\PaymentServiceInterface;
 use Exception;
@@ -30,6 +31,8 @@ class PaymentController extends Controller
         }
 
         $order->update(['status' => Order::STATUS_PAYMENT_COLLECTED]);
+
+        $order->customer->user->notify(new CustomerCharged($order));
 
         return view(
             'payments.success',
