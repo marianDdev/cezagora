@@ -23,7 +23,8 @@ use Spatie\Translatable\HasTranslations;
  * @property Company    $companies
  * @property boolean    $stripe_account_enabled
  * @property int        $id
- * @property int        $stripe_account_id
+ * @property string        $stripe_account_id
+ * @property string        $stripe_customer_id
  * @property string     $email
  * @property Company|null $company
  */
@@ -39,6 +40,7 @@ class User extends Authenticatable implements HasMedia
         'company_id',
         'email',
         'stripe_account_id',
+        'stripe_customer_id',
         'stripe_account_enabled',
         'password',
         'is_admin',

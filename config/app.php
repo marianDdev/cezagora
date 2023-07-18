@@ -180,6 +180,7 @@ return [
         App\Providers\PaymentServiceProvider::class,
         App\Providers\CustomerServiceProvider::class,
         App\Providers\NotificationServiceProvider::class,
+        App\Providers\BillingPortalServiceProvider::class,
     ])->toArray(),
 
     /*
