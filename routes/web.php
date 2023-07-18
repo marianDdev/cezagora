@@ -9,6 +9,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeOnboardingController;
+use App\Http\Controllers\StripePortalController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Middleware\RedirectIfUserHasNotAddedCompanyDetails;
@@ -132,6 +133,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/onboarding', [StripeOnboardingController::class, 'index'])->name('onboarding');
     Route::get('/onboarding/redirect', [StripeOnboardingController::class, 'redirect'])->name('onboarding.redirect');
     Route::get('/onboarding/verify', [StripeOnboardingController::class, 'verify'])->name('onboarding.verify');
+
+    Route::post('/create-customer-portal-session', [StripePortalController::class, 'createSession'])->name('create.stripe.portal.session');
 
     //webhooks
     Route::post('/webhooks/payment-intent', [WebhookController::class, 'handlePaymentIntentSucceeded'])->name('webhook.paymentIntent');

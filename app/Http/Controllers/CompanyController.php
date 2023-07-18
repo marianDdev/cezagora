@@ -69,6 +69,10 @@ class CompanyController extends Controller
         $userService->updateCompany($company->id);
         $company->update(['has_details_completed' => true]);
 
+
+        //todo event CompanyCreated, add stripe_customer_id to User, create stripe customer after company created and updated User stripe_cutomer_id with teh id of newly customer created
+        // we need cutomer created for customer billing portal
+
         return redirect('/dashboard');
     }
 

@@ -3,20 +3,28 @@
 namespace App\Services\Stripe\Customer;
 
 use App\Models\Address;
-use App\Models\Company;
 use App\Models\Order;
+use App\Models\User;
+use App\Services\Stripe\StripeService;
 use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 
-class CustomerService implements CustomerServiceInterface
+class CustomerService extends StripeService implements CustomerServiceInterface
 {
-
-    private StripeClient $stripeClient;
-
-    public function __construct()
+    /**
+     * @throws ApiErrorException
+     */
+    public function createCustomer(User $user): Customer
     {
-        $this->stripeClient = new StripeClient(config('stripe.secret'));
+        return $this->stripeClient->customers->create(
+            [
+                'email' => $user->email
+            ],
+            [
+                'stripe_account' => $user->stripe_account_id
+            ]
+        );
     }
 
     /**

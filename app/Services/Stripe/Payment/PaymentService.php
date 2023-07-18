@@ -5,20 +5,18 @@ namespace App\Services\Stripe\Payment;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Setting;
+use App\Services\Stripe\StripeService;
 use Exception;
 use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentIntent;
-use Stripe\StripeClient;
 
-class PaymentService implements PaymentServiceInterface
+class PaymentService extends StripeService implements PaymentServiceInterface
 {
-    private StripeClient $stripeClient;
     private int $percentage;
 
     public function __construct()
     {
-        $this->stripeClient = new StripeClient(config('stripe.secret'));
         $this->percentage = (int) Setting::where('name', Setting::TRANSACTION_FEE_PERCENTAGE)->first()->value;
     }
 
