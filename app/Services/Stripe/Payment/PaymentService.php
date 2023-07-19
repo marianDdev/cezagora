@@ -17,6 +17,8 @@ class PaymentService extends StripeService implements PaymentServiceInterface
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->percentage = (int) Setting::where('name', Setting::TRANSACTION_FEE_PERCENTAGE)->first()->value;
     }
 
@@ -66,6 +68,7 @@ class PaymentService extends StripeService implements PaymentServiceInterface
             $amount         = $item->price * $item->quantity;
             $sellerStripeId = $item->seller->user->stripe_account_id;
 
+
             $this->stripeClient
                 ->transfers
                 ->create(
@@ -78,8 +81,7 @@ class PaymentService extends StripeService implements PaymentServiceInterface
                     ]
                 );
 
-            $this->createInvoice($sellerStripeId, $stripeCustomer->id, $amount);
-
+            $this->createInvoice($item, $sellerStripeId, $stripeCustomer->id, $amount);
         }
     }
 
@@ -98,9 +100,23 @@ class PaymentService extends StripeService implements PaymentServiceInterface
     /**
      * @throws ApiErrorException
      */
-    private function createInvoice(string $sellerStripeId, string $stripeCustomerId, int $amount)
+    private function createInvoice(OrderItem $item, string $sellerStripeId, string $stripeCustomerId, int $amount)
     {
-        $this->stripeClient
+        $product = $this->stripeClient->products->create(
+            [
+                'name' => $item->name,
+            ]
+        );
+
+        $price = $this->stripeClient->prices->create(
+            [
+                'product'     => $product->id,
+                'unit_amount' => $item->price,
+                'currency'    => 'ron',
+            ]
+        );
+
+        $invoice = $this->stripeClient
             ->invoices
             ->create(
                 [
@@ -110,5 +126,13 @@ class PaymentService extends StripeService implements PaymentServiceInterface
                     'customer'               => $stripeCustomerId,
                 ]
             );
+
+        $this->stripeClient->invoiceItems->create([
+                                                      'customer' => $stripeCustomerId,
+                                                      'price'    => $price->id,
+                                                      'invoice'  => $invoice->id,
+                                                  ]);
+
+        $this->stripeClient->invoices->finalizeInvoice($invoice->id, []);
     }
 }

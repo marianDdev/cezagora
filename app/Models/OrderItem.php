@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property int $price
- * @property int $quantity
- * @property Order $order
+ * @property int     $price
+ * @property int     $quantity
+ * @property Order   $order
  * @property Company $seller
+ * @property string   $name
  */
 class OrderItem extends Model
 {
