@@ -15,19 +15,20 @@ class StripePortalController extends Controller
 
     public function createSession(
         BillingPortalServiceInterface $billingPortalService,
-        CustomerServiceInterface $customerService
-    ): RedirectResponse|View {
+        CustomerServiceInterface      $customerService
+    ): RedirectResponse|View
+    {
         try {
-            $user = $this->authUser();
+            $user       = $this->authUser();
             $customerId = $user->stripe_customer_id;
-            $stripeAccountId = $user->stripe_account_id;
 
             if (is_null($customerId)) {
-                $customer = $customerService->createCustomer($user);
+                $customer   = $customerService->createCustomer($user);
                 $customerId = $customer->id;
                 $user->update(['stripe_customer_id' => $customerId]);
             }
 
+            $billingPortalService->createConfiguration($user);
             $session = $billingPortalService->createSession($user);
 
             return redirect($session->url);
@@ -35,7 +36,7 @@ class StripePortalController extends Controller
             return view(
                 'portal.error',
                 [
-                    'error'   => $e->getMessage(),
+                    'error' => $e->getMessage(),
                 ]
             );
         }
