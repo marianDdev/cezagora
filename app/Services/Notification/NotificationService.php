@@ -22,8 +22,9 @@ class NotificationService implements NotificationServiceInterface
             $sellerData = json_decode($seller, true);
             $sellerUser = User::find($sellerData['user']['id']);
             $sellerName = $sellerData['name'];
+            $customerName = $order->customer->name;
 
-            $sellerUser->notify(new OrderProcessed($total, $sellerName));
+            $sellerUser->notify(new OrderProcessed($total, $customerName, $sellerName));
         }
     }
 

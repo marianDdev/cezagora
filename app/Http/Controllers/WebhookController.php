@@ -10,15 +10,10 @@ class WebhookController extends Controller
     public function handlePaymentIntentSucceeded(Request $request)
     {
         $payload = json_decode($request->getContent(), true);
-
-        dd($payload);
-
     }
 
     public function handleTransfers(Request $request)
     {
         $payload = json_decode($request->getContent(), true);
-
-        dd($payload);
     }
 }

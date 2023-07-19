@@ -1,8 +1,4 @@
 <x-app-layout>
-    <form method="POST" action="{{ route('create.stripe.portal.session') }}">
-        @csrf
-        <button type="submit">Manage billing</button>
-    </form>
     <section class="bg-white dark:bg-gray-900">
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
             <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
@@ -10,6 +6,7 @@
                 <p class="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">Explore the whole collection of open-source web components and elements built with the utility classes from Tailwind</p>
             </div>
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
+                @include('cards.stripe_dashboard', ['imagePath' => 'https://picsum.photos/id/431/200',])
                 @include('cards.company',
                     [
                         'company' => $company,
@@ -24,7 +21,7 @@
                 @include(
                     'cards.ingredients',
                     [
-                        'name' => sprintf('My %s', $text),
+                        'name' => sprintf('%s', $text),
                         'imagePath' => 'https://picsum.photos/id/312/200',
                         'count' => $items ? $items->count() : 0
                         ]
