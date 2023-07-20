@@ -24,6 +24,11 @@ class StoreCompanyRequest extends FormRequest
             'country' => ['required', 'string', 'max:256'],
             'city' => ['required', 'string', 'max:256'],
             'state' => ['nullable', 'string', 'max:256'],
+            'product_description' => ['nullable', 'string'],
+            'website' => ['nullable', 'url'],
+            'tax_id' => ['required', 'string'],
+            'vat_id' => ['required', 'string'],
+            'mcc' => ['required', 'string']
         ];
     }
 }

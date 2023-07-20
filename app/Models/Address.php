@@ -18,8 +18,11 @@ class Address extends Model
     protected $fillable = [
         'company_id',
         'country',
+        'country_code',
         'state',
         'city',
+        'continent',
+        'region',
     ];
 
     public function company(): BelongsTo

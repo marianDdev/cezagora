@@ -6,7 +6,9 @@
                 <p class="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">Explore the whole collection of open-source web components and elements built with the utility classes from Tailwind</p>
             </div>
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
-                @include('cards.stripe_dashboard', ['imagePath' => 'https://picsum.photos/id/431/200',])
+                @if(!is_null($account))
+                    @include('cards.stripe_dashboard', ['imagePath' => 'https://picsum.photos/id/431/200',])
+                @endif
                 @include('cards.company',
                     [
                         'company' => $company,

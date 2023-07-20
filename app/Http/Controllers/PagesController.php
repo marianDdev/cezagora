@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\CompanyCategory;
 use App\Models\ProductsCategory;
 use App\Models\User;
+use App\Services\Stripe\Account\StripeAccountServiceInterface;
+use App\Traits\AuthUser;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
+    use AuthUser;
+
     public function home(): View
     {
         return view('pages.home', ['categories' => ProductsCategory::all()]);
@@ -40,7 +44,7 @@ class PagesController extends Controller
         return view('pages.services');
     }
 
-    public function dashboard(): View
+    public function dashboard(StripeAccountServiceInterface $stripeAccountService): View
     {
         /** @var User $user */
         $user = Auth::user();
@@ -59,6 +63,7 @@ class PagesController extends Controller
         ];
 
         return view('dashboard', [
+            'account' => $this->authUser()->stripe_account_id ? $stripeAccountService->retrieve($this->authUser()->stripe_account_id) : null,
             'user'    => $user,
             'company' => $company ?? null,
             'text'    => $company && $company->companyCategory
