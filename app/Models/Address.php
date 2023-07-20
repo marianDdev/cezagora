@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $city
  * @property string $country
  * @property string $state
+ * @property string $country_code
  */
 class Address extends Model
 {

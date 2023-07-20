@@ -17,8 +17,12 @@
                 <x-input-error :messages="$errors->get('phone')" class="mt-2" />
             </div>
             <div class="mb-6">
-                <x-text-input id="mcc" type="text" name="mcc" :value="old('mcc')" autofocus autocomplete="mcc" placeholder="Your Company's merchant category code" />
-                <x-input-error :messages="$errors->get('mcc')" class="mt-2" />
+                <select id="mcc" name="mcc" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option selected>Select your company's merchant category code</option>
+                    @foreach($mccs as $mcc)
+                        <option value="{{ $mcc->code }}">{{ $mcc->code }} - {{ $mcc->description }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-6">
                 <x-text-input id="product_description" type="text" name="product_description" :value="old('product_description')" autofocus autocomplete="mcc" placeholder="Short description of your products or services" />

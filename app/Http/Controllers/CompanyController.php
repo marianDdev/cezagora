@@ -7,9 +7,9 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Models\Company;
 use App\Models\CompanyCategory;
 use App\Models\CompanyIngredient;
+use App\Models\MerchantCategoryCode;
 use App\Services\Address\AddressServiceInterface;
 use App\Services\Company\CompanyServiceInterface;
-use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Services\User\UserServiceInterface;
 use App\Traits\AuthUser;
 use Illuminate\Contracts\View\View;
@@ -54,7 +54,8 @@ class CompanyController extends Controller
         return view(
             'companies.forms.create',
             [
-                'categories' => CompanyCategory::all()
+                'categories' => CompanyCategory::all(),
+                'mccs' => MerchantCategoryCode::all()
             ]
         );
     }
@@ -73,7 +74,7 @@ class CompanyController extends Controller
 
         event(new CompanyCreated($company));
 
-        return redirect('/dashboard');
+        return redirect('/onboarding');
     }
 
     public function edit(): View
