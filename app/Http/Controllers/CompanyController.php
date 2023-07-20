@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CompanyCreated;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Models\Company;
 use App\Models\CompanyCategory;
 use App\Models\CompanyIngredient;
+use App\Models\MerchantCategoryCode;
 use App\Services\Address\AddressServiceInterface;
 use App\Services\Company\CompanyServiceInterface;
 use App\Services\User\UserServiceInterface;
@@ -52,7 +54,8 @@ class CompanyController extends Controller
         return view(
             'companies.forms.create',
             [
-                'categories' => CompanyCategory::all()
+                'categories' => CompanyCategory::all(),
+                'mccs' => MerchantCategoryCode::all()
             ]
         );
     }
@@ -61,7 +64,7 @@ class CompanyController extends Controller
         StoreCompanyRequest     $request,
         CompanyServiceInterface $companyService,
         AddressServiceInterface $addressService,
-        UserServiceInterface    $userService
+        UserServiceInterface    $userService,
     ): RedirectResponse {
         $validated = $request->validated();
         $company   = $companyService->create($validated);
@@ -69,11 +72,9 @@ class CompanyController extends Controller
         $userService->updateCompany($company->id);
         $company->update(['has_details_completed' => true]);
 
+        event(new CompanyCreated($company));
 
-        //todo event CompanyCreated, add stripe_customer_id to User, create stripe customer after company created and updated User stripe_cutomer_id with teh id of newly customer created
-        // we need cutomer created for customer billing portal
-
-        return redirect('/dashboard');
+        return redirect('/onboarding');
     }
 
     public function edit(): View

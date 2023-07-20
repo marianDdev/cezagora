@@ -71,8 +71,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/my-ingredients', [IngredientController::class, 'listMyIngredients'])
          ->middleware(
              [
+                 RedirectIfUserHasNotAddedCompanyDetails::class,
                  RedirectIfUserHasNotEnabledStripe::class,
-                 RedirectIfUserHasNotAddedCompanyDetails::class
              ]
          )
          ->name('my-ingredients');
@@ -85,20 +85,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [OrderController::class, 'index'])->name('orders');
         Route::get('/{id}', [OrderController::class, 'show'])->name('order.show');
         Route::get('/create', [OrderController::class, 'create'])
-            ->middleware(
-                [
-                    RedirectIfUserHasNotEnabledStripe::class,
-                    RedirectIfUserHasNotAddedCompanyDetails::class
-                ]
-            )
+             ->middleware(
+                 [
+                     RedirectIfUserHasNotEnabledStripe::class,
+                     RedirectIfUserHasNotAddedCompanyDetails::class,
+                 ]
+             )
              ->name('order.create');
         Route::post('/', [OrderController::class, 'store'])
-            ->middleware(
-                [
-                    RedirectIfUserHasNotEnabledStripe::class,
-                    RedirectIfUserHasNotAddedCompanyDetails::class
-                ]
-            )
+             ->middleware(
+                 [
+                     RedirectIfUserHasNotEnabledStripe::class,
+                     RedirectIfUserHasNotAddedCompanyDetails::class,
+                 ]
+             )
              ->name('order.store');
         Route::get('/{id}/edit', [OrderController::class, 'edit'])->name('order.edit');
         Route::put('/{id}', [OrderController::class, 'update'])->name('order.update');
@@ -114,7 +114,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
              ->middleware(
                  [
                      RedirectIfUserHasNotEnabledStripe::class,
-                     RedirectIfUserHasNotAddedCompanyDetails::class
+                     RedirectIfUserHasNotAddedCompanyDetails::class,
                  ]
              )
              ->name('order-item.store');

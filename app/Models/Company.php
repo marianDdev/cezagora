@@ -26,6 +26,12 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property Collection      $sales
  * @property string          $email
  * @property User            $user
+ * @property string          $mcc
+ * @property string          $product_description
+ * @property string          $phone
+ * @property string          $website
+ * @property string           $tax_id
+ * @property string           $vat_id
  */
 class Company extends Model implements HasMedia
 {
@@ -38,6 +44,11 @@ class Company extends Model implements HasMedia
         'phone',
         'has_details_completed',
         'slug',
+        'product_description',
+        'website',
+        'tax_id',
+        'vat_id',
+        'mcc',
     ];
 
     public function user(): HasOne

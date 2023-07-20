@@ -49,7 +49,7 @@ class StripeOnboardingController extends Controller
             $user->stripe_account_id,
             [],
             [
-                'api_key' => config('stripe.secret')
+                'api_key' => config('stripe.secret'),
             ]
         );
 

@@ -20,7 +20,7 @@ class CountryDropdown extends Component
 
     public function mount($selectedCity = null)
     {
-        $this->countries    = Country::all();
+        $this->countries    = Country::where('region', 'Europe')->get();
         $this->states       = collect();
         $this->cities       = collect();
         $this->selectedCity = $selectedCity;

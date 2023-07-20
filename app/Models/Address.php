@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $city
  * @property string $country
  * @property string $state
+ * @property string $country_code
  */
 class Address extends Model
 {
@@ -18,8 +19,11 @@ class Address extends Model
     protected $fillable = [
         'company_id',
         'country',
+        'country_code',
         'state',
         'city',
+        'continent',
+        'region',
     ];
 
     public function company(): BelongsTo

@@ -181,6 +181,7 @@ return [
         App\Providers\CustomerServiceProvider::class,
         App\Providers\NotificationServiceProvider::class,
         App\Providers\BillingPortalServiceProvider::class,
+        App\Providers\StripeAccountServiceProvider::class,
     ])->toArray(),
 
     /*

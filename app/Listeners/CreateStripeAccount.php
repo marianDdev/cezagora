@@ -2,40 +2,30 @@
 
 namespace App\Listeners;
 
-use Stripe\Exception\ApiErrorException;
-use Stripe\StripeClient;
+use App\Models\Company;
+use App\Services\Stripe\Account\StripeAccountServiceInterface;
 
 class CreateStripeAccount
 {
-    private StripeClient $stripeClient;
+    private StripeAccountServiceInterface $stripeAccountService;
 
     /**
      * Create the event listener.
      */
-    public function __construct(StripeClient $stripeClient)
+    public function __construct(StripeAccountServiceInterface $stripeAccountService)
     {
-        $this->stripeClient = $stripeClient;
+        $this->stripeAccountService = $stripeAccountService;
     }
 
-    /**
-     * Handle the event.
-     *
-     * @throws ApiErrorException
-     */
     public function handle(object $event): void
     {
-        $response = $this->stripeClient->accounts->create(
+        /** @var Company $company */
+        $company = $event->company;
+        $account = $this->stripeAccountService->create($company);
+        $company->user->update(
             [
-                'type' => 'standard',
-            ],
-            [
-                'api_key' => config('stripe.secret'),
-            ]
-        );
-
-        $event->user->update(
-            [
-                'stripe_account_id' => $response->id,
+                'stripe_account_id' => $account->id,
+                //'stripe_account_enabled' => true,
             ]
         );
     }
