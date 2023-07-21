@@ -1,23 +1,31 @@
 <x-app-layout>
-    <h1>After you submit the requested info you will be redirected to stripe for the payment account onboarding</h1>
+    <h1 class="text-center font-bold 2xl mb-10">After you submit the requested info you will be redirected to <a href="https://stripe.com/" class="text-indigo-500">Stripe</a> onboarding page</h1>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg flex justify-center items-center">
         <form method="POST" action="{{ route('companies.store') }}" class="w-4/5 ">
             @csrf
-            <livewire:other-company-category />
+            {{--            <livewire:other-company-category />--}}
             <div class="mb-6">
-                <x-text-input id="email" type="email" name="email" :value="old('email')" autofocus autocomplete="email" placeholder="office@yourcompany.com" />
+                @include('companies.forms.business_activities_checkboxes')
+                <x-input-error :messages="$errors->get('company_categories')" class="mt-2" />
+            </div>
+            <div class="mb-6">
+                <x-text-input id="email" type="email" name="email" :value="old('email')" autofocus autocomplete="email"
+                              placeholder="office@yourcompany.com" />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
             <div class="mb-6">
-                <x-text-input id="name" type="text" name="name" :value="old('name')" autofocus autocomplete="name" placeholder="Your Company's name" />
+                <x-text-input id="name" type="text" name="name" :value="old('name')" autofocus autocomplete="name"
+                              placeholder="Your Company's name" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
             <div class="mb-6">
-                <x-text-input id="phone" type="text" name="phone" :value="old('phone')" autofocus autocomplete="phone"  placeholder="+40700000000" />
+                <x-text-input id="phone" type="text" name="phone" :value="old('phone')" autofocus autocomplete="phone"
+                              placeholder="+40700000000" />
                 <x-input-error :messages="$errors->get('phone')" class="mt-2" />
             </div>
             <div class="mb-6">
-                <select id="mcc" name="mcc" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select id="mcc" name="mcc"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected>Select your company's merchant category code</option>
                     @foreach($mccs as $mcc)
                         <option value="{{ $mcc->code }}">{{ $mcc->code }} - {{ $mcc->description }}</option>
@@ -25,19 +33,24 @@
                 </select>
             </div>
             <div class="mb-6">
-                <x-text-input id="product_description" type="text" name="product_description" :value="old('product_description')" autofocus autocomplete="mcc" placeholder="Short description of your products or services" />
+                <x-text-input id="product_description" type="text" name="product_description"
+                              :value="old('product_description')" autofocus autocomplete="mcc"
+                              placeholder="Short description of your products or services" />
                 <x-input-error :messages="$errors->get('product_description')" class="mt-2" />
             </div>
             <div class="mb-6">
-                <x-text-input id="website" type="text" name="website" :value="old('website')" autofocus autocomplete="website" placeholder="Website or social media page URL" />
+                <x-text-input id="website" type="text" name="website" :value="old('website')" autofocus
+                              autocomplete="website" placeholder="Website or social media page URL" />
                 <x-input-error :messages="$errors->get('website')" class="mt-2" />
             </div>
             <div class="mb-6">
-                <x-text-input id="tax_id" type="text" name="tax_id" :value="old('tax_id')" autofocus autocomplete="tax_id" placeholder="Tax ID" />
+                <x-text-input id="tax_id" type="text" name="tax_id" :value="old('tax_id')" autofocus
+                              autocomplete="tax_id" placeholder="Tax ID" />
                 <x-input-error :messages="$errors->get('tax_id')" class="mt-2" />
             </div>
             <div class="mb-6">
-                <x-text-input id="vat_id" type="text" name="vat_id" :value="old('vat_id')" autofocus autocomplete="vat_id" placeholder="VAT ID" />
+                <x-text-input id="vat_id" type="text" name="vat_id" :value="old('vat_id')" autofocus
+                              autocomplete="vat_id" placeholder="VAT ID" />
                 <x-input-error :messages="$errors->get('vat_id')" class="mt-2" />
             </div>
             <livewire:country-dropdown />
