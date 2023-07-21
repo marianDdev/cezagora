@@ -61,9 +61,9 @@ class Company extends Model implements HasMedia
         return array_key_exists($key, $this->getAttributes());
     }
 
-    public function companyCategory(): BelongsTo
+    public function categories(): BelongsToMany
     {
-        return $this->belongsTo(CompanyCategory::class);
+        return $this->belongsToMany(CompanyCategory::class);
     }
 
     public function addresses(): HasMany
