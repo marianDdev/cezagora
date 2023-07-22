@@ -5,7 +5,8 @@ return [
      * The webhook URLs that we'll use to send a message to Slack.
      */
     'webhook_urls' => [
-        'default' => env('SLACK_ALERT_WEBHOOK'),
+        'default' => env('SLACK_USER_REGISTERED_ALERT_WEBHOOK'),
+        'payment-errors' => env('SLACK_PAYEMENT_ERRORS_ALERT_WEBHOOK')
     ],
 
     /*

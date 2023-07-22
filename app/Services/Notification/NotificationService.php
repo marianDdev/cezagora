@@ -6,7 +6,6 @@ use App\Models\Order;
 use App\Models\User;
 use App\Notifications\CustomerCharged;
 use App\Notifications\OrderProcessed;
-use Illuminate\Notifications\Slack\BlockKit\Blocks\SectionBlock;
 use Spatie\SlackAlerts\SlackAlert;
 
 class NotificationService implements NotificationServiceInterface
@@ -72,6 +71,35 @@ class NotificationService implements NotificationServiceInterface
                     "text" => [
                         "type" => "mrkdwn",
                         "text" => sprintf('Email: %s', $user->email),
+                    ],
+                ],
+            ]
+        );
+    }
+
+    public function notifyUsAboutPaymentErrors(Order $order, string $error): void
+    {
+        $this->slackAlert->to('payment-errors')->blocks(
+            [
+                [
+                    "type" => "section",
+                    "text" => [
+                        "type" => "mrkdwn",
+                        "text" => sprintf("Unable to create payment intent for order #%s", $order->id),
+                    ],
+                ],
+                [
+                    "type" => "section",
+                    "text" => [
+                        "type" => "mrkdwn",
+                        "text" => sprintf('Buyer: %s', $order->customer->name),
+                    ],
+                ],
+                [
+                    "type" => "section",
+                    "text" => [
+                        "type" => "mrkdwn",
+                        "text" => sprintf('Error message: %s', $error),
                     ],
                 ],
             ]

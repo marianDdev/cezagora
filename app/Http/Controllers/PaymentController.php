@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Notifications\CustomerCharged;
+use App\Services\Notification\NotificationServiceInterface;
 use App\Services\Order\OrdersServiceInterface;
 use App\Services\Stripe\Payment\PaymentServiceInterface;
 use Exception;
@@ -14,6 +15,7 @@ class PaymentController extends Controller
     public function chargeCustomer(
         PaymentServiceInterface  $paymentService,
         OrdersServiceInterface   $ordersService,
+        NotificationServiceInterface $notificationService
     ): View
     {
         $order = $ordersService->getPendingOrder();
@@ -21,6 +23,9 @@ class PaymentController extends Controller
         try {
             $paymentService->createPaymentIntent($order);
         } catch (Exception $e) {
+            $error = $e->getMessage();
+            $notificationService->notifyUsAboutPaymentErrors($order, $error);
+
             return view(
                 'payments.error',
                 [

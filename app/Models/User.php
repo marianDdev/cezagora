@@ -69,11 +69,6 @@ class User extends Authenticatable implements HasMedia
         'completed_stripe_onboarding' => 'bool',
     ];
 
-    public function routeNotificationForSlack(): string
-    {
-        return 'cez-users-registered';
-    }
-
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
