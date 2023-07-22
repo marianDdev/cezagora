@@ -62,7 +62,5 @@ class Order extends Model
             'Manual' =>  'Verification Required — Order on hold while some aspect, such as tax-exempt documentation, is manually confirmed. Orders with this status must be updated manually. Capturing funds or other order actions will not automatically update the status of an order marked Manual Verification Required.',
             'Partially' =>  'Refunded — Seller has partially refunded the order.',
         ];
-
-
     }
 }
