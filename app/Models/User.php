@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -16,17 +17,18 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Translatable\HasTranslations;
 
 /**
- * @property boolean    $is_admin
- * @property int        $company_id
- * @property string     $first_name
- * @property string     $last_name
- * @property Company    $companies
- * @property boolean    $stripe_account_enabled
- * @property int        $id
- * @property string        $stripe_account_id
- * @property string        $stripe_customer_id
- * @property string     $email
+ * @property boolean      $is_admin
+ * @property int          $company_id
+ * @property string       $first_name
+ * @property string       $last_name
+ * @property Company      $companies
+ * @property boolean      $stripe_account_enabled
+ * @property int          $id
+ * @property string       $stripe_account_id
+ * @property string       $stripe_customer_id
+ * @property string       $email
  * @property Company|null $company
+ * @property string        $fullName
  */
 class User extends Authenticatable implements HasMedia
 {
@@ -62,12 +64,15 @@ class User extends Authenticatable implements HasMedia
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-        'completed_stripe_onboarding' => 'bool'
+        'email_verified_at'           => 'datetime',
+        'password'                    => 'hashed',
+        'completed_stripe_onboarding' => 'bool',
     ];
 
-    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
+    public function routeNotificationForSlack(): string
+    {
+        return 'cez-users-registered';
+    }
 
     public function company(): BelongsTo
     {
@@ -87,6 +92,18 @@ class User extends Authenticatable implements HasMedia
     public function isAdmin(): bool
     {
         return $this->is_admin == true;
+    }
+
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => sprintf(
+                '%s %s',
+                $this->attributes['first_name'],
+                $this->attributes['last_name']
+            ),
+            set: fn(int $value) => $value
+        );
     }
 
     public function getFullName(): string

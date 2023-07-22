@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\Notification\NotificationService;
 use Illuminate\Support\ServiceProvider;
+use Spatie\SlackAlerts\SlackAlert;
 
 class NotificationServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,7 @@ class NotificationServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind('App\Services\Notification\NotificationServiceInterface', function () {
-            return new NotificationService();
+            return new NotificationService(new SlackAlert());
         });
     }
 

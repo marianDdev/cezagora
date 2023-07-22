@@ -37,6 +37,14 @@ class OrderItem extends Model
         'name',
     ];
 
+    protected function total(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->attributes['quantity'] * $this->attributes['price'],
+            set: fn(int $value) => $value
+        );
+    }
+
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
@@ -60,13 +68,5 @@ class OrderItem extends Model
     public function product(): HasOne
     {
         return $this->hasOne(Product::class, 'item_id', 'id');
-    }
-
-    protected function total(): Attribute
-    {
-        return Attribute::make(
-          get: fn() => $this->attributes['quantity'] * $this->attributes['price'],
-            set: fn(int $value) => $value
-        );
     }
 }

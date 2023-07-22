@@ -3,6 +3,7 @@
 namespace App\Services\Notification;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 interface NotificationServiceInterface
@@ -10,4 +11,6 @@ interface NotificationServiceInterface
     public function notifySellersAboutMoneyTransfers(Order $order): void;
 
     public function notifyCustomerAboutPaymentCharge(Order $order): void;
+
+    public function notifyUsAboutUserRegistered(User $user): void;
 }
