@@ -8,6 +8,8 @@ use Illuminate\Support\Collection;
 
 interface NotificationServiceInterface
 {
+    public function sendWelcomeEmail(User $user): void;
+
     public function notifySellersAboutMoneyTransfers(Order $order): void;
 
     public function notifyCustomerAboutPaymentCharge(Order $order): void;

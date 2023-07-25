@@ -16,6 +16,6 @@ class IngredientsSeeder extends Seeder
 
     public function run(): void
     {
-        $this->fileService->storeContent('ingredient', public_path('ingredients_2.csv'));
+        $this->fileService->storeIngredients('ingredient', public_path('ingredients_2.csv'));
     }
 }

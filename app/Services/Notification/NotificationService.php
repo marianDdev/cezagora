@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\User;
 use App\Notifications\CustomerCharged;
 use App\Notifications\OrderProcessed;
+use App\Notifications\WelcomeEmail;
 use Spatie\SlackAlerts\SlackAlert;
 
 class NotificationService implements NotificationServiceInterface
@@ -15,6 +16,11 @@ class NotificationService implements NotificationServiceInterface
     public function __construct(SlackAlert $slackAlert)
     {
         $this->slackAlert = $slackAlert;
+    }
+
+    public function sendWelcomeEmail(User $user): void
+    {
+        $user->notify(new WelcomeEmail($user));
     }
 
     public function notifySellersAboutMoneyTransfers(Order $order): void

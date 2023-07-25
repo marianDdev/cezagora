@@ -11,7 +11,6 @@ use App\Services\Notification\NotificationServiceInterface;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
@@ -24,23 +23,18 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws ValidationException
-     */
     public function store(
         RegisterRequest $request,
         NotificationServiceInterface $notificationService
     ): RedirectResponse {
         $validated = $request->validated();
-
         $user = User::create($validated);
 
         event(new Registered($user));
 
         Auth::login($user);
 
+        $notificationService->sendWelcomeEmail($user);
         $notificationService->notifyUsAboutUserRegistered($user);
 
         return redirect(RouteServiceProvider::HOME);

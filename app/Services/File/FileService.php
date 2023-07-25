@@ -2,44 +2,35 @@
 
 namespace App\Services\File;
 
+use App\Models\Ingredient;
 use App\Services\Ingredient\IngredientServiceInterface;
 use App\Services\Product\ProductServiceInterface;
-use Illuminate\Support\Facades\Storage;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class FileService implements FileServiceInterface
 {
-    private  const INGREDIENT = 'ingredient';
-    private  const PRODUCT = 'product';
+    private const INGREDIENT = 'ingredient';
+    private const PRODUCT    = 'product';
 
     private IngredientServiceInterface $ingredientService;
     private ProductServiceInterface    $productService;
 
     public function __construct(
         IngredientServiceInterface $ingredientService,
-        ProductServiceInterface $productService
-    ) {
+        ProductServiceInterface    $productService
+    )
+    {
         $this->ingredientService = $ingredientService;
-        $this->productService = $productService;
+        $this->productService    = $productService;
     }
 
-    public function storeContent(string $modelType, string $filePath): void
+    public function storeIngredients(string $modelType, string $filePath): void
     {
-        $rows = SimpleExcelReader::create($filePath)->getRows();
+        //call ->chunk on rows because it is a colection and then insert each chunk
+        $chunks = SimpleExcelReader::create($filePath)->getRows()->chunk(1000);
 
-        $rows->each(function (array $rowProperties) use ($modelType, $filePath) {
-            switch ($modelType) {
-                case self::INGREDIENT:
-                    $this->ingredientService->create($rowProperties);
-
-                    if (Storage::exists($filePath)) {
-                        Storage::delete($filePath);
-                    }
-                    break;
-                case self::PRODUCT:
-                    $this->productService->create($rowProperties);
-
-            }
-        });
+        foreach ($chunks as $chunk) {
+            Ingredient::insert($chunk->toArray());
+        }
     }
 }

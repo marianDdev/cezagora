@@ -89,7 +89,7 @@ class IngredientController extends Controller
 
         $filename = storage_path('app/public/' . $file->id . '/' . $file->file_name);
 
-        $fileService->storeContent('ingredient', $filename);
+        $fileService->storeIngredients('ingredient', $filename);
 
         return redirect('/ingredients');
     }
