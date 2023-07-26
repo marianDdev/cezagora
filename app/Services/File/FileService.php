@@ -2,13 +2,18 @@
 
 namespace App\Services\File;
 
-use App\Models\Ingredient;
+use App\Jobs\ProcessIngredientsFile;
 use App\Services\Ingredient\IngredientServiceInterface;
 use App\Services\Product\ProductServiceInterface;
+use App\Traits\AuthUser;
+use Illuminate\Support\Facades\Bus;
 use Spatie\SimpleExcel\SimpleExcelReader;
+use Throwable;
 
 class FileService implements FileServiceInterface
 {
+    use AuthUser;
+
     private const INGREDIENT = 'ingredient';
     private const PRODUCT    = 'product';
 
@@ -24,13 +29,19 @@ class FileService implements FileServiceInterface
         $this->productService    = $productService;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function storeIngredients(string $modelType, string $filePath): void
     {
-        //call ->chunk on rows because it is a colection and then insert each chunk
-        $chunks = SimpleExcelReader::create($filePath)->getRows()->chunk(1000);
+        $company = $this->authUserCompany();
+        $batches = [];
+        $chunks  = SimpleExcelReader::create($filePath)->getRows()->chunk(2);
 
         foreach ($chunks as $chunk) {
-            Ingredient::insert($chunk->toArray());
+            $batches[] = new ProcessIngredientsFile($company, $this->ingredientService, $chunk->toArray());
         }
+
+        Bus::batch($batches)->dispatch();
     }
 }

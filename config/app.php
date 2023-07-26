@@ -156,33 +156,34 @@ return [
     */
 
     'providers' => ServiceProvider::defaultProviders()->merge([
-        /*
-         * Package Service Providers...
-         */
+                                                                  /*
+                                                                   * Package Service Providers...
+                                                                   */
 
-        /*
-         * Application Service Providers...
-         */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        App\Providers\FileServiceProvider::class,
-        App\Providers\AddressServiceProvider::class,
-        App\Providers\UserServiceProvider::class,
-        App\Providers\CompanyServiceProvider::class,
-        App\Providers\IngredientServiceProvider::class,
-        App\Providers\ProductServiceProvider::class,
-        App\Providers\StripeServiceProvider::class,
-        App\Providers\CheckoutServiceProvider::class,
-        App\Providers\OrderServiceProvider::class,
-        App\Providers\PaymentServiceProvider::class,
-        App\Providers\CustomerServiceProvider::class,
-        App\Providers\NotificationServiceProvider::class,
-        App\Providers\BillingPortalServiceProvider::class,
-        App\Providers\StripeAccountServiceProvider::class,
-    ])->toArray(),
+                                                                  /*
+                                                                   * Application Service Providers...
+                                                                   */
+                                                                  App\Providers\AppServiceProvider::class,
+                                                                  App\Providers\AuthServiceProvider::class,
+                                                                  // App\Providers\BroadcastServiceProvider::class,
+                                                                  App\Providers\EventServiceProvider::class,
+                                                                  App\Providers\RouteServiceProvider::class,
+                                                                  App\Providers\FileServiceProvider::class,
+                                                                  App\Providers\AddressServiceProvider::class,
+                                                                  App\Providers\UserServiceProvider::class,
+                                                                  App\Providers\CompanyServiceProvider::class,
+                                                                  App\Providers\IngredientServiceProvider::class,
+                                                                  App\Providers\ProductServiceProvider::class,
+                                                                  App\Providers\StripeServiceProvider::class,
+                                                                  App\Providers\CheckoutServiceProvider::class,
+                                                                  App\Providers\OrderServiceProvider::class,
+                                                                  App\Providers\PaymentServiceProvider::class,
+                                                                  App\Providers\CustomerServiceProvider::class,
+                                                                  App\Providers\NotificationServiceProvider::class,
+                                                                  App\Providers\BillingPortalServiceProvider::class,
+                                                                  App\Providers\StripeAccountServiceProvider::class,
+                                                                  Maatwebsite\Excel\ExcelServiceProvider::class,
+                                                              ])->toArray(),
 
     /*
     |--------------------------------------------------------------------------
@@ -195,8 +196,9 @@ return [
     |
     */
 
-    'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
-    ])->toArray(),
-
+    'aliases' => Facade::defaultAliases()->merge(
+        [
+            'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        ]
+    )->toArray(),
 ];
