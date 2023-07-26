@@ -2,7 +2,9 @@
 
 namespace App\Services\Ingredient;
 
+use App\Models\Company;
+
 interface IngredientServiceInterface
 {
-    public function create(array $data): void;
+    public function bulkInsert(Company $company, array $data): void;
 }

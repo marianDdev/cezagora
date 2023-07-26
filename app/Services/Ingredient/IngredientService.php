@@ -2,38 +2,90 @@
 
 namespace App\Services\Ingredient;
 
+use App\Models\Company;
 use App\Models\CompanyIngredient;
 use App\Models\Ingredient;
 use App\Traits\AuthUser;
+use Exception;
 use Illuminate\Support\Str;
 
 class IngredientService implements IngredientServiceInterface
 {
     use AuthUser;
 
-    public function create(array $data): void
+    private const REQUIRED_KEYS = [
+        'name',
+        'description',
+        'function',
+        'price',
+        'quantity',
+    ];
+
+    /**
+     * @throws Exception
+     */
+    public function bulkInsert(Company $company, array $data): void
     {
-        $company = $this->authUserCompany();
-        $slug = Str::slug(substr($data['name'], 0, 20));
+        $ingredients = [];
 
-        $ingredient = Ingredient::create(
-            [
-                'name' => $data['name'],
-                'description' => $data['description'],
-                'function' => $data['function'],
-            ]
-        );
+        foreach ($data as $datum) {
+            $this->validateKeysExist($datum);
+            $this->validatValues($datum);
+            $ingredient = Ingredient::create(
+                [
+                    'name'        => $datum['name'],
+                    'description' => $datum['description'],
+                    'function'    => $datum['function'],
+                ]
+            );
+            $slug       = Str::slug(substr($ingredient->name, 0, 20));
+            $ingredient->update(['slug' => sprintf('%s-%d', $slug, $ingredient->id)]);
 
-        $ingredient->update(['slug' => sprintf('%s-%d', $slug, $ingredient->id)]);
-
-        //todo replace dummy values from companies id, price and quantity
-        CompanyIngredient::create(
-            [
-                'company_id' => $company->id ?? rand(1,10),
+            $ingredients[] = [
                 'ingredient_id' => $ingredient->id,
-                'price' => $data['price'] ?? rand(1, 10),
-                'quantity' => $data['quantity'] ?? rand(1, 10),
-            ]
-        );
+                'price'         => $datum['price'],
+                'quantity'      => $datum['quantity'],
+                'company_id'    => $company->id,
+            ];
+        }
+
+        CompanyIngredient::insert($ingredients);
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function validateKeysExist(array $ingredient): void
+    {
+        if (!$this->hasNecessaryDetails($ingredient)) {
+            throw new Exception(
+                sprintf(
+                    'Please make sure that your list of ingredients contain all the necessary colums: %s',
+                    implode(',', self::REQUIRED_KEYS)
+                )
+            );
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function validatValues(array $ingredient): void
+    {
+        foreach ($ingredient as $key => $value) {
+            if (is_null($value)) {
+                throw new Exception(
+                    sprintf(
+                        'Please make sure that the value for %s is not empty',
+                        $key
+                    )
+                );
+            }
+        }
+    }
+
+    private function hasNecessaryDetails(array $ingredient): bool
+    {
+        return count(array_intersect_key(array_flip(self::REQUIRED_KEYS), $ingredient)) === count(self::REQUIRED_KEYS);
     }
 }

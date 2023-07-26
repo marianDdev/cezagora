@@ -29,6 +29,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string       $email
  * @property Company|null $company
  * @property string        $fullName
+ * @method static create(array $validated)
  */
 class User extends Authenticatable implements HasMedia
 {

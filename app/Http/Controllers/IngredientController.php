@@ -5,12 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\CompanyIngredient;
 use App\Models\Ingredient;
 use App\Services\File\FileServiceInterface;
+use Exception;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class IngredientController extends Controller
 {
@@ -76,21 +73,21 @@ class IngredientController extends Controller
         //todo create RedirectIfUserHasNotAddedCompanyDetails
     }
 
-    /**
-     * @throws FileIsTooBig
-     * @throws FileDoesNotExist
-     */
-    public function upload(FileServiceInterface $fileService): Application|Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application
+    public function upload(FileServiceInterface $fileService):RedirectResponse|View
     {
-        $user = $this->authUser();
+        try {
+            $user = $this->authUser();
 
-        $file = $user->addMediaFromRequest('import_file')
-                     ->toMediaCollection('imports');
+            $file = $user->addMediaFromRequest('import_file')
+                         ->toMediaCollection('imports');
 
-        $filename = storage_path('app/public/' . $file->id . '/' . $file->file_name);
+            $filename = storage_path('app/public/' . $file->id . '/' . $file->file_name);
 
-        $fileService->storeContent('ingredient', $filename);
+            $fileService->storeIngredients('ingredient', $filename);
 
-        return redirect('/ingredients');
+            return redirect('/ingredients');
+        } catch (Exception $e) {
+            return view('ingredients.error', ['error' => $e->getMessage()]);
+        }
     }
 }
