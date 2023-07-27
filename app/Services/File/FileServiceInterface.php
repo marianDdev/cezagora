@@ -4,5 +4,5 @@ namespace App\Services\File;
 
 interface FileServiceInterface
 {
-    public function storeIngredients(string $modelType, string $filePath): void;
+    public function storeIngredients(string $filePath): void;
 }

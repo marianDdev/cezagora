@@ -17,6 +17,8 @@ class FileService implements FileServiceInterface
     private const INGREDIENT = 'ingredient';
     private const PRODUCT    = 'product';
 
+    private const CHUNK_LIMIT = 100;
+
     private IngredientServiceInterface $ingredientService;
     private ProductServiceInterface    $productService;
 
@@ -32,11 +34,11 @@ class FileService implements FileServiceInterface
     /**
      * @throws Throwable
      */
-    public function storeIngredients(string $modelType, string $filePath): void
+    public function storeIngredients(string $filePath): void
     {
         $company = $this->authUserCompany();
         $batches = [];
-        $chunks  = SimpleExcelReader::create($filePath)->getRows()->chunk(2);
+        $chunks  = SimpleExcelReader::create($filePath)->getRows()->chunk(self::CHUNK_LIMIT);
 
         foreach ($chunks as $chunk) {
             $batches[] = new ProcessIngredientsFile($company, $this->ingredientService, $chunk->toArray());
