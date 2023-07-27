@@ -34,6 +34,7 @@ class IngredientService implements IngredientServiceInterface
             $ingredient = Ingredient::create(
                 [
                     'name'        => $datum['name'],
+                    'common_name' => $datum['common_name'] ?? null,
                     'description' => $datum['description'],
                     'function'    => $datum['function'],
                 ]
