@@ -16,6 +16,8 @@ class ProcessIngredientsFile implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, Batchable;
 
+    public $tries = 3;
+
     private array             $data;
     private IngredientService $ingredientService;
     private Company           $company;

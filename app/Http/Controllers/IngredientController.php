@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\CompanyIngredient;
 use App\Models\Ingredient;
 use App\Services\File\FileServiceInterface;
+use App\Services\Ingredient\IngredientServiceInterface;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Throwable;
 
 class IngredientController extends Controller
 {
+    private const IMPORT_FILE_NAME = 'import_file';
+    private const IMPORTS          = 'imports';
+
     public function index(): View
     {
         return view(
@@ -35,7 +40,7 @@ class IngredientController extends Controller
 
     public function show(string $slug): View
     {
-        $ingredient = Ingredient::where('slug', $slug)->first();
+        $ingredient         = Ingredient::where('slug', $slug)->first();
         $companyIngredients = CompanyIngredient::where('ingredient_id', $ingredient->id)->get();
 
         if (is_null($ingredient)) {
@@ -46,9 +51,9 @@ class IngredientController extends Controller
             'ingredients.show',
             [
                 'ingredients' => $companyIngredients,
-                'name' => $ingredient->name,
+                'name'        => $ingredient->name,
                 'description' => $ingredient->description,
-                'function' => $ingredient->function,
+                'function'    => $ingredient->function,
             ]
         );
     }
@@ -68,26 +73,23 @@ class IngredientController extends Controller
         );
     }
 
-    public function store()
-    {
-        //todo create RedirectIfUserHasNotAddedCompanyDetails
-    }
-
-    public function upload(FileServiceInterface $fileService):RedirectResponse|View
+    /**
+     * @throws Throwable
+     */
+    public function insertIngredientsFromFile(
+        FileServiceInterface       $fileService,
+        IngredientServiceInterface $ingredientService
+    ): View|RedirectResponse
     {
         try {
-            $user = $this->authUser();
+            $file     = $fileService->addToMediaCollection(self::IMPORT_FILE_NAME, self::IMPORTS);
+            $fileRows = $fileService->extractRows($file);
+            $ingredientService->bulkInsert($fileRows);
 
-            $file = $user->addMediaFromRequest('import_file')
-                         ->toMediaCollection('imports');
-
-            $filename = storage_path('app/public/' . $file->id . '/' . $file->file_name);
-
-            $fileService->storeIngredients('ingredient', $filename);
-
-            return redirect('/ingredients');
+            return redirect(route('my-ingredients'));
         } catch (Exception $e) {
             return view('ingredients.error', ['error' => $e->getMessage()]);
         }
+
     }
 }

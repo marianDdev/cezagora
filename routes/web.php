@@ -17,17 +17,6 @@ use App\Http\Middleware\RedirectIfUserHasNotEnabledStripe;
 use App\Models\CompanyCategory;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('/', [PagesController::class, 'home'])->name('home');
 Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/services', [PagesController::class, 'services'])->name('services');
@@ -63,9 +52,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [IngredientController::class, 'index'])->name('ingredients');
         Route::get('/{slug}', [IngredientController::class, 'show'])->name('ingredient.show');
         Route::get('/create', [IngredientController::class, 'create'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.create');
-        Route::post('/', [IngredientController::class, 'store'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.store');
         Route::get('/{slug}/edit', [IngredientController::class, 'edit'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.edit');
-        Route::post('/upload', [IngredientController::class, 'upload'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredients.upload');
+        Route::post('/upload', [IngredientController::class, 'insertIngredientsFromFile'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredients.upload');
     });
 
     Route::get('/my-ingredients', [IngredientController::class, 'listMyIngredients'])
