@@ -3,6 +3,7 @@
 namespace App\Services\Ingredient;
 
 use App\Jobs\InsertIngredientsFromFile;
+use App\Notifications\WelcomeEmail;
 use App\Traits\AuthUser;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\LazyCollection;
@@ -21,6 +22,7 @@ class IngredientService implements IngredientServiceInterface
         $chunks  = $rows->chunk(1000);
         $batch   = Bus::batch([])
                       ->name('Insert ingredients from file')
+                      ->then(fn() => $this->authUser()->notify(new WelcomeEmail($this->authUser())))
                       ->dispatch();
 
         foreach ($chunks as $chunk) {
