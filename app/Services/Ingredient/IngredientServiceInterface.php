@@ -2,9 +2,9 @@
 
 namespace App\Services\Ingredient;
 
-use App\Models\Company;
+use Illuminate\Support\LazyCollection;
 
 interface IngredientServiceInterface
 {
-    public function bulkInsert(Company $company, array $data): void;
+    public function bulkInsert(LazyCollection $rows): void;
 }

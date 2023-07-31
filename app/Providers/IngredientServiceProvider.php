@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\Ingredient\ProductService;
+use App\Services\Ingredient\IngredientService;
 use Illuminate\Support\ServiceProvider;
 
 class IngredientServiceProvider extends ServiceProvider
@@ -13,7 +13,7 @@ class IngredientServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind('App\Services\Ingredient\IngredientServiceInterface', function () {
-            return new ProductService();
+            return new IngredientService();
         });
     }
 

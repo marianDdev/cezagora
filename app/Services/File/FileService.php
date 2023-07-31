@@ -2,13 +2,14 @@
 
 namespace App\Services\File;
 
-use App\Jobs\ProcessIngredientsFile;
 use App\Services\Ingredient\IngredientServiceInterface;
 use App\Services\Product\ProductServiceInterface;
 use App\Traits\AuthUser;
-use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\LazyCollection;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\SimpleExcel\SimpleExcelReader;
-use Throwable;
 
 class FileService implements FileServiceInterface
 {
@@ -17,7 +18,7 @@ class FileService implements FileServiceInterface
     private const INGREDIENT = 'ingredient';
     private const PRODUCT    = 'product';
 
-    private const CHUNK_LIMIT = 100;
+    private const CHUNK_LIMIT = 1000;
 
     private IngredientServiceInterface $ingredientService;
     private ProductServiceInterface    $productService;
@@ -32,18 +33,21 @@ class FileService implements FileServiceInterface
     }
 
     /**
-     * @throws Throwable
+     * @throws FileIsTooBig
+     * @throws FileDoesNotExist
      */
-    public function storeIngredients(string $filePath): void
+    public function addToMediaCollection(string $fileName, string $collectionName): Media
     {
-        $company = $this->authUserCompany();
-        $batches = [];
-        $chunks  = SimpleExcelReader::create($filePath)->getRows()->chunk(self::CHUNK_LIMIT);
+        $user = $this->authUser();
 
-        foreach ($chunks as $chunk) {
-            $batches[] = new ProcessIngredientsFile($company, $this->ingredientService, $chunk->toArray());
-        }
+        return $user->addMediaFromRequest($fileName)
+                    ->toMediaCollection($collectionName);
+    }
 
-        Bus::batch($batches)->dispatch();
+    public function extractRows(Media $file): LazyCollection
+    {
+        $filePath = storage_path('app/public/' . $file->id . '/' . $file->file_name);
+
+        return SimpleExcelReader::create($filePath)->getRows();
     }
 }
