@@ -86,7 +86,9 @@ class IngredientController extends Controller
             $fileRows = $fileService->extractRows($file);
             $ingredientService->bulkInsert($fileRows);
 
-            return redirect(route('my-ingredients'));
+            //return redirect(route('my-ingredients'));
+
+            return view('ingredients.check-upload-status');
         } catch (Exception $e) {
             return view('ingredients.error', ['error' => $e->getMessage()]);
         }
