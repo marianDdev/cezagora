@@ -26,9 +26,6 @@ class EventServiceProvider extends ServiceProvider
             CreateStripeAccount::class,
             CreateStripeCustomer::class,
         ],
-        IngredientsFileProcessed::class => [
-            RedirectToMyIngredients::class,
-        ],
     ];
 
     /**
