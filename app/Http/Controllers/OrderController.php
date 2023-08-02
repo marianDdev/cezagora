@@ -12,9 +12,17 @@ class OrderController extends Controller
 {
     use AuthUser;
 
-    public function index(): Collection
+    public function index(): View
     {
-        return Order::all();
+        $company = $this->authUserCompany();
+
+        return view(
+            'orders.index',
+            [
+                'orders' => $company->orders,
+                'sales' => $company->sales,
+            ]
+        );
     }
 
     public function listMyOrders(): Collection

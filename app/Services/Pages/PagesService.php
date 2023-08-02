@@ -2,7 +2,6 @@
 
 namespace App\Services\Pages;
 
-use App\Models\Company;
 use App\Models\CompanyCategory;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Traits\AuthUser;
