@@ -155,46 +155,39 @@ return [
     |
     */
 
-    'providers' => ServiceProvider::defaultProviders()->merge([
-                                                                  /*
-                                                                   * Package Service Providers...
-                                                                   */
+    'providers' => ServiceProvider::defaultProviders()
+                                  ->merge(
+                                      [
+                                          /*
+                                           * Package Service Providers...
+                                           */
 
-                                                                  /*
-                                                                   * Application Service Providers...
-                                                                   */
-                                                                  App\Providers\AppServiceProvider::class,
-                                                                  App\Providers\AuthServiceProvider::class,
-                                                                  // App\Providers\BroadcastServiceProvider::class,
-                                                                  App\Providers\EventServiceProvider::class,
-                                                                  App\Providers\RouteServiceProvider::class,
-                                                                  App\Providers\FileServiceProvider::class,
-                                                                  App\Providers\AddressServiceProvider::class,
-                                                                  App\Providers\UserServiceProvider::class,
-                                                                  App\Providers\CompanyServiceProvider::class,
-                                                                  App\Providers\IngredientServiceProvider::class,
-                                                                  App\Providers\ProductServiceProvider::class,
-                                                                  App\Providers\StripeServiceProvider::class,
-                                                                  App\Providers\CheckoutServiceProvider::class,
-                                                                  App\Providers\OrderServiceProvider::class,
-                                                                  App\Providers\PaymentServiceProvider::class,
-                                                                  App\Providers\CustomerServiceProvider::class,
-                                                                  App\Providers\NotificationServiceProvider::class,
-                                                                  App\Providers\BillingPortalServiceProvider::class,
-                                                                  App\Providers\StripeAccountServiceProvider::class,
-                                                                  Maatwebsite\Excel\ExcelServiceProvider::class,
-                                                              ])->toArray(),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Class Aliases
-    |--------------------------------------------------------------------------
-    |
-    | This array of class aliases will be registered when this application
-    | is started. However, feel free to register as many as you wish as
-    | the aliases are "lazy" loaded so they don't hinder performance.
-    |
-    */
+                                          /*
+                                           * Application Service Providers...
+                                           */
+                                          App\Providers\AppServiceProvider::class,
+                                          App\Providers\AuthServiceProvider::class,
+                                          // App\Providers\BroadcastServiceProvider::class,
+                                          App\Providers\EventServiceProvider::class,
+                                          App\Providers\RouteServiceProvider::class,
+                                          App\Providers\FileServiceProvider::class,
+                                          App\Providers\AddressServiceProvider::class,
+                                          App\Providers\UserServiceProvider::class,
+                                          App\Providers\CompanyServiceProvider::class,
+                                          App\Providers\IngredientServiceProvider::class,
+                                          App\Providers\ProductServiceProvider::class,
+                                          App\Providers\StripeServiceProvider::class,
+                                          App\Providers\CheckoutServiceProvider::class,
+                                          App\Providers\OrderServiceProvider::class,
+                                          App\Providers\PaymentServiceProvider::class,
+                                          App\Providers\CustomerServiceProvider::class,
+                                          App\Providers\NotificationServiceProvider::class,
+                                          App\Providers\BillingPortalServiceProvider::class,
+                                          App\Providers\StripeAccountServiceProvider::class,
+                                          Maatwebsite\Excel\ExcelServiceProvider::class,
+                                          App\Providers\PagesServiceProvider::class,
+                                      ]
+                                  )->toArray(),
 
     'aliases' => Facade::defaultAliases()->merge(
         [

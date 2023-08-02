@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class CompanyCategoryCompany extends Pivot
+class CompanyCompanyCategory extends Pivot
 {
     use HasFactory;
 

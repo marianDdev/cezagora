@@ -7,7 +7,7 @@
             <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">
                 My company
             </h3>
-            <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Name:</span> {{ $name }}</p>
+            <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Name:</span> {{ $title }}</p>
             <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Email:</span> {{ $email }}</p>
             <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Phone:</span> {{ $phone }}</p>
             <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">CezAgora admin:</span> {{ $admin }}</p>
