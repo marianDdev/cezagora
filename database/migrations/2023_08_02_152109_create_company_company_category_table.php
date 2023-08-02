@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('company_category_company', function (Blueprint $table) {
-            $table->foreignId('category_id');
+        Schema::create('company_company_category', function (Blueprint $table) {
+            $table->foreignId('company_category_id');
             $table->foreignId('company_id');
         });
     }
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('company_category_company');
+        Schema::dropIfExists('company_company_categories');
     }
 };
