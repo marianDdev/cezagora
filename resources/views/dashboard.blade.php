@@ -43,15 +43,22 @@
                         )
 
                 @include(
-                        'components.orders_card',
+                        'cards.orders',
                         [
                             'title' => 'Orders',
                             'imagePath' => 'https://picsum.photos/id/180/200',
                              'countOrders' => $company->orders->count(),
-                             'countSales' => $company->sales->count(),
-                             'pendingOrder' => (bool)$company->getPendingOrder()
                             ]
                         )
+
+                    @include(
+                            'cards.sales',
+                            [
+                                'title' => 'Sales',
+                                'imagePath' => 'https://picsum.photos/id/180/200',
+                                 'countSales' => $company->sales->count(),
+                                ]
+                            )
             </div>
         </div>
     </section>
