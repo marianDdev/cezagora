@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateIngredientRequest;
 use App\Models\CompanyIngredient;
 use App\Models\Ingredient;
 use App\Services\File\FileServiceInterface;
@@ -9,6 +10,7 @@ use App\Services\Ingredient\IngredientServiceInterface;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
 use Throwable;
 
 class IngredientController extends Controller
@@ -93,5 +95,22 @@ class IngredientController extends Controller
             return view('ingredients.error', ['error' => $e->getMessage()]);
         }
 
+    }
+
+    public function edit(string $slug): View
+    {
+        $ingredient = Ingredient::where('slug', $slug)->first();
+
+        return view('ingredients.edit', ['ingredient' => $ingredient]);
+    }
+
+    public function update(UpdateIngredientRequest $request, string $slug): View
+    {
+        $validated = $request->validated();
+        $ingredient = Ingredient::where('slug', $slug)->first();
+
+        $ingredient->update($validated);
+
+        return view('ingredients.show');
     }
 }

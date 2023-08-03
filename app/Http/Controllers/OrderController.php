@@ -6,13 +6,12 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
 use App\Traits\AuthUser;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 
 class OrderController extends Controller
 {
     use AuthUser;
 
-    public function index(): View
+    public function listOrders(): View
     {
         $company = $this->authUserCompany();
 
@@ -20,14 +19,20 @@ class OrderController extends Controller
             'orders.index',
             [
                 'orders' => $company->orders,
-                'sales' => $company->sales,
             ]
         );
     }
 
-    public function listMyOrders(): Collection
+    public function listSales(): View
     {
-        return $this->authUserCompany()->orders;
+        $company = $this->authUserCompany();
+
+        return view(
+            'sales.index',
+            [
+                'sales' => $company->sales,
+            ]
+        );
     }
 
     public function show(int $id)

@@ -53,6 +53,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{slug}', [IngredientController::class, 'show'])->name('ingredient.show');
         Route::get('/create', [IngredientController::class, 'create'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.create');
         Route::get('/{slug}/edit', [IngredientController::class, 'edit'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.edit');
+        Route::put('/update', [IngredientController::class, 'update'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.update');
         Route::post('/upload', [IngredientController::class, 'insertIngredientsFromFile'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredients.upload');
     });
 
@@ -70,7 +71,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //orders
     Route::group(['prefix' => '/orders'], function () {
-        Route::get('/', [OrderController::class, 'index'])->name('orders');
+        Route::get('/', [OrderController::class, 'listOrders'])->name('orders');
         Route::get('/{id}', [OrderController::class, 'show'])->name('order.show');
         Route::get('/create', [OrderController::class, 'create'])
              ->middleware(
@@ -92,7 +93,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/{id}', [OrderController::class, 'update'])->name('order.update');
     });
 
-    Route::get('/my-orders', [OrderController::class, 'listMyOrders'])->name('myOrders');
+    //sales
+    Route::group(['prefix' => '/sales'], function () {
+        Route::get('/', [OrderController::class, 'listSales'])->name('sales');
+    });
 
     //order items
     Route::group(['prefix' => '/order-items'], function () {
