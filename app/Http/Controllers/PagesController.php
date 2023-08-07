@@ -14,7 +14,12 @@ class PagesController extends Controller
 
     public function home(): View
     {
-        return view('pages.home', ['categories' => ProductsCategory::all()]);
+        return view(
+            'pages.home.main',
+            [
+                'categories' => ProductsCategory::all(),
+            ]
+        );
     }
 
     public function about(): View
