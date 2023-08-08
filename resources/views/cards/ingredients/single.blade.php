@@ -10,7 +10,7 @@
             class="font-bold">Available quantity:</span> {{ $ingredient->quantity }}</p>
     <p class="text-md font-normal text-gray-500 dark:text-gray-400 mb-4"><span class="font-bold">Seller:</span> <a
             href="{{ route('company.show', ['slug' => $ingredient->company->slug]) }}"
-            class="text-indigo-500">{{ $ingredient->company->name }}</a></p>
+            class="text-indigo-500">{{ \Illuminate\Support\Facades\Auth::user()->id === $ingredient->company->id ? 'You are the seller' : $ingredient->company->name }}</a></p>
     <p class="text-md font-normal text-gray-500 dark:text-gray-400 mb-4"><span
             class="font-bold">Function:</span> {{ strtolower($ingredient->ingredient->function) }}</p>
     @if(\Illuminate\Support\Facades\Auth::user()->id !== $ingredient->company->id)
