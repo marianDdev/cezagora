@@ -8,7 +8,7 @@
             </div>
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
                 @foreach($categories as $category)
-                    @include('cards.ingredients', ['name' => $category, 'imagePath' => 'https://picsum.photos/200'])
+                    @include('cards.dashboard.ingredients', ['name' => $category, 'imagePath' => 'https://picsum.photos/200'])
                 @endforeach
             </div>
         </div>

@@ -9,10 +9,10 @@
 
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
                 @if(!is_null($account))
-                    @include('cards.stripe_dashboard', ['imagePath' => 'https://picsum.photos/id/431/200',])
+                    @include('cards.dashboard.stripe_dashboard', ['imagePath' => 'https://picsum.photos/id/431/200',])
                 @endif
 
-                @include('cards.company',
+                @include('cards.dashboard.company',
                     [
                         'company' => $company,
                         'title' => $company->name ?? null,
@@ -25,7 +25,7 @@
                 )
 
                 @include(
-                    'cards.ingredients',
+                    'cards.dashboard.ingredients',
                     [
                         'title' => sprintf('%s', $productsTitle),
                         'imagePath' => 'https://picsum.photos/id/312/200',
@@ -43,7 +43,7 @@
                         )
 
                 @include(
-                        'cards.orders',
+                        'cards.dashboard.orders',
                         [
                             'title' => 'Orders',
                             'imagePath' => 'https://picsum.photos/id/180/200',
@@ -51,14 +51,14 @@
                             ]
                         )
 
-                    @include(
-                            'cards.sales',
-                            [
-                                'title' => 'Sales',
-                                'imagePath' => 'https://picsum.photos/id/180/200',
-                                 'countSales' => $company->sales->count(),
-                                ]
-                            )
+                @include(
+                        'cards.dashboard.sales',
+                        [
+                            'title' => 'Sales',
+                            'imagePath' => 'https://picsum.photos/id/180/200',
+                             'countSales' => $company->sales->count(),
+                            ]
+                        )
             </div>
         </div>
     </section>
