@@ -54,6 +54,6 @@ class PagesController extends Controller
     {
         $data = $pagesService->getDashboardData($stripeAccountService);
 
-        return view('dashboard', $data);
+        return view('pages.dashboard', $data);
     }
 }
