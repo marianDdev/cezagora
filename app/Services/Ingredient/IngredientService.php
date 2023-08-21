@@ -4,6 +4,7 @@ namespace App\Services\Ingredient;
 
 use App\Events\IngredientsFileProcessed;
 use App\Jobs\InsertIngredientsFromFile;
+use App\Models\CompanyIngredient;
 use App\Notifications\WelcomeEmail;
 use App\Traits\AuthUser;
 use Illuminate\Support\Facades\Bus;
@@ -13,6 +14,13 @@ use Throwable;
 class IngredientService implements IngredientServiceInterface
 {
     use AuthUser;
+
+    public function getCompanyIngredient(int $companyId, int $ingredientId): CompanyIngredient|null
+    {
+        return CompanyIngredient::where('company_id', $companyId)
+                                ->where('ingredient_id', $ingredientId)
+                                ->first();
+    }
 
     /**
      * @throws Throwable

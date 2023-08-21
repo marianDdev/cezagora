@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use App\Notifications\CustomerCharged;
+use App\Events\OrderCreated;
 use App\Services\Notification\NotificationServiceInterface;
 use App\Services\Order\OrdersServiceInterface;
 use App\Services\Stripe\Payment\PaymentServiceInterface;
@@ -15,7 +14,7 @@ class PaymentController extends Controller
     public function chargeCustomer(
         PaymentServiceInterface  $paymentService,
         OrdersServiceInterface   $ordersService,
-        NotificationServiceInterface $notificationService
+        NotificationServiceInterface $notificationService,
     ): View
     {
         $order = $ordersService->getPendingOrder();
@@ -35,9 +34,7 @@ class PaymentController extends Controller
             );
         }
 
-        $order->update(['status' => Order::STATUS_PAYMENT_COLLECTED]);
-
-        $order->customer->user->notify(new CustomerCharged($order));
+        event(new OrderCreated($order));
 
         return view(
             'payments.success',

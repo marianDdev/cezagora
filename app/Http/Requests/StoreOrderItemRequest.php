@@ -23,7 +23,8 @@ class StoreOrderItemRequest extends FormRequest
             'item_type' => ['required', Rule::in(['ingredient', 'product'])],
             'price' => ['required', 'integer'],
             'quantity' => ['required', 'integer'],
-            'name' => ['required', 'string']
+            'name' => ['required', 'string'],
+            'total' => ['nullable', 'integer']
         ];
     }
 }

@@ -17,22 +17,24 @@ class OrderItemController extends Controller
      * @throws Exception
      */
     public function store(
-        StoreOrderItemRequest $request,
-        OrdersServiceInterface $ordersService
+        StoreOrderItemRequest  $request,
+        OrdersServiceInterface $ordersService,
     ): RedirectResponse
     {
         $validated = $request->validated();
-
-        $order = $ordersService->getCurrentOrder();
-
-        $order->update(['total_price' => $validated['price'] * $validated['quantity']]);
-        $data = array_merge($validated, ['order_id' => $order->id]);
-
-        $item = OrderItem::create($data);
+        $order     = $ordersService->getCurrentOrder();
+        $data      = array_merge($validated, ['order_id' => $order->id]);
+        $item      = OrderItem::create($data);
 
         if (is_null($item)) {
             throw new Exception('Order item was not created', 422);
         }
+
+        $item->total = $item->price * $item->quantity;
+        $item->save();
+
+        $order->total_price += $item->total;
+        $order->save();
 
         return redirect(route('ingredients'));
     }

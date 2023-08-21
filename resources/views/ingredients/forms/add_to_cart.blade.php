@@ -1,3 +1,12 @@
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <form action="{{ route('order-item.store') }}" method="post">
     @csrf
     <input id="customer_id" name="customer_id"
@@ -9,7 +18,7 @@
     <input id="item_type" name="item_type" value="ingredient" type="hidden" />
     <input id="price" name="price" value="{{ $ingredient->price }}" type="hidden" />
 
-    <select wire:model="selectedState" name="state"
+    <select name="quantity"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         <option value="" selected>Choose quantity</option>
         @foreach(range(1, $ingredient->quantity) as $quantity)

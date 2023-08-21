@@ -13,7 +13,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int     $quantity
  * @property Order   $order
  * @property Company $seller
- * @property string   $name
+ * @property string  $name
+ * @property int     $seller_id
+ * @property int     $item_id
+ * @property string   $item_type
  */
 class OrderItem extends Model
 {
@@ -35,6 +38,7 @@ class OrderItem extends Model
         'price',
         'quantity',
         'name',
+        'total'
     ];
 
     protected function total(): Attribute
