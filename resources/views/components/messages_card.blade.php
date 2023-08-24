@@ -7,6 +7,6 @@
             {{ $title }}
         </h3>
         <span class="text-gray-500 dark:text-gray-400">You have {{ $count }} messages</span>
-        <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400"><a href="{{ route('my-ingredients') }}">Click here to manage your ingredients</a></p>
+        <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400"><a href="{{ route('my-ingredients') }}">Click here to check your messages</a></p>
     </div>
 </div>

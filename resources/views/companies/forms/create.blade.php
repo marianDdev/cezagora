@@ -1,5 +1,5 @@
 <x-app-layout>
-    <h1 class="text-center font-bold 2xl mb-10">After you submit the requested info you will be redirected to <a href="https://stripe.com/" class="text-indigo-500">Stripe</a> onboarding page</h1>
+    <h1 class="text-center font-bold 2xl mb-10 text-orange-300">After you submit this form, you will be redirected to <a href="https://stripe.com/" class="text-indigo-500">Stripe</a>'s onboarding page</h1>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg flex justify-center items-center">
         <form method="POST" action="{{ route('companies.store') }}" class="w-4/5 ">
             @csrf
@@ -10,27 +10,28 @@
             </div>
             <div class="mb-6">
                 <x-text-input id="email" type="email" name="email" :value="old('email')" autofocus autocomplete="email"
-                              placeholder="office@yourcompany.com" />
+                              placeholder="email" />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
             <div class="mb-6">
                 <x-text-input id="name" type="text" name="name" :value="old('name')" autofocus autocomplete="name"
-                              placeholder="Your Company's name" />
+                              placeholder="name" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
             <div class="mb-6">
                 <x-text-input id="phone" type="text" name="phone" :value="old('phone')" autofocus autocomplete="phone"
-                              placeholder="+40700000000" />
+                              placeholder="phone" />
                 <x-input-error :messages="$errors->get('phone')" class="mt-2" />
             </div>
             <div class="mb-6">
                 <select id="mcc" name="mcc"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected>Select your company's merchant category code</option>
+                    <option selected>Select your merchant category code</option>
                     @foreach($mccs as $mcc)
                         <option value="{{ $mcc->code }}">{{ $mcc->code }} - {{ $mcc->description }}</option>
                     @endforeach
                 </select>
+                <x-input-error :messages="$errors->get('mcc')" class="mt-2" />
             </div>
             <div class="mb-6">
                 <x-text-input id="product_description" type="text" name="product_description"
@@ -54,7 +55,7 @@
                 <x-input-error :messages="$errors->get('vat_id')" class="mt-2" />
             </div>
             <livewire:country-dropdown />
-            <x-primary-button class="ml-4">
+            <x-primary-button class="mb-10">
                 {{ __('Add company') }}
             </x-primary-button>
         </form>

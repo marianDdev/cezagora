@@ -10,12 +10,12 @@
             <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Name:</span> {{ $title }}</p>
             <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Email:</span> {{ $email }}</p>
             <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Phone:</span> {{ $phone }}</p>
-            <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">CezAgora admin:</span> {{ $admin }}</p>
-            <p class="text-blue-500 dark:text-gray-400 mt-2"><a
+            <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">CezAgora user:</span> {{ $admin }}</p>
+            <p class="text-indigo-500 dark:text-gray-400 mt-2"><a
                     href="{{ route('companies.edit') }}">click here to update your company's details</a></p>
         @else
             <p class="text-gray-500 dark:text-gray-400">You didn't add your company details.</p>
-            <p class="text-blue-500 dark:text-gray-400 mt-2"><a
+            <p class="text-indigo-500 dark:text-gray-400 mt-2"><a
                     href="{{ route('companies.create') }}">click to create your company's profile</a></p>
         @endif
     </div>

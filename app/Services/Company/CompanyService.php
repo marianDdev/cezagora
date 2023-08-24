@@ -4,6 +4,7 @@ namespace App\Services\Company;
 
 use App\Models\Company;
 use App\Models\CompanyCategoryCompany;
+use App\Models\CompanyCompanyCategory;
 use Illuminate\Support\Str;
 
 class CompanyService implements CompanyServiceInterface
@@ -33,11 +34,11 @@ class CompanyService implements CompanyServiceInterface
         foreach ($categoriesIds as $categoryId) {
             $categoryData[] = [
                 'company_id' => $companyId,
-                'category_id' => $categoryId,
+                'company_category_id' => $categoryId,
             ];
         }
 
-        CompanyCategoryCompany::insert($categoryData);
+        CompanyCompanyCategory::insert($categoryData);
 
         return $company;
     }
