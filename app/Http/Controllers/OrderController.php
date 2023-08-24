@@ -18,7 +18,7 @@ class OrderController extends Controller
         return view(
             'orders.index',
             [
-                'orders' => $company->orders,
+                'orders' => $company?->orders,
             ]
         );
     }
@@ -30,7 +30,7 @@ class OrderController extends Controller
         return view(
             'sales.index',
             [
-                'sales' => $company->sales,
+                'sales' => $company?->sales,
             ]
         );
     }

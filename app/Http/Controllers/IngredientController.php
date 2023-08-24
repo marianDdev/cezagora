@@ -10,7 +10,6 @@ use App\Services\Ingredient\IngredientServiceInterface;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Str;
 use Throwable;
 
 class IngredientController extends Controller
@@ -23,14 +22,14 @@ class IngredientController extends Controller
         return view(
             'ingredients.index',
             [
-                'ingredients' => CompanyIngredient::paginate(20),
+                'ingredients' => CompanyIngredient::paginate(12),
             ]
         );
     }
 
     public function listMyIngredients(): View
     {
-        $ingredients = CompanyIngredient::where('company_id', $this->authUserCompany()->id)->paginate(20);
+        $ingredients = CompanyIngredient::where('company_id', $this->authUserCompany()->id)->paginate(12);
 
         return view(
             'ingredients.index',
@@ -87,8 +86,6 @@ class IngredientController extends Controller
             $file     = $fileService->addToMediaCollection(self::IMPORT_FILE_NAME, self::IMPORTS);
             $fileRows = $fileService->extractRows($file);
             $ingredientService->bulkInsert($fileRows);
-
-            //return redirect(route('my-ingredients'));
 
             return view('ingredients.check-upload-status');
         } catch (Exception $e) {
