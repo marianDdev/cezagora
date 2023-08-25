@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
 use App\Models\CompanyIngredient;
 use App\Models\Ingredient;
@@ -94,6 +95,27 @@ class IngredientController extends Controller
 
     }
 
+    public function store(StoreIngredientRequest $request): RedirectResponse
+    {
+        $validated  = $request->validated();
+        $ingredient = Ingredient::create($validated);
+        CompanyIngredient::create(
+            [
+                'company_id'    => $validated['company_id'],
+                'ingredient_id' => $ingredient->id,
+                'price'         => $validated['price'],
+                'quantity'      => $validated['quantity'],
+            ]
+        );
+
+        return redirect()->route('ingredient.create')
+                         ->with(
+                             [
+                                 'successful_message' => 'Ingredient added successfully!',
+                             ]
+                         );
+    }
+
     public function edit(string $slug): View
     {
         $ingredient = Ingredient::where('slug', $slug)->first();
@@ -103,7 +125,7 @@ class IngredientController extends Controller
 
     public function update(UpdateIngredientRequest $request, string $slug): View
     {
-        $validated = $request->validated();
+        $validated  = $request->validated();
         $ingredient = Ingredient::where('slug', $slug)->first();
 
         $ingredient->update($validated);

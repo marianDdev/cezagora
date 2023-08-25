@@ -35,15 +35,6 @@
                         ]
                     )
 
-                {{--                @include(--}}
-                {{--                        'components.messages_card',--}}
-                {{--                        [--}}
-                {{--                            'title' => 'Private messages',--}}
-                {{--                            'imagePath' => 'https://picsum.photos/id/403/200',--}}
-                {{--                             'count' => 0--}}
-                {{--                            ]--}}
-                {{--                        )--}}
-
                 @include(
                         'cards.dashboard.orders',
                         [
