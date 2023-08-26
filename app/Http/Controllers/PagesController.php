@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanyCategory;
+use App\Models\MerchantCategoryCode;
 use App\Models\ProductsCategory;
 use App\Services\Pages\PagesServiceInterface;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
@@ -52,7 +54,11 @@ class PagesController extends Controller
         PagesServiceInterface         $pagesService
     ): View
     {
-        $data = $pagesService->getDashboardData($stripeAccountService);
+        $categories = [
+            'categories' => CompanyCategory::all(),
+            'mccs'       => MerchantCategoryCode::all(),
+        ];
+        $data       = array_merge($categories, $pagesService->getDashboardData($stripeAccountService));
 
         return view('pages.dashboard', $data);
     }
