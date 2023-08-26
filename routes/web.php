@@ -36,13 +36,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    //companies
     Route::group(['prefix' => '/companies'], function () {
         Route::get('/', [CompanyController::class, 'index'])->name('companies');
-        Route::get('/create', [CompanyController::class, 'create'])->name('companies.create');
-        Route::post('/', [CompanyController::class, 'store'])->name('companies.store');
+        Route::patch('/update', [CompanyController::class, 'update'])->name('company.update');
+        Route::post('/', [CompanyController::class, 'store'])->name('company.store');
         Route::get('/{slug}', [CompanyController::class, 'show'])->name('company.show');
-        Route::get('/edit', [CompanyController::class, 'edit'])->name('companies.edit');
-        Route::put('/update', [CompanyController::class, 'update'])->name('companies.edit');
     });
 
     Route::get('my-company', [CompanyController::class, 'showMyCompany'])->name('my-companies');

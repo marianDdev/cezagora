@@ -4,19 +4,9 @@
     </a>
     <div class="p-5">
         @if(!is_null($company))
-            <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">
-                My company
-            </h3>
-            <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Name:</span> {{ $title }}</p>
-            <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Email:</span> {{ $email }}</p>
-            <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Phone:</span> {{ $phone }}</p>
-            <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">CezAgora user:</span> {{ $admin }}</p>
-            <p class="text-indigo-500 dark:text-gray-400 mt-2"><a
-                    href="{{ route('companies.edit') }}">click here to update your company's details</a></p>
+            @include('companies.forms.edit')
         @else
-            <p class="text-gray-500 dark:text-gray-400">You didn't add your company details.</p>
-            <p class="text-indigo-500 dark:text-gray-400 mt-2"><a
-                    href="{{ route('companies.create') }}">click to create your company's profile</a></p>
+            @include('companies.forms.create')
         @endif
     </div>
 </div>

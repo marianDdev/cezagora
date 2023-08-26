@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Events\CompanyCreated;
 use App\Http\Requests\StoreCompanyRequest;
+use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
-use App\Models\CompanyCategory;
 use App\Models\CompanyIngredient;
-use App\Models\MerchantCategoryCode;
 use App\Services\Address\AddressServiceInterface;
 use App\Services\Company\CompanyServiceInterface;
 use App\Services\User\UserServiceInterface;
@@ -49,17 +48,6 @@ class CompanyController extends Controller
         return view('components.companies', ['companies' => $user->company()]);
     }
 
-    public function create(): View
-    {
-        return view(
-            'companies.forms.create',
-            [
-                'categories' => CompanyCategory::all(),
-                'mccs' => MerchantCategoryCode::all()
-            ]
-        );
-    }
-
     public function store(
         StoreCompanyRequest     $request,
         CompanyServiceInterface $companyService,
@@ -77,15 +65,22 @@ class CompanyController extends Controller
         return redirect('/onboarding');
     }
 
-    public function edit(): View
+    public function update(UpdateCompanyRequest $request): RedirectResponse
     {
-        $company = $this->authUserCompany();
+        $validated = $request->validated();
 
-        return view('companies.forms.edit', ['companies' => $company]);
-    }
+        /** @var Company $company */
+        $company = Company::find($validated['company_id']);
 
-    public function update()
-    {
-        //
+        if ($request->has('mcc') && $validated['mcc'] === 'Select your merchant category code') {
+            $validated['mcc'] = null;
+        }
+
+        $company->update($validated);
+
+
+        //todo choose which address to update or add a new one
+
+        return redirect()->route('dashboard');
     }
 }

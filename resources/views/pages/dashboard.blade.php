@@ -10,21 +10,23 @@
             </div>
 
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
+                @include('cards.dashboard.company',
+                        [
+                            'categories' => $categories,
+                            'mccs' => $mccs,
+                            'company' => $company,
+                            'title' => $company->name ?? null,
+                            'imagePath' => 'https://picsum.photos/id/445/200',
+                            'email' => $company->email ?? null,
+                            'phone' => $company->phone ?? null,
+                            'admin' => $user->getFullName(),
+                            'description' => 'bla bla',
+                        ]
+                    )
+                
                 @if(!is_null($account))
                     @include('cards.dashboard.stripe_dashboard', ['imagePath' => 'https://picsum.photos/id/431/200',])
                 @endif
-
-                @include('cards.dashboard.company',
-                    [
-                        'company' => $company,
-                        'title' => $company->name ?? null,
-                        'imagePath' => 'https://picsum.photos/id/445/200',
-                        'email' => $company->email ?? null,
-                        'phone' => $company->phone ?? null,
-                        'admin' => $user->getFullName(),
-                        'description' => 'bla bla',
-                    ]
-                )
 
                 @include(
                     'cards.dashboard.ingredients',
