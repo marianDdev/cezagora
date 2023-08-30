@@ -44,11 +44,6 @@ class PagesController extends Controller
         return view('pages.pricing');
     }
 
-    public function services(): View
-    {
-        return view('pages.services');
-    }
-
     public function dashboard(
         StripeAccountServiceInterface $stripeAccountService,
         PagesServiceInterface         $pagesService
