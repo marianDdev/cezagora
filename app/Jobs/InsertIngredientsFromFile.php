@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Company;
 use App\Models\Ingredient;
+use Carbon\Carbon;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -44,6 +45,9 @@ class InsertIngredientsFromFile implements ShouldQueue
     {
         foreach ($this->data as $datum) {
             $datum = array_merge($datum, ['company_id' => $this->company->id]);
+            $availableAt = $datum['available_at'];
+            $date = Carbon::parse($availableAt)->format('Y-m-d h:i:s');
+            $datum['available_at'] = $date;
             $this->validateKeysExist($datum);
             $this->validatValues($datum);
             Ingredient::create($datum);
