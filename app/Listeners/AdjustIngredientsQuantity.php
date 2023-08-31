@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Models\CompanyIngredient;
+use App\Models\Ingredient;
 use App\Models\OrderItem;
 use App\Services\Ingredient\IngredientServiceInterface;
 
@@ -18,21 +18,10 @@ class AdjustIngredientsQuantity
 
         /** @var OrderItem $item */
         foreach ($order->items as $item) {
-            if ($this->itemQuantityShouldAdjust($item, $this->ingredientService)) {
-                $company = $item->seller;
-                /** @var CompanyIngredient $companyIngredient */
-                $companyIngredient = $this->ingredientService->getCompanyIngredient($item->seller_id, $item->item_id);
-                $quantity          = $companyIngredient->quantity - $item->quantity;
-                $company->ingredients()->updateExistingPivot($item->item_id, ['quantity' => $quantity]);
-            }
+            /** @var Ingredient $ingredient */
+            $ingredient           = Ingredient::find($item->item_id);
+            $ingredient->quantity = $ingredient->quantity - $item->quantity;
+            $ingredient->save();
         }
-    }
-
-    private function itemQuantityShouldAdjust(OrderItem $item, IngredientServiceInterface $ingredientService): bool
-    {
-        $isIngredient             = $item->item_type === 'ingredient';
-        $companyIngredientNotNull = !is_null($ingredientService->getCompanyIngredient($item->seller_id, $item->item_id));
-
-        return $isIngredient && $companyIngredientNotNull;
     }
 }

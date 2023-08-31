@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Company;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -24,6 +25,8 @@ class StoreIngredientRequest extends FormRequest
             'function' => ['required', 'string'],
             'price' => ['required', 'integer'],
             'quantity' => ['required', 'integer'],
+            'availability' => ['required', 'string', Rule::in(['now', 'on_demand'])],
+            'available_at' => ['required_if:availability,on_demand', 'date', 'date_format:d-m-y', 'after_or_equal:' . Carbon::today()]
         ];
     }
 }

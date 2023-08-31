@@ -16,7 +16,6 @@ return new class extends Migration
             $table->text('name');
             $table->text('description');
             $table->string('function');
-            $table->string('slug')->nullable()->unique();
             $table->timestamps();
         });
     }

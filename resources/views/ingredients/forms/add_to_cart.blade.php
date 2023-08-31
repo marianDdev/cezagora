@@ -13,7 +13,7 @@
            value="{{ \Illuminate\Support\Facades\Auth::user()->company_id }}" type="hidden" />
     <input id="seller_id" name="seller_id" value="{{ $ingredient->company->id }}"
            type="hidden" />
-    <input id="item_id" name="item_id" value="{{ $ingredient->ingredient->id }}"
+    <input id="item_id" name="item_id" value="{{ $ingredient->id }}"
            type="hidden" />
     <input id="item_type" name="item_type" value="ingredient" type="hidden" />
     <input id="price" name="price" value="{{ $ingredient->price }}" type="hidden" />
@@ -26,7 +26,7 @@
         @endforeach
     </select>
 
-    <input id="name" name="name" value="{{ $ingredient->ingredient->name }}" type="hidden" />
+    <input id="name" name="name" value="{{ $ingredient->name }}" type="hidden" />
     <div
         class="mt-4 col-start-1 row-start-3 self-center sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4">
         <button type="submit"

@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Models\Company;
-use App\Models\CompanyIngredient;
 use App\Models\Ingredient;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -11,7 +10,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Str;
 
 class InsertIngredientsFromFile implements ShouldQueue
 {
@@ -26,6 +24,8 @@ class InsertIngredientsFromFile implements ShouldQueue
         'function',
         'price',
         'quantity',
+        'availability',
+        'available_at',
     ];
 
     /**
@@ -42,31 +42,12 @@ class InsertIngredientsFromFile implements ShouldQueue
      */
     public function handle(): void
     {
-        $ingredients = [];
-
         foreach ($this->data as $datum) {
+            $datum = array_merge($datum, ['company_id' => $this->company->id]);
             $this->validateKeysExist($datum);
             $this->validatValues($datum);
-            $ingredient = Ingredient::create(
-                [
-                    'name'        => $datum['name'],
-                    'common_name' => $datum['common_name'] ?? null,
-                    'description' => $datum['description'],
-                    'function'    => $datum['function'],
-                ]
-            );
-            $slug       = Str::slug(substr($ingredient->name, 0, 20));
-            $ingredient->update(['slug' => sprintf('%s-%d', $slug, $ingredient->id)]);
-
-            $ingredients[] = [
-                'ingredient_id' => $ingredient->id,
-                'price'         => $datum['price'],
-                'quantity'      => $datum['quantity'],
-                'company_id'    => $this->company->id,
-            ];
+            Ingredient::create($datum);
         }
-
-        CompanyIngredient::insert($ingredients);
     }
 
     /**

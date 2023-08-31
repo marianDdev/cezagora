@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
-use App\Models\CompanyIngredient;
 use App\Models\Ingredient;
 use App\Services\File\FileServiceInterface;
 use App\Services\Ingredient\IngredientServiceInterface;
@@ -23,39 +22,19 @@ class IngredientController extends Controller
         return view(
             'ingredients.index',
             [
-                'ingredients' => CompanyIngredient::paginate(12),
+                'ingredients' => Ingredient::paginate(12),
             ]
         );
     }
 
     public function listMyIngredients(): View
     {
-        $ingredients = CompanyIngredient::where('company_id', $this->authUserCompany()->id)->paginate(12);
+        $authCompany = $this->authUserCompany();
 
         return view(
             'ingredients.index',
             [
-                'ingredients' => $ingredients,
-            ]
-        );
-    }
-
-    public function show(string $slug): View
-    {
-        $ingredient         = Ingredient::where('slug', $slug)->first();
-        $companyIngredients = CompanyIngredient::where('ingredient_id', $ingredient->id)->get();
-
-        if (is_null($ingredient)) {
-            abort(404, 'Ingredient not found.');
-        }
-
-        return view(
-            'ingredients.show',
-            [
-                'ingredients' => $companyIngredients,
-                'name'        => $ingredient->name,
-                'description' => $ingredient->description,
-                'function'    => $ingredient->function,
+                'ingredients' => $authCompany->ingredients()->paginate(12),
             ]
         );
     }
@@ -97,16 +76,8 @@ class IngredientController extends Controller
 
     public function store(StoreIngredientRequest $request): RedirectResponse
     {
-        $validated  = $request->validated();
-        $ingredient = Ingredient::create($validated);
-        CompanyIngredient::create(
-            [
-                'company_id'    => $validated['company_id'],
-                'ingredient_id' => $ingredient->id,
-                'price'         => $validated['price'],
-                'quantity'      => $validated['quantity'],
-            ]
-        );
+        $validated = $request->validated();
+        Ingredient::create($validated);
 
         return redirect()->route('ingredient.create')
                          ->with(

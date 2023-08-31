@@ -10,18 +10,24 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
- * @property int $id
+ * @property int       $id
+ * @property int $quantity
  */
 class Ingredient extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
     protected $fillable = [
-      'name',
-      'common_name',
-      'description',
-      'function',
-      'slug',
+        'company_id',
+        'name',
+        'common_name',
+        'description',
+        'function',
+        'slug',
+        'price',
+        'quantity',
+        'availability',
+        'available_at',
     ];
 
     public function hasAttribute(string $key): bool
@@ -29,9 +35,9 @@ class Ingredient extends Model implements HasMedia
         return array_key_exists($key, $this->getAttributes());
     }
 
-    public function companies(): BelongsToMany
+    public function company(): BelongsTo
     {
-        return $this->belongsToMany(Company::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function orderItem(): BelongsTo
