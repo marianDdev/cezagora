@@ -41,17 +41,21 @@ class IngredientController extends Controller
 
     public function create(): View
     {
-        $myIngredients  = $this->authUserCompany()->ingredients;
-        $allIngredients = Ingredient::all();
-        $newIngredients = $allIngredients->diff($myIngredients);
+        return view('ingredients.forms.create');
+    }
 
-        return view(
-            'ingredients.forms.create',
-            [
-                'myIngredients'  => $myIngredients,
-                'newIngredients' => $newIngredients,
-            ]
-        );
+    public function store(StoreIngredientRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        Ingredient::create($validated);
+
+        return redirect()->route('ingredient.create')
+                         ->with(
+                             [
+                                 'successful_message' => 'Ingredient added successfully!',
+                             ]
+                         );
     }
 
     /**
@@ -72,19 +76,6 @@ class IngredientController extends Controller
             return view('ingredients.error', ['error' => $e->getMessage()]);
         }
 
-    }
-
-    public function store(StoreIngredientRequest $request): RedirectResponse
-    {
-        $validated = $request->validated();
-        Ingredient::create($validated);
-
-        return redirect()->route('ingredient.create')
-                         ->with(
-                             [
-                                 'successful_message' => 'Ingredient added successfully!',
-                             ]
-                         );
     }
 
     public function edit(string $slug): View
