@@ -1,5 +1,5 @@
 @php
-    $ingredientName = $ingredient->ingredient->common_name ?? $ingredient->ingredient->name;
+    $ingredientName = $ingredient->common_name ?? $ingredient->name;
     $shortName = strlen($ingredientName) > 30 ? substr($ingredientName, 0, 30) . '...' : $ingredientName;
     $userHasCompany = Auth::check() && !is_null(Auth::user()->company);
     $authCompany = $userHasCompany ? Auth::user()->company : null;
@@ -15,14 +15,23 @@
     </div>
     <p class="text-md font-normal text-gray-500 dark:text-gray-400 mb-4"><span
             class="font-bold">Price per item:</span> {{ $ingredient->price }}</p>
+
+    <p class="text-md font-normal text-gray-500 dark:text-gray-400 mb-4"><span
+            class="font-bold">Availability:</span> {{ $ingredient->availability }}</p>
+
+    <p class="text-md font-normal text-gray-500 dark:text-gray-400 mb-4"><span
+            class="font-bold">Available at:</span> {{ \Carbon\Carbon::parse($ingredient->available_at)->format('d-m-Y') }}</p>
+
     <p class="text-md font-normal text-gray-500 dark:text-gray-400 mb-4"><span
             class="font-bold">Available quantity:</span> {{ $ingredient->quantity }}</p>
+
     <p class="text-md font-normal text-gray-500 dark:text-gray-400 mb-4"><span class="font-bold">Seller:</span> <a
             href="{{ route('company.show', ['slug' => $ingredient->company->slug]) }}"
             class="text-indigo-500">{{ $seller }}</a>
     </p>
+
     <p class="text-md font-normal text-gray-500 dark:text-gray-400 mb-4"><span
-            class="font-bold">Function:</span> {{ strtolower($ingredient->ingredient->function) }}</p>
+            class="font-bold">Function:</span> {{ strtolower($ingredient->function) }}</p>
     @if(!$authUserOwnsIngredient)
         @include('ingredients.forms.add_to_cart', ['ingredient' => $ingredient])
     @endif

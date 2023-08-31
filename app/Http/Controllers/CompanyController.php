@@ -6,7 +6,6 @@ use App\Events\CompanyCreated;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
-use App\Models\CompanyIngredient;
 use App\Services\Address\AddressServiceInterface;
 use App\Services\Company\CompanyServiceInterface;
 use App\Services\User\UserServiceInterface;
@@ -31,11 +30,9 @@ class CompanyController extends Controller
             abort(404, 'Company not found.');
         }
 
-        $companyIngredients = CompanyIngredient::where('company_id', $company->id)->get();
-
         return view('companies.show', [
             'company' => $company,
-            'ingredients' => $companyIngredients ?? null,
+            'ingredients' => $company->ingredients ?? null,
             'products' => $company->products ?? null,
             'services' => $company->services ?? null,
         ]);

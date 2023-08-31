@@ -81,9 +81,9 @@ class Company extends Model implements HasMedia
         return $this->belongsToMany(Service::class);
     }
 
-    public function ingredients(): BelongsToMany
+    public function ingredients(): HasMany
     {
-        return $this->belongsToMany(Ingredient::class);
+        return $this->hasMany(Ingredient::class);
     }
 
     public function packingProducts(): HasMany

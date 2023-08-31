@@ -59,15 +59,15 @@
         @foreach($ingredients as $ingredient)
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td class="px-6 py-4 text-indigo-500">
-                    <a href="{{ route('ingredient.show', $ingredient->ingredient->slug) }}">
-                        {{ $ingredient->ingredient->name ?? '' }}
+                    <a href="{{ route('ingredient.show', ['id' => $ingredient->id]) }}">
+                        {{ $ingredient->name ?? '' }}
                     </a>
                 </td>
                 <td class="px-6 py-4">
-                    {{ $ingredient->ingredient->description ?? '' }}
+                    {{ $ingredient->description ?? '' }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $ingredient->ingredient->function ?? '' }}
+                    {{ $ingredient->function ?? '' }}
                 </td>
                 <td class="px-6 py-4">
                     {{ $ingredient->quantity ?? '' }}
