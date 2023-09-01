@@ -17,14 +17,19 @@ class IngredientController extends Controller
     private const IMPORT_FILE_NAME = 'import_file';
     private const IMPORTS          = 'imports';
 
+
+
     public function index(): View
     {
-        return view(
-            'ingredients.index',
-            [
+        return view('ingredients.main', [
                 'ingredients' => Ingredient::paginate(12),
-            ]
-        );
+            ]);
+//        return view(
+//            'ingredients.index',
+//            [
+//                'ingredients' => Ingredient::paginate(12),
+//            ]
+//        );
     }
 
     public function listMyIngredients(): View
