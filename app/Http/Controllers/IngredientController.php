@@ -10,6 +10,7 @@ use App\Services\Ingredient\IngredientServiceInterface;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Throwable;
 
 class IngredientController extends Controller
@@ -18,18 +19,23 @@ class IngredientController extends Controller
     private const IMPORTS          = 'imports';
 
 
+    public function index(
+        Request $request,
+        IngredientServiceInterface $service,
 
-    public function index(): View
+    ): View
     {
+        $filtersData = $service->getFiltersData();
+        $filtered = $service->filter($request->all());
+
         return view('ingredients.main', [
-                'ingredients' => Ingredient::paginate(12),
-            ]);
-//        return view(
-//            'ingredients.index',
-//            [
-//                'ingredients' => Ingredient::paginate(12),
-//            ]
-//        );
+            'allIngredients' => $filtersData['allIngredients'],
+            'companies' => $filtersData['companies'],
+            'functions' => $filtersData['functions'],
+            'filteredIngredients' => $filtered,
+        ]);
+
+
     }
 
     public function listMyIngredients(): View
