@@ -10,8 +10,11 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
- * @property int       $id
- * @property int $quantity
+ * @property int    $id
+ * @property int    $quantity
+ * @property string $availabiliy
+ * @property string $available_at
+ * @property Company  $company
  */
 class Ingredient extends Model implements HasMedia
 {
