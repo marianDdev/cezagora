@@ -9,22 +9,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property int     $price
- * @property int     $quantity
- * @property Order   $order
- * @property Company $seller
- * @property string  $name
- * @property int     $seller_id
- * @property int     $item_id
- * @property string   $item_type
+ * @property int        $price
+ * @property int        $quantity
+ * @property Order      $order
+ * @property Company    $seller
+ * @property string     $name
+ * @property int        $seller_id
+ * @property int        $item_id
+ * @property string     $item_type
+ * @property Ingredient $ingredient
+ * @property string     $status
  */
 class OrderItem extends Model
 {
     use HasFactory;
 
     private const INGREDIENT_TYPE = 'ingredient';
-    private const PRODUCT_TYPE = 'product';
-    private const TYPES = [
+    private const PRODUCT_TYPE    = 'product';
+    private const TYPES           = [
         self::INGREDIENT_TYPE,
         self::PRODUCT_TYPE,
     ];
@@ -38,7 +40,8 @@ class OrderItem extends Model
         'price',
         'quantity',
         'name',
-        'total'
+        'total',
+        'status',
     ];
 
     protected function total(): Attribute
@@ -64,9 +67,9 @@ class OrderItem extends Model
         return $this->belongsTo(Shipping::class);
     }
 
-    public function ingredient(): HasOne
+    public function ingredient(): ?Ingredient
     {
-        return $this->hasOne(Ingredient::class, 'item_id', 'id');
+        return Ingredient::find($this->attributes['item_id']);
     }
 
     public function product(): HasOne
