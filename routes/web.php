@@ -107,8 +107,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                  ]
              )
              ->name('order-item.store');
+        Route::post('/{id}/cancel', [OrderItemController::class, 'cancel'])->name('order-item.cancel');
     });
-
     Route::group(['prefix' => '/payments'], function () {
         Route::post('/', [PaymentController::class, 'chargeCustomer'])->name('payment.charge');
     });

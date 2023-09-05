@@ -26,6 +26,12 @@
                     <th scope="col" class="px-6 py-3">
                         Price
                     </th>
+                    <th scope="col" class="px-6 py-3">
+                        Status
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Action
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -46,6 +52,17 @@
                         </td>
                         <td class="px-6 py-4">
                             ${{ $item->price }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $item->status }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <form action="{{ route('order-item.cancel', ['id' => $item->id]) }}" method="POST">
+                            @csrf
+                                <x-primary-button class="ml-4">
+                                    {{ __('Cancel') }}
+                                </x-primary-button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
