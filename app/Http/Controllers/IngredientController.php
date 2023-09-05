@@ -26,7 +26,9 @@ class IngredientController extends Controller
     ): View
     {
         $filtersData = $service->getFiltersData();
-        $filtered = $service->filter($request->all());
+        $filters = collect($request->all())->filter()->all();
+
+        $filtered = $service->filter($filters);
 
         return view('ingredients.main', [
             'allIngredients' => $filtersData['allIngredients'],
