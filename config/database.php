@@ -37,7 +37,7 @@ return [
 
         'sqlite' => [
             'driver' => 'sqlite',
-            'url' => env('DATABASE_URL'),
+            'url' => env('DATABASE_URL', 'mysql://marian:AVNS_BKCuUrZ75igLR9mdD5Z@cezagora-db-do-user-12977623-0.b.db.ondigitalocean.com:25060/cezagora-db?ssl-mode=REQUIRED'),
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
