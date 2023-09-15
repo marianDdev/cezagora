@@ -10,14 +10,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(MercgantCategorySeeder::class);
         $this->call(ServicesCategoriesSeeder::class);
-        $this->call(ServiceSeeder::class);
         $this->call(WorldSeeder::class);
         $this->call(CompanyCategoriesSeeder::class);
         $this->call(ProducstCategoriesSeeder::class);
-        $this->call(CompaniesSeeder::class);
-        $this->call(CompanyServiceSeeder::class);
-        $this->call(ProductsSeeder::class);
-        $this->call(UsersSeeder::class);
         $this->call(PackingProductsSeeder::class);
         $this->call(SettingsSeeder::class);
     }

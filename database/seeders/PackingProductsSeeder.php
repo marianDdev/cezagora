@@ -16,7 +16,5 @@ class PackingProductsSeeder extends Seeder
         foreach (PackingProductCategory::CATEGORIES as $category) {
             PackingProductCategory::create(['name' => $category]);
         }
-
-        PackingProduct::factory(50)->create();
     }
 }

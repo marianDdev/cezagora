@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('company_id')
                   ->nullable()
                   ->default(null);
+            $table->string('stripe_customer_id')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->string('first_name');
             $table->string('last_name');

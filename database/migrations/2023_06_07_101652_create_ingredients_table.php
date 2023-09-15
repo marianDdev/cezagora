@@ -13,9 +13,15 @@ return new class extends Migration
     {
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('company_id');
             $table->text('name');
+            $table->string('common_name')->nullable();
             $table->text('description');
             $table->string('function');
+            $table->unsignedInteger('price');
+            $table->integer('quantity');
+            $table->string('availability');
+            $table->timestamp('available_at');
             $table->timestamps();
         });
     }

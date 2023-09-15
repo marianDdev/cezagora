@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedInteger('price');
             $table->string('quantity');
+            $table->integer('total')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }
