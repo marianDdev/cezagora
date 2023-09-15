@@ -18,6 +18,11 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('slug')->nullable()->unique();
+            $table->text('product_description')->nullable();
+            $table->string('website')->nullable();
+            $table->string('tax_id')->nullable();
+            $table->string('vat_id')->nullable();
+            $table->string('mcc')->nullable(); //like 6201 for Cezagora
             $table->boolean('has_details_completed')->default(false);
             $table->timestamps();
         });

@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('company_id');
             $table->string('country');
+            $table->string('country_code');
+            $table->string('continent');
+            $table->string('region')
+                  ->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
             $table->timestamps();
