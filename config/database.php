@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -46,11 +46,11 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('DB_HOST', 'cezagora-db-do-user-12977623-0.b.db.ondigitalocean.com'),
+            'port' => env('DB_PORT', '25060'),
+            'database' => env('DB_DATABASE', 'cezagora-db'),
+            'username' => env('DB_USERNAME', 'marian'),
+            'password' => env('DB_PASSWORD', 'AVNS_BKCuUrZ75igLR9mdD5Z'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
