@@ -57,4 +57,9 @@ class PagesController extends Controller
 
         return view('pages.dashboard', $data);
     }
+
+    public function advertising()
+    {
+        return view('pages.tc_and_policies.advertising');
+    }
 }

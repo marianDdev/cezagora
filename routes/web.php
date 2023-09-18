@@ -22,6 +22,7 @@ Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/pricing', [PagesController::class, 'pricing'])->name('pricing');
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/help', [PagesController::class, 'help'])->name('help');
+Route::get('/advertising', [PagesController::class, 'advertising'])->name('advertising');
 
 Route::get('/companies-categories', function () {
     return view('components.companies-categories-page', ['categories' => CompanyCategory::TYPES]);
