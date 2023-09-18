@@ -9,6 +9,7 @@ return [
 	|--------------------------------------------------------------------------
 	*/
 	'allowed_countries' => [
+        //UE + a few other european countries
         'AT',
         'BE',
         'BG',
@@ -46,6 +47,21 @@ return [
         'IS',
         'NO',
         'LI',
+        //outside Europe
+        'AU', //Australia
+        'HK', //Hong Kong
+        'SG', //Singapore
+        'CA', //Canada
+        'MX', //Mexico,
+        'US',
+        'GI', //Gibraltar,
+        'IN', //India,
+        'JP', //Japan
+        'TH', //Thailand
+        'BR', //Brazil
+        'MY', //Malaysia
+        'NZ', //New Zeeland
+        'AE', //United Arab Emirates
     ],
 
 	/*
