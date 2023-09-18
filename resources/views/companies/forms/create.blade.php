@@ -75,7 +75,6 @@
                                       autocomplete="vat_id" placeholder="VAT ID" />
                         <x-input-error :messages="$errors->get('vat_id')" class="mt-2" />
                     </div>
-                    <livewire:country-dropdown />
                     <x-primary-button class="mb-10">
                         {{ __('Create company') }}
                     </x-primary-button>

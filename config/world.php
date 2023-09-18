@@ -8,7 +8,61 @@ return [
 	| value in the allowed_countries array
 	|--------------------------------------------------------------------------
 	*/
-	'allowed_countries' => [],
+	'allowed_countries' => [
+        //UE + a few other european countries
+        'AT',
+        'BE',
+        'BG',
+        'HR',
+        'CY',
+        'CZ',
+        'DK',
+        'EE',
+        'FI',
+        'FR',
+        'DE',
+        'GR',
+        'HU',
+        'IE',
+        'IT',
+        'LV',
+        'LT',
+        'LU',
+        'MT',
+        'NL',
+        'PL',
+        'PT',
+        'RO',
+        'SK',
+        'SI',
+        'ES',
+        'SE',
+        'GB',
+        'CH',
+        'GB',
+        'SM',
+        'VA',
+        'AD',
+        'MC',
+        'IS',
+        'NO',
+        'LI',
+        //outside Europe
+        'AU', //Australia
+        'HK', //Hong Kong
+        'SG', //Singapore
+        'CA', //Canada
+        'MX', //Mexico,
+        'US',
+        'GI', //Gibraltar,
+        'IN', //India,
+        'JP', //Japan
+        'TH', //Thailand
+        'BR', //Brazil
+        'MY', //Malaysia
+        'NZ', //New Zeeland
+        'AE', //United Arab Emirates
+    ],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -77,7 +131,7 @@ return [
 					'length' => 5,
 				],
 				'iso3' => [
-					'required' => true,
+					'required' => false,
 					'type' => 'string',
 					'length' => 3,
 				],
