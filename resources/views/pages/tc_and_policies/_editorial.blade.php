@@ -1,0 +1,10 @@
+<div class="mb-10">
+    <h3 class="flex items-center mb-4 text-lg font-medium text-gray-900 dark:text-white">
+        <svg class="flex-shrink-0 mr-2 w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+        Editorial
+    </h3>
+    <p class="text-gray-500 mb-3 dark:text-gray-400"><span class="font-bold">Use of “CezAgora” Trademark.</span>You may use the phrase “find me on CezAgora Marketplace” in accordance with our trademark guidelines, but otherwise do not use “CezAgora” or refer to CezAgora Marketplace (the company, brand or site) in your ad. Do not imply affiliation with or an endorsement by CezAgora Marketplace.</p>
+    <p class="text-gray-500 mb-3 dark:text-gray-400"><span class="font-bold">Appropriate Language.</span>Use language appropriate for professionals and aspiring professionals in your ad</p>
+    <p class="text-gray-500 mb-3 dark:text-gray-400"><span class="font-bold">Standard Text and Contact Information.</span>Use correct spelling and grammar in your ad. Use standard capitalization except for valid acronyms. Words should never be fully capitalized. Use standard punctuation and do not repeat punctuation and do not use more than a single exclamation point in your ad. Do not use a symbol (i.e. *, @) in a manner that differs from its standard meaning. Do not use a symbol in replacement of a letter ('cl!ck'). Do not use excessive emojis, animated gifs or unrelated hashtags in your ad. Do not repeat words or phrases in your ad. You may include a single link and either a single email address or phone number in your ad.</p>
+    <p class="text-gray-500 mb-3 dark:text-gray-400"><span class="font-bold">Supported Languages.</span>CezAgora Marketplace only allows ads to be posted in supported languages.</p>
+</div>
