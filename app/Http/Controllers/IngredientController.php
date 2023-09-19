@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
 use App\Models\Ingredient;
 use App\Services\File\FileServiceInterface;
 use App\Services\Ingredient\IngredientServiceInterface;
+use App\Services\SearchServiceInterface;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -15,10 +17,6 @@ use Throwable;
 
 class IngredientController extends Controller
 {
-    private const IMPORT_FILE_NAME = 'import_file';
-    private const IMPORTS          = 'imports';
-
-
     public function index(
         Request $request,
         IngredientServiceInterface $service,
@@ -80,7 +78,7 @@ class IngredientController extends Controller
     ): View|RedirectResponse
     {
         try {
-            $file     = $fileService->addToMediaCollection(self::IMPORT_FILE_NAME, self::IMPORTS);
+            $file     = $fileService->addToMediaCollection(IngredientServiceInterface::IMPORT_FILE_NAME, IngredientServiceInterface::IMPORTS);
             $fileRows = $fileService->extractRows($file);
             $ingredientService->bulkInsert($fileRows);
 
@@ -106,5 +104,18 @@ class IngredientController extends Controller
         $ingredient->update($validated);
 
         return view('ingredients.show');
+    }
+
+    public function search(SearchRequest $request, IngredientServiceInterface $service): View
+    {
+        $validated = $request->validated();
+        $ingredients = $service->search($validated['keyword']);
+
+        return view(
+            'ingredients.main',
+            [
+                'ingredients' => $ingredients,
+            ]
+        );
     }
 }

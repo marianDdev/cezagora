@@ -2,14 +2,12 @@
     @if(!empty($companies))
         <h3 class="mb-10 mt-16 text-3xl font-extrabold leading-none tracking-tight text-blue-500 md:text-3xl lg:text-3xl text-center">Companies</h3>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg flex justify-center items-center">
-            @if($companies->count() > 0)
                 @include(
                     'companies.index_table',['companies' => $companies]
                     )
-            @else
-                <h3 class="mb-10 mt-16 text-3xl font-extrabold leading-none tracking-tight text-blue-500 md:text-3xl lg:text-3xl dark:text-white text-center">Motha fucka you have zero ingredients. Move your ass and add some!</h3>
-            @endif
         </div>
+    @else
+        <h3 class="mb-10 mt-16 text-2xl font-bold leading-none tracking-tight text-red-400 md:text-2xl lg:text-2xl dark:text-white text-center">No matching companies under keyword "{{ $keyword }}".</h3>
     @endif
 
     @if(!empty($ingredients))
@@ -25,5 +23,7 @@
                 </div>
             </div>
         </section>
+        @else
+            <h3 class="mb-10 mt-16 text-2xl font-bold leading-none tracking-tight text-red-400 md:text-2xl lg:text-2xl dark:text-white text-center">No matching ingredients under keyword "{{ $keyword }}"</h3>
     @endif
 </x-guest-layout>

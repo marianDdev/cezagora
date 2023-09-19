@@ -7,6 +7,9 @@ use Illuminate\Support\LazyCollection;
 
 interface IngredientServiceInterface
 {
+    public const IMPORT_FILE_NAME = 'import_file';
+    public const IMPORTS          = 'imports';
+
     public function filter(array $filters): Collection;
 
     public function getFiltersData(): array;
