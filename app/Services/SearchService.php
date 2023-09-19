@@ -21,7 +21,10 @@ class SearchService implements SearchServiceInterface
 
     public function globalSearch(string $keyword): array
     {
-        $data = [];
+        $data = [
+            'keyword' => $keyword,
+        ];
+
         $companies = $this->companyService->search($keyword);
         $ingredients = $this->ingredientService->search($keyword);
 

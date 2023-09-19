@@ -134,6 +134,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::group(['prefix' => '/ingredients'], function () {
     Route::get('/', [IngredientController::class, 'index'])->name('ingredients');
+    Route::post('/', [IngredientController::class, 'search'])->name('ingredients.search');
 });
 Route::group(['prefix' => '/search'], function () {
     Route::post('/global', [SearchController::class, 'globalSearch'])->name('search.global');

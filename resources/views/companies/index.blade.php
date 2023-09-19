@@ -7,7 +7,7 @@
                 'companies.index_table',['companies' => $companies]
                 )
         @else
-            <h3 class="mb-10 mt-16 text-3xl font-extrabold leading-none tracking-tight text-blue-500 md:text-3xl lg:text-3xl dark:text-white text-center">Motha fucka you have zero ingredients. Move your ass and add some!</h3>
+            <h3 class="mb-10 mt-16 text-3xl font-extrabold leading-none tracking-tight text-blue-500 md:text-3xl lg:text-3xl dark:text-white text-center">You didn't add any ingredients yet.</h3>
         @endif
     </div>
 </x-app-layout>
