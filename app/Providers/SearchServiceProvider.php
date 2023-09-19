@@ -2,19 +2,18 @@
 
 namespace App\Providers;
 
-use App\Services\Ingredient\ProductService;
+use App\Services\SearchService;
+use App\Services\SearchServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
-class ProductServiceProvider extends ServiceProvider
+class SearchServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
      */
     public function register(): void
     {
-        $this->app->bind('App\Services\Product\ProductServiceInterface', function () {
-            return new ProductService();
-        });
+        $this->app->bind(SearchServiceInterface::class, SearchService::class);
     }
 
     /**

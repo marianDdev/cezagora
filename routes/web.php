@@ -8,6 +8,7 @@ use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StripeOnboardingController;
 use App\Http\Controllers\StripePortalController;
 use App\Http\Controllers\TransferController;
@@ -133,6 +134,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::group(['prefix' => '/ingredients'], function () {
     Route::get('/', [IngredientController::class, 'index'])->name('ingredients');
+});
+Route::group(['prefix' => '/search'], function () {
+    Route::post('/global', [SearchController::class, 'globalSearch'])->name('search.global');
 });
 
 require __DIR__ . '/auth.php';
