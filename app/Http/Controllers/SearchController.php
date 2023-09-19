@@ -15,17 +15,11 @@ class SearchController extends Controller
         $keyword = $validated['keyword'];
 
         if (is_null($keyword)) {
-            redirect()->back();
+            return view('pages.home.main');
         }
 
-        $results = $service->globalSearch($keyword);
-        /** @var Collection $companies */
-        $companies = $results['companies'];
-        $data = [];
+        $data = $service->globalSearch($keyword);
 
-        if ($companies->count() > 0) {
-            $data['companies'] = $companies;
-        }
         return view('search.results', $data);
     }
 }

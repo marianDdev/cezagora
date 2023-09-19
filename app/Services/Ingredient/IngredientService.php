@@ -77,4 +77,12 @@ class IngredientService implements IngredientServiceInterface
             $batch->add(new InsertIngredientsFromFile($company, $chunk->toArray()));
         }
     }
+
+    public function search(string $keyword): Collection
+    {
+        return Ingredient::where('name','LIKE',"%{$keyword}%")
+                      ->orWhere('common_name', 'LIKE',"%{$keyword}%")
+                      ->orWhere('function', 'LIKE',"%{$keyword}%")
+                      ->get();
+    }
 }

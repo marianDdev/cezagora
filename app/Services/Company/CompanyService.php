@@ -45,6 +45,9 @@ class CompanyService implements CompanyServiceInterface
 
     public function search(string $keyword): Collection
     {
-        return Company::where('name', 'LIKE', $keyword)->get();
+        return Company::where('name','LIKE',"%{$keyword}%")
+            ->orWhere('email', 'LIKE',"%{$keyword}%")
+            ->orWhere('website', 'LIKE',"%{$keyword}%")
+            ->get();
     }
 }
