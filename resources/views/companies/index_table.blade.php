@@ -42,10 +42,10 @@
                     {{ $company->phone ?? '' }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $company->address->country ?? '' }}
+                    {{ $company->addresses->first()->country ?? '' }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $company->address->city ?? '' }}
+                    {{ $company->addresses->first()->city ?? '' }}
                 </td>
                 <td class="px-6 py-4">
                     {{ $company->address->state ?? '' }}

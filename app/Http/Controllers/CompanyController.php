@@ -19,7 +19,12 @@ class CompanyController extends Controller
 
     public function index(): View
     {
-        return view('companies.index', ['companies' => Company::all()]);
+        return view(
+            'companies.index',
+            [
+                'companies' => Company::all()
+            ]
+        );
     }
 
     public function show(string $slug): View
