@@ -13,8 +13,6 @@ class CompanyService implements CompanyServiceInterface
     {
         $categoriesIds = $validated['company_categories'];
         $categoryData = [];
-
-
         $company = Company::create(
             [
                 'name'                => $validated['name'],

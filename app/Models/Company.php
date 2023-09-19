@@ -38,7 +38,6 @@ class Company extends Model implements HasMedia
     use HasFactory, InteractsWithMedia, AuthUser;
 
     protected $fillable = [
-        'company_category_id',
         'name',
         'email',
         'phone',
