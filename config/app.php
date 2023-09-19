@@ -186,6 +186,7 @@ return [
                                           App\Providers\StripeAccountServiceProvider::class,
                                           Maatwebsite\Excel\ExcelServiceProvider::class,
                                           App\Providers\PagesServiceProvider::class,
+                                          App\Providers\SearchServiceProvider::class,
                                       ]
                                   )->toArray(),
 

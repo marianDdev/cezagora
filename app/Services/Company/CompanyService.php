@@ -3,8 +3,8 @@
 namespace App\Services\Company;
 
 use App\Models\Company;
-use App\Models\CompanyCategoryCompany;
 use App\Models\CompanyCompanyCategory;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class CompanyService implements CompanyServiceInterface
@@ -41,5 +41,10 @@ class CompanyService implements CompanyServiceInterface
         CompanyCompanyCategory::insert($categoryData);
 
         return $company;
+    }
+
+    public function search(string $keyword): Collection
+    {
+        return Company::where('name', 'LIKE', $keyword)->get();
     }
 }
