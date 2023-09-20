@@ -6,7 +6,7 @@
                     @if(url()->current() === 'https://cezagora.test/my-ingredients')
                         <h1 class="text-4xl font-bold tracking-tight text-gray-900">
 
-                            View your entire list of ingredients.
+                            View your entire list of ingredients
                         </h1>
                         <a class="mb-4 font-bold tracking-tight leading-none text-indigo-500"
                            href="{{ route('ingredient.create') }}">Click here to add more ingredients</a>
@@ -15,7 +15,6 @@
                             Discover our entire list of ingredients.
                         </h1>
                         @endif
-                        </h1>
                 </div>
 
                 <section aria-labelledby="products-heading" class="pb-24 pt-6">

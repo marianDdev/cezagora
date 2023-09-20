@@ -5,20 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
- * @property int    $id
- * @property int    $quantity
- * @property string $availabiliy
- * @property string $available_at
- * @property Company  $company
+ * @property int     $id
+ * @property int     $quantity
+ * @property string  $availabiliy
+ * @property string  $available_at
+ * @property Company $company
  */
-class Ingredient extends Model implements HasMedia
+class Ingredient extends Model
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory;
 
     protected $fillable = [
         'company_id',
