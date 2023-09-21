@@ -9,13 +9,13 @@
                         <a href="{{ route('about') }}" class=" hover:underline">About</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">Careers</a>
+                        <a role="link" aria-disabled="true" class="hover:underline">Careers</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">Brand Center</a>
+                        <a role="link" aria-disabled="true" class="hover:underline">Brand Center</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">Blog</a>
+                        <a role="link" aria-disabled="true" class="hover:underline">Blog</a>
                     </li>
                 </ul>
             </div>
@@ -23,10 +23,10 @@
                 <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Help center</h2>
                 <ul class="text-gray-500 dark:text-gray-400 font-medium">
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">Twitter</a>
+                        <a role="link" aria-disabled="true" class="hover:underline">Twitter</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">Facebook</a>
+                        <a role="link" aria-disabled="true" class="hover:underline">Facebook</a>
                     </li>
                     <li class="mb-4">
                         <a href="{{ route('contact') }}" class="hover:underline">Contact Us</a>
@@ -40,22 +40,22 @@
                         <a href="{{ route('advertising') }}" class="hover:underline">Advertising Policy</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">Brand Policy</a>
+                        <a role="link" aria-disabled="true" class="hover:underline">Brand Policy</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">Cookie Policy</a>
+                        <a role="link" aria-disabled="true" class="hover:underline">Cookie Policy</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">Copyright Policy</a>
+                        <a role="link" aria-disabled="true" class="hover:underline">Copyright Policy</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">General Policies</a>
+                        <a role="link" aria-disabled="true" class="hover:underline">General Policies</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">Privacy Policy</a>
+                        <a role="link" aria-disabled="true" class="hover:underline">Privacy Policy</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+                        <a role="link" aria-disabled="true" class="hover:underline">Terms &amp; Conditions</a>
                     </li>
                 </ul>
             </div>
