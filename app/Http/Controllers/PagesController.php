@@ -73,4 +73,8 @@ class PagesController extends Controller
         return view('pages.account-soft-delete-confirmation');
     }
 
+    public function activateAccount(): View
+    {
+        return view('pages.activate_account');
+    }
 }

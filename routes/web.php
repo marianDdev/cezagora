@@ -48,6 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/activate-account', [PagesController::class, 'activateAccount'])->name('activate.account');
+
     //users
     Route::group(['prefix' => '/users'], function () {
         Route::patch('/{id}', [UserController::class, 'softDelete'])->name('user.soft_delete');
