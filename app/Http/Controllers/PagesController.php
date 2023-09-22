@@ -62,4 +62,15 @@ class PagesController extends Controller
     {
         return view('pages.tc_and_policies.advertising');
     }
+
+    public function settings(): View
+    {
+        return view('pages.settings');
+    }
+
+    public function accountDeletedConfirmationPage(): View
+    {
+        return view('pages.account-soft-delete-confirmation');
+    }
+
 }

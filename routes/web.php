@@ -12,6 +12,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StripeOnboardingController;
 use App\Http\Controllers\StripePortalController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Middleware\RedirectIfUserHasNotAddedCompanyDetails;
 use App\Http\Middleware\RedirectIfUserHasNotEnabledStripe;
@@ -24,6 +25,16 @@ Route::get('/pricing', [PagesController::class, 'pricing'])->name('pricing');
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/help', [PagesController::class, 'help'])->name('help');
 Route::get('/advertising', [PagesController::class, 'advertising'])->name('advertising');
+Route::get('/settings', [PagesController::class, 'settings'])->name('settings');
+Route::get('/account-deleted', [PagesController::class, 'accountDeletedConfirmationPage'])->name('account.deleted.page');
+
+Route::group(['prefix' => '/ingredients'], function () {
+    Route::get('/', [IngredientController::class, 'index'])->name('ingredients');
+    Route::post('/', [IngredientController::class, 'search'])->name('ingredients.search');
+});
+Route::group(['prefix' => '/search'], function () {
+    Route::post('/global', [SearchController::class, 'globalSearch'])->name('search.global');
+});
 
 Route::get('/companies-categories', function () {
     return view('components.companies-categories-page', ['categories' => CompanyCategory::TYPES]);
@@ -36,6 +47,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
          ->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //users
+    Route::group(['prefix' => '/users'], function () {
+        Route::patch('/{id}', [UserController::class, 'softDelete'])->name('user.soft_delete');
+    });
 
     //companies
     Route::group(['prefix' => '/companies'], function () {
@@ -130,14 +146,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //webhooks
     Route::post('/webhooks/payment-intent', [WebhookController::class, 'handlePaymentIntentSucceeded'])->name('webhook.paymentIntent');
     Route::post('/webhooks/transfers', [WebhookController::class, 'handleTransfers'])->name('webhook.trasfers');
-});
-
-Route::group(['prefix' => '/ingredients'], function () {
-    Route::get('/', [IngredientController::class, 'index'])->name('ingredients');
-    Route::post('/', [IngredientController::class, 'search'])->name('ingredients.search');
-});
-Route::group(['prefix' => '/search'], function () {
-    Route::post('/global', [SearchController::class, 'globalSearch'])->name('search.global');
 });
 
 require __DIR__ . '/auth.php';
