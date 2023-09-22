@@ -3,6 +3,7 @@
 namespace App\Services\Company;
 
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 interface CompanyServiceInterface
@@ -10,4 +11,6 @@ interface CompanyServiceInterface
     public function create(array $validated): Company;
 
     public function search(string $keyword): Collection;
+
+    public function markAsInactive(User $user): void;
 }

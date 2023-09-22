@@ -2,10 +2,10 @@
 
 namespace App\Services\Ingredient;
 
-use App\Events\IngredientsFileProcessed;
 use App\Jobs\InsertIngredientsFromFile;
 use App\Models\Company;
 use App\Models\Ingredient;
+use App\Models\User;
 use App\Traits\AuthUser;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -17,9 +17,16 @@ class IngredientService implements IngredientServiceInterface
 {
     use AuthUser;
 
+    public function getAll(): Collection
+    {
+        $companies = Company::where('is_active', true)->has('ingredients')->get();
+        $companiesIds = $companies->pluck('id');
+
+        return Ingredient::whereIn('company_id', $companiesIds)->get();
+    }
     public function filter(array $filters): Collection
     {
-        $ingredients = Ingredient::all();
+        $ingredients = $this->getAll();
 
         return $ingredients->when(!empty($filters['company_id']), function (Collection $collection) use ($filters) {
             return $collection->where('company_id', $filters['company_id']);
@@ -51,8 +58,8 @@ class IngredientService implements IngredientServiceInterface
 
     public function getFiltersData(): array
     {
-        $all       = Ingredient::all();
-        $companies = Company::has('ingredients')->get();
+        $companies = Company::where('is_active', true)->has('ingredients')->get();
+        $all = $this->getAll();
         $functions = $all->unique('function')->pluck('function');
 
         return [
@@ -84,5 +91,11 @@ class IngredientService implements IngredientServiceInterface
                       ->orWhere('common_name', 'LIKE',"%{$keyword}%")
                       ->orWhere('function', 'LIKE',"%{$keyword}%")
                       ->get();
+    }
+
+    public function deleteAll(User $user): void
+    {
+        $company = $user->company;
+        Ingredient::where('company_id', $company->id)->delete();
     }
 }
