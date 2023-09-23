@@ -12,5 +12,5 @@ interface CompanyServiceInterface
 
     public function search(string $keyword): Collection;
 
-    public function markAsInactive(User $user): void;
+    public function toggleActive(User $user, bool $activate): void;
 }

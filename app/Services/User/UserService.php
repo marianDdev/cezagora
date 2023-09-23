@@ -16,10 +16,10 @@ class UserService implements UserServiceInterface
         $user->save();
     }
 
-    public function softDelete(User $user): void
+    public function toggleActive(User $user, bool $activate, string $deletedAt = null): void
     {
-        $user->deleted_at = Carbon::now();
-        $user->is_active = false;
+        $user->deleted_at = $deletedAt;
+        $user->is_active = $activate;
         $user->save();
     }
 }

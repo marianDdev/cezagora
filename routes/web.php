@@ -26,7 +26,8 @@ Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/help', [PagesController::class, 'help'])->name('help');
 Route::get('/advertising', [PagesController::class, 'advertising'])->name('advertising');
 Route::get('/settings', [PagesController::class, 'settings'])->name('settings');
-Route::get('/account-deleted', [PagesController::class, 'accountDeletedConfirmationPage'])->name('account.deleted.page');
+Route::get('/account-deactivated', [PagesController::class, 'accountDeactivatedConfirmationPage'])->name('account.deactivated.page');
+Route::get('/account-reactivated', [PagesController::class, 'accountReactivatedConfirmationPage'])->name('account.reactivated.page');
 
 Route::group(['prefix' => '/ingredients'], function () {
     Route::get('/', [IngredientController::class, 'index'])->name('ingredients');
@@ -52,7 +53,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //users
     Route::group(['prefix' => '/users'], function () {
-        Route::patch('/{id}', [UserController::class, 'softDelete'])->name('user.soft_delete');
+        Route::patch('/{id}', [UserController::class, 'toggleActive'])->name('user.toggle.activate');
     });
 
     //companies

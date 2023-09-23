@@ -32,8 +32,8 @@ class AuthenticatedSessionController extends Controller
         /** @var User $user */
         $user = $request->user();
 
-        if (!$user->is_active) {
-            return redirect('/activate-account');
+        if ($user->is_active == false) {
+            return redirect()->route('activate.account');
         }
 
         return redirect()->intended(RouteServiceProvider::HOME);

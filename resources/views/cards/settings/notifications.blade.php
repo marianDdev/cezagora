@@ -2,7 +2,7 @@
     <a href="#">
         <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" />
     </a>
-    <div class="p-5">
+    <div class="p-5 text-gray-300">
         <p>choose notifications preferrences</p>
     </div>
 </div>

@@ -68,9 +68,14 @@ class PagesController extends Controller
         return view('pages.settings');
     }
 
-    public function accountDeletedConfirmationPage(): View
+    public function accountDeactivatedConfirmationPage(): View
     {
-        return view('pages.account-soft-delete-confirmation');
+        return view('pages.account-deactivated-confirmation');
+    }
+
+    public function accountReactivatedConfirmationPage(): View
+    {
+        return view('pages.account-reactivated-confirmation');
     }
 
     public function activateAccount(): View

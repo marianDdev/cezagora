@@ -7,7 +7,7 @@
             </div>
 
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
-                @include('cards.settings.delete_account')
+                @include('cards.settings.deactivate_account')
                 @include('cards.settings.language')
                 @include('cards.settings.notifications')
             </div>

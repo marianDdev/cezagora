@@ -8,5 +8,5 @@ interface UserServiceInterface
 {
     public function setCompany(int $companyId): void;
 
-    public function softDelete(User $user): void;
+    public function toggleActive(User $user, bool $activate, string $deletedAt = null): void;
 }

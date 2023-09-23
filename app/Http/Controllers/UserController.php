@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ToggleUserActiveRequest;
 use App\Models\User;
 use App\Services\Company\CompanyServiceInterface;
 use App\Services\Ingredient\IngredientServiceInterface;
@@ -12,20 +13,25 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    public function softDelete(
-        UserServiceInterface $userService,
+    public function toggleActive(
+        ToggleUserActiveRequest $request,
+        UserServiceInterface    $userService,
         CompanyServiceInterface $companyService,
-        IngredientServiceInterface $ingredientService,
-        int $id
-    ): RedirectResponse {
+        int                     $id
+    ): RedirectResponse
+    {
+        $validated = $request->validated();
         $user = User::find($id);
-        $userService->softDelete($user);
-        $companyService->markAsInactive($user);
-        $ingredientService-
+        $userService->toggleActive($user, $validated['activate'], $validated['deleted_at']);
+        $companyService->toggleActive($user, $validated['activate']);
+
+        if ($validated['activate']) {
+            return redirect()->route('account.reactivated.page');
+        }
 
         Auth::logout();
         Session::flush();
 
-        return redirect('/account-deleted');
+        return redirect()->route('account.deactivated.page');
     }
 }

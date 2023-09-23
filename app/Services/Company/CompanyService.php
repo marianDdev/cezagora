@@ -50,10 +50,10 @@ class CompanyService implements CompanyServiceInterface
             ->get();
     }
 
-    public function markAsInactive(User $user): void
+    public function toggleActive(User $user, bool $activate): void
     {
         $company = $user->company;
-        $company->is_active = false;
+        $company->is_active = $activate;
         $company->save();
     }
 }
