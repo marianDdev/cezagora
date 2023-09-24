@@ -2,11 +2,13 @@
 
 namespace App\Services\Ingredient;
 
+use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
 
 interface IngredientServiceInterface
 {
+    public function getAll(): Collection;
     public const IMPORT_FILE_NAME = 'import_file';
     public const IMPORTS          = 'imports';
 
@@ -21,4 +23,6 @@ interface IngredientServiceInterface
     public function bulkInsert(LazyCollection $rows): void;
 
     public function search(string $keyword): Collection;
+
+    public function deleteAll(User $user): void;
 }

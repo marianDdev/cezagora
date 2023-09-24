@@ -2,15 +2,14 @@
 
 namespace App\Console;
 
-use App\Console\Commands\AddCountryCodeAndContinentCommand;
-use App\Console\Commands\UpdateAllIngredientsCommand;
+use App\Console\Commands\SendEmailCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
-        AddCountryCodeAndContinentCommand::class,
+        SendEmailCommand::class,
     ];
 
     /**

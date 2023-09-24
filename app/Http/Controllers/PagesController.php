@@ -62,4 +62,24 @@ class PagesController extends Controller
     {
         return view('pages.tc_and_policies.advertising');
     }
+
+    public function settings(): View
+    {
+        return view('pages.settings');
+    }
+
+    public function accountDeactivatedConfirmationPage(): View
+    {
+        return view('pages.account-deactivated-confirmation');
+    }
+
+    public function accountReactivatedConfirmationPage(): View
+    {
+        return view('pages.account-reactivated-confirmation');
+    }
+
+    public function activateAccount(): View
+    {
+        return view('pages.activate_account');
+    }
 }

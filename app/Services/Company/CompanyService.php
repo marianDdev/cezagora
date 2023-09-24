@@ -4,6 +4,7 @@ namespace App\Services\Company;
 
 use App\Models\Company;
 use App\Models\CompanyCompanyCategory;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -47,5 +48,12 @@ class CompanyService implements CompanyServiceInterface
             ->orWhere('email', 'LIKE',"%{$keyword}%")
             ->orWhere('website', 'LIKE',"%{$keyword}%")
             ->get();
+    }
+
+    public function toggleActive(User $user, bool $activate): void
+    {
+        $company = $user->company;
+        $company->is_active = $activate;
+        $company->save();
     }
 }

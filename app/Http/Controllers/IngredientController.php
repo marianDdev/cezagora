@@ -19,8 +19,7 @@ class IngredientController extends Controller
 {
     public function index(
         Request $request,
-        IngredientServiceInterface $service,
-
+        IngredientServiceInterface $service
     ): View
     {
         $filtersData = $service->getFiltersData();
