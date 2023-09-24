@@ -32,15 +32,15 @@
                         @method('PATCH')
                         @csrf
 
-                        <x-primary-button class="mb-10">
+                        <x-red-button class="mb-10">
                             {{ __('YES, deactivate my account') }}
-                        </x-primary-button>
+                        </x-red-button>
                     </form>
 
                     <form class="w-4/5 p-6">
-                        <x-primary-button class="mb-10" data-modal-hide="delete-account">
+                        <x-green-button class="mb-10" data-modal-hide="delete-account">
                             {{ __('No, keep my account') }}
-                        </x-primary-button>
+                        </x-green-button>
                     </form>
                 </div>
             </div>
