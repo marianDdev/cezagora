@@ -59,7 +59,7 @@ class CompanyController extends Controller
         $validated = $request->validated();
         $company   = $companyService->create($validated);
         $addressService->create($validated, $company->id);
-        $userService->updateCompany($company->id);
+        $userService->setCompany($company->id);
         $company->update(['has_details_completed' => true]);
 
         event(new CompanyCreated($company));

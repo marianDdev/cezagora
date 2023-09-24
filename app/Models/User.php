@@ -28,7 +28,8 @@ use Spatie\Translatable\HasTranslations;
  * @property string       $stripe_customer_id
  * @property string       $email
  * @property Company|null $company
- * @property string        $fullName
+ * @property string       $fullName
+ * @property bool         $is_active
  * @method static create(array $validated)
  */
 class User extends Authenticatable implements HasMedia
@@ -47,6 +48,8 @@ class User extends Authenticatable implements HasMedia
         'stripe_account_enabled',
         'password',
         'is_admin',
+        'deleted_at',
+        'is_active',
     ];
 
     /**

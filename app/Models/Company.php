@@ -32,6 +32,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property string          $tax_id
  * @property string          $vat_id
  * @property Collection      $categories
+ * @property bool            $is_active
  */
 class Company extends Model implements HasMedia
 {
@@ -48,6 +49,7 @@ class Company extends Model implements HasMedia
         'tax_id',
         'vat_id',
         'mcc',
+        'is_active',
     ];
 
     public function user(): HasOne
@@ -103,5 +105,10 @@ class Company extends Model implements HasMedia
     public function getPendingOrder(): ?Order
     {
         return $this->orders->where('status', Order::STATUS_PENDING)->first();
+    }
+
+    public function isActive(): bool
+    {
+        return $this->user->is_active;
     }
 }
