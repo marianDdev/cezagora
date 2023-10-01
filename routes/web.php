@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
@@ -40,6 +41,8 @@ Route::group(['prefix' => '/search'], function () {
 Route::get('/companies-categories', function () {
     return view('components.companies-categories-page', ['categories' => CompanyCategory::TYPES]);
 })->name('companies-categories');
+
+Route::post('/contact-message', [ContactMessageController::class, 'store'])->name('contact-message.store');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [PagesController::class, 'dashboard'])
