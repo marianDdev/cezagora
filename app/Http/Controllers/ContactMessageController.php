@@ -13,6 +13,6 @@ class ContactMessageController extends Controller
         $validated = $request->validated();
         ContactMessage::create($validated);
 
-        return redirect('/contact');
+        return redirect()->route('contact.message.sent');
     }
 }
