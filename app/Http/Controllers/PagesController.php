@@ -82,4 +82,9 @@ class PagesController extends Controller
     {
         return view('pages.activate_account');
     }
+
+    public function contactMessageSent(): View
+    {
+        return view('pages.contact-message-sent');
+    }
 }
