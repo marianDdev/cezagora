@@ -36,7 +36,7 @@ class PagesController extends Controller
 
     public function help(): View
     {
-        return view('pages.help');
+        return view('pages.help.main');
     }
 
     public function pricing(): View
@@ -86,5 +86,10 @@ class PagesController extends Controller
     public function contactMessageSent(): View
     {
         return view('pages.contact-message-sent');
+    }
+
+    public function faq(): View
+    {
+        return view('pages.help.faq');
     }
 }

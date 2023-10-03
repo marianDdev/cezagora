@@ -25,6 +25,7 @@ Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/pricing', [PagesController::class, 'pricing'])->name('pricing');
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/help', [PagesController::class, 'help'])->name('help');
+Route::get('/faq', [PagesController::class, 'faq'])->name('faq');
 Route::get('/advertising', [PagesController::class, 'advertising'])->name('advertising');
 Route::get('/settings', [PagesController::class, 'settings'])->name('settings');
 Route::get('/account-deactivated', [PagesController::class, 'accountDeactivatedConfirmationPage'])->name('account.deactivated.page');
