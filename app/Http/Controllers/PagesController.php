@@ -36,7 +36,7 @@ class PagesController extends Controller
 
     public function help(): View
     {
-        return view('pages.help');
+        return view('pages.help.main');
     }
 
     public function pricing(): View
@@ -56,11 +56,6 @@ class PagesController extends Controller
         $data       = array_merge($categories, $pagesService->getDashboardData($stripeAccountService));
 
         return view('pages.dashboard', $data);
-    }
-
-    public function advertising()
-    {
-        return view('pages.tc_and_policies.advertising');
     }
 
     public function settings(): View
@@ -86,5 +81,55 @@ class PagesController extends Controller
     public function contactMessageSent(): View
     {
         return view('pages.contact-message-sent');
+    }
+
+    public function faq(): View
+    {
+        return view('pages.help.faq');
+    }
+
+    public function guides(): View
+    {
+        return view('pages.help.guides');
+    }
+
+    public function policies(): View
+    {
+        return view('pages.help.policies');
+    }
+
+    public function advertising(): View
+    {
+        return view('pages.tc_and_policies.advertising.main');
+    }
+
+    public function cookie(): View
+    {
+        return view('pages.tc_and_policies.cookie');
+    }
+
+    public function branding(): View
+    {
+        return view('pages.tc_and_policies.branding');
+    }
+
+    public function generalPolicies(): View
+    {
+        return view('pages.tc_and_policies.general');
+    }
+
+    public function privacy(): View
+    {
+        return view('pages.tc_and_policies.privacy');
+    }
+
+    public function copyright(): View
+    {
+        return view('pages.tc_and_policies.copyright');
+    }
+
+    public function termsAndConditions(): View
+    {
+        return view('pages.tc_and_policies.terms_conditions');
     }
 }
