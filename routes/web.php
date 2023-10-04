@@ -27,6 +27,8 @@ Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/help', [PagesController::class, 'help'])->name('help');
 Route::get('/faq', [PagesController::class, 'faq'])->name('faq');
 Route::get('/guides', [PagesController::class, 'guides'])->name('guides');
+Route::get('/video-tutorials', [PagesController::class, 'videoTutorials'])->name('video.tutorials');
+Route::get('/user-roles', [PagesController::class, 'userRoles'])->name('help.user.roles');
 Route::get('/advertising-policy', [PagesController::class, 'advertising'])->name('advertising');
 Route::get('/terms-conditions', [PagesController::class, 'termsAndConditions'])->name('terms.conditions');
 Route::get('/cookie-policy', [PagesController::class, 'cookie'])->name('cookie');
