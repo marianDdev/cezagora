@@ -43,7 +43,7 @@
                         <a role="link" aria-disabled="true" class="hover:underline">Brand Policy</a>
                     </li>
                     <li class="mb-4">
-                        <a role="link" aria-disabled="true" class="hover:underline">Cookie Policy</a>
+                        <a href="{{ route('cookie') }}" class="hover:underline">Cookie Policy</a>
                     </li>
                     <li class="mb-4">
                         <a role="link" aria-disabled="true" class="hover:underline">Copyright Policy</a>

@@ -58,11 +58,6 @@ class PagesController extends Controller
         return view('pages.dashboard', $data);
     }
 
-    public function advertising()
-    {
-        return view('pages.tc_and_policies.advertising');
-    }
-
     public function settings(): View
     {
         return view('pages.settings');
@@ -91,5 +86,25 @@ class PagesController extends Controller
     public function faq(): View
     {
         return view('pages.help.faq');
+    }
+
+    public function guides(): View
+    {
+        return view('pages.help.guides');
+    }
+
+    public function policies(): View
+    {
+        return view('pages.help.policies');
+    }
+
+    public function advertising(): View
+    {
+        return view('pages.tc_and_policies.advertising.main');
+    }
+
+    public function cookie(): View
+    {
+        return view('pages.tc_and_policies.cookie');
     }
 }
