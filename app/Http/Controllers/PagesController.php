@@ -132,4 +132,14 @@ class PagesController extends Controller
     {
         return view('pages.tc_and_policies.terms_conditions');
     }
+
+    public function videoTutorials(): View
+    {
+        return view('pages.help.video_tutorials');
+    }
+
+    public function userRoles(): View
+    {
+        return view('pages.help.user_roles');
+    }
 }
