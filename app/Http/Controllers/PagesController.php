@@ -112,4 +112,24 @@ class PagesController extends Controller
     {
         return view('pages.tc_and_policies.branding');
     }
+
+    public function generalPolicies(): View
+    {
+        return view('pages.tc_and_policies.general');
+    }
+
+    public function privacy(): View
+    {
+        return view('pages.tc_and_policies.privacy');
+    }
+
+    public function copyright(): View
+    {
+        return view('pages.tc_and_policies.copyright');
+    }
+
+    public function termsAndConditions(): View
+    {
+        return view('pages.tc_and_policies.terms_conditions');
+    }
 }
