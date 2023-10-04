@@ -29,6 +29,7 @@ Route::get('/faq', [PagesController::class, 'faq'])->name('faq');
 Route::get('/guides', [PagesController::class, 'guides'])->name('guides');
 Route::get('/advertising-policy', [PagesController::class, 'advertising'])->name('advertising');
 Route::get('/cookie-policy', [PagesController::class, 'cookie'])->name('cookie');
+Route::get('/branding-policy', [PagesController::class, 'branding'])->name('branding');
 Route::get('/policies', [PagesController::class, 'policies'])->name('policies');
 Route::get('/settings', [PagesController::class, 'settings'])->name('settings');
 Route::get('/account-deactivated', [PagesController::class, 'accountDeactivatedConfirmationPage'])->name('account.deactivated.page');

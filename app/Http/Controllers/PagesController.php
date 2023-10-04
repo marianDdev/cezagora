@@ -107,4 +107,9 @@ class PagesController extends Controller
     {
         return view('pages.tc_and_policies.cookie');
     }
+
+    public function branding(): View
+    {
+        return view('pages.tc_and_policies.branding');
+    }
 }
