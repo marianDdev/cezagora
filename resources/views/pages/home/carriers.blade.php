@@ -1,10 +1,10 @@
 <div
     class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12">
-    <h2 class="text-gray-900 dark:text-white text-3xl font-extrabold mb-2">Delivery</h2>
+    <h2 class="text-gray-900 dark:text-white text-3xl font-extrabold mb-2">{{__('Delivery')}}</h2>
     <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
         <img src="{{ url('/images/homepage/carrier.jpeg') }}">
     </div>
-    <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-4">Browse shipping, warehouse, transport and distribution services.</p>
+    <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-4">{{__('Browse shipping, warehouse, transport and distribution services.')}}</p>
     <a role="link" aria-disabled="true"
        class="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center">Go to delivery providers list
         <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
