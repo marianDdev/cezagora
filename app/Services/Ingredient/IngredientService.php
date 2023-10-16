@@ -75,7 +75,7 @@ class IngredientService implements IngredientServiceInterface
     public function bulkInsert(LazyCollection $rows): void
     {
         $company = $this->authUserCompany();
-        $chunks  = $rows->chunk(1000);
+        $chunks  = $rows->chunk(self::CHUNK_LIMIT);
         $batch   = Bus::batch([])
                       ->name('Insert ingredients from file')
                       ->dispatch();

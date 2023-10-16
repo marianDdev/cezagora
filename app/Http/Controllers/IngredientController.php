@@ -78,6 +78,8 @@ class IngredientController extends Controller
     {
         try {
             $file     = $fileService->addToMediaCollection(IngredientServiceInterface::IMPORT_FILE_NAME, IngredientServiceInterface::IMPORTS);
+            $fileService->validateFileHeader($file);
+
             $fileRows = $fileService->extractRows($file);
             $ingredientService->bulkInsert($fileRows);
 
