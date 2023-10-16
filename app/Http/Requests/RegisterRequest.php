@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Company;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class RegisterRequest extends FormRequest
 {
@@ -21,7 +18,14 @@ class RegisterRequest extends FormRequest
             'last_name'  => ['required', 'string', 'max:255'],
             'email'      => ['required', 'email', 'unique:users'],
             'is_admin'   => ['nullable', 'boolean'],
-            'password'   => ['required', 'confirmed', Password::defaults()],
+            'password'   => ['required', 'confirmed', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@()$%^&*=_{}[\]:;"\'|\\<>,.\/~`±§+-]).{8,30}$/'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+          'password.regex' => 'The :attribute must be 8–30 characters, and include a number, a symbol, a lower and a upper case letter'
         ];
     }
 }
