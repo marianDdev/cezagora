@@ -5,9 +5,12 @@
                 class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <div class="mb-6">
-                        <label class="block mb-2 text-sm font-medium text-orange-500 dark:text-white">Check the list of countries where CezAgora is currently supported.</label>
-                        <label class="block mb-2 text-sm font-medium text-orange-500 dark:text-white">Once CezAgora is available in your country, we'll be more than happy to have you in our community.</label>
-                        <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label
+                            class="block mb-2 text-sm font-medium text-orange-500 dark:text-white">Check the list of countries where CezAgora is currently supported.</label>
+                        <label
+                            class="block mb-2 text-sm font-medium text-orange-500 dark:text-white">Once CezAgora is available in your country, we'll be more than happy to have you in our community.</label>
+                        <select
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             @foreach($countries as $country)
                                 <option>{{ $country->name }}</option>
                             @endforeach
@@ -49,6 +52,9 @@
                                           :value="old('password_confirmation')" autofocus
                                           autocomplete="password_confirmation" />
                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                            <p class="text-sm text-orange-300 mt-5">
+                                Choose a password with a length between 8 and 30 characters, include a number, a symbol, lower and uppercase letters.
+                            </p>
                         </div>
                         <x-primary-button class="ml-4">
                             {{ __('Create an account') }}
