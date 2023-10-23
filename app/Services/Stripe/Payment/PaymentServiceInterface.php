@@ -9,6 +9,9 @@ use Stripe\PaymentIntent;
 
 interface PaymentServiceInterface
 {
+    public const CURRENCY_RON = 'ron';
+    public const PAYMENT_METHOD_CARD_VISA = 'pm_card_visa';
+
     /**
      * @throws ApiErrorException
      */

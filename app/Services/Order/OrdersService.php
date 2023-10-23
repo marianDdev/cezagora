@@ -3,6 +3,7 @@
 namespace App\Services\Order;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Traits\AuthUser;
 use Exception;
 
@@ -40,10 +41,30 @@ class OrdersService implements OrdersServiceInterface
      */
     public function getPendingOrder(): Order
     {
-        if (is_null($this->pendingOrder)) {
-            throw new Exception('there is no pending order.');
+        return $this->pendingOrder;
+    }
+
+    public function createOrderItem(array $validated): OrderItem
+    {
+        $order     = $this->getCurrentOrder();
+        $data      = array_merge($validated, ['order_id' => $order->id]);
+        $item      = OrderItem::create($data);
+
+        if (is_null($item)) {
+            throw new Exception('Order item was not created', 422);
         }
 
-        return $this->pendingOrder;
+        $item->total = $item->price * $item->quantity;
+        $item->save();
+
+        $this->updateTotal($order, $item);
+
+        return $item;
+    }
+
+    public function updateTotal(Order $order, OrderItem $item): void
+    {
+        $order->total_price += $item->total;
+        $order->save();
     }
 }
