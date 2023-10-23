@@ -56,6 +56,5 @@ class OrderController extends Controller
         $validated = $orderRequest->validated();
 
         Order::create($validated);
-
     }
 }

@@ -100,7 +100,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
          ->name('my-ingredients');
 
     Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
-    Route::get('/checkout/success', [CheckoutController::class, 'showSucess'])->name('checkout.success');
+    Route::get('/checkout/success', [CheckoutController::class, 'showSuccess'])->name('checkout.success');
 
     //orders
     Route::group(['prefix' => '/orders'], function () {
@@ -145,11 +145,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
              ->name('order-item.store');
         Route::post('/{id}/cancel', [OrderItemController::class, 'cancel'])->name('order-item.cancel');
     });
+
     Route::group(['prefix' => '/payments'], function () {
         Route::post('/', [PaymentController::class, 'chargeCustomer'])->name('payment.charge');
     });
 
     Route::group(['prefix' => '/transfers'], function () {
+        Route::get('/', [TransferController::class, 'listTransfersToExecute'])->name('transfer.list');
         Route::get('/{orderId}', [TransferController::class, 'getTransferPage'])->name('transfer.show');
         Route::post('/', [TransferController::class, 'transferToSellers'])->name('transfer.create');
     });

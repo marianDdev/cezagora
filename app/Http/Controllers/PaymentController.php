@@ -19,6 +19,16 @@ class PaymentController extends Controller
     {
         $order = $ordersService->getPendingOrder();
 
+        if (is_null($order)) {
+            return view(
+                'payments.error',
+                [
+                    'error' => 'There are no pending orders',
+                    'orderId' => 0,
+                ]
+            );
+        }
+
         try {
             $paymentService->createPaymentIntent($order);
         } catch (Exception $e) {

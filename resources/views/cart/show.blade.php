@@ -60,7 +60,7 @@
         <form class="text-center space-y-6" method="post" action="{{ route('payment.charge') }}">
             @csrf
             <x-primary-button class="w-full justify-center">
-                Buy now for {{ $order->total_price}} LEI
+                Buy now for {{ $order->total_price / 100}} LEI
             </x-primary-button>
 
         </form>

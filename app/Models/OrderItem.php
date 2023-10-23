@@ -24,6 +24,8 @@ class OrderItem extends Model
 {
     use HasFactory;
 
+    public const STATUS_PENDING = 'pending';
+
     private const INGREDIENT_TYPE = 'ingredient';
     private const PRODUCT_TYPE    = 'product';
     private const TYPES           = [
