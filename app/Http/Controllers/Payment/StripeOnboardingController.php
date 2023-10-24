@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Payment;
 
+use App\Http\Controllers\Controller;
 use App\Traits\AuthUser;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;

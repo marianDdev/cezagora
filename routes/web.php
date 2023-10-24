@@ -1,18 +1,18 @@
 <?php
 
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\IngredientController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\Order\OrderController;
+use App\Http\Controllers\Order\OrderIngredientController;
 use App\Http\Controllers\PagesController;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Payment\CheckoutController;
+use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Payment\StripeOnboardingController;
+use App\Http\Controllers\Payment\StripePortalController;
+use App\Http\Controllers\Payment\TransferController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\StripeOnboardingController;
-use App\Http\Controllers\StripePortalController;
-use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Middleware\RedirectIfUserHasNotAddedCompanyDetails;
@@ -124,6 +124,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
              ->name('order.store');
         Route::get('/{id}/edit', [OrderController::class, 'edit'])->name('order.edit');
         Route::put('/{id}', [OrderController::class, 'update'])->name('order.update');
+        Route::post('/ingredient/store', [OrderIngredientController::class, 'store'])
+             ->middleware(
+                 [
+                     RedirectIfUserHasNotEnabledStripe::class,
+                     RedirectIfUserHasNotAddedCompanyDetails::class,
+                 ]
+             )
+             ->name('ingredient.order-item.store');
     });
 
     //sales
@@ -133,17 +141,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //order items
     Route::group(['prefix' => '/order-items'], function () {
-        Route::get('/{orderId}', [OrderItemController::class, 'index'])->name('order-items');
-        Route::get('/{id}', [OrderItemController::class, 'show'])->name('order-item.show');
-        Route::post('/', [OrderItemController::class, 'store'])
-             ->middleware(
-                 [
-                     RedirectIfUserHasNotEnabledStripe::class,
-                     RedirectIfUserHasNotAddedCompanyDetails::class,
-                 ]
-             )
-             ->name('order-item.store');
-        Route::post('/{id}/cancel', [OrderItemController::class, 'cancel'])->name('order-item.cancel');
+        Route::get('/{orderId}', [OrderIngredientController::class, 'index'])->name('order-items');
+        Route::get('/{id}', [OrderIngredientController::class, 'show'])->name('order-item.show');
+
+        Route::post('/{id}/cancel', [OrderIngredientController::class, 'cancel'])->name('order-item.cancel');
     });
 
     Route::group(['prefix' => '/payments'], function () {

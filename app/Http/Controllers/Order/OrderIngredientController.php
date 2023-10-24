@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Order;
 
-use App\Http\Requests\StoreOrderItemRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreIngredientOrderItemRequest;
 use App\Models\OrderItem;
 use App\Services\Order\OrdersServiceInterface;
 use App\Traits\AuthUser;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 
-class OrderItemController extends Controller
+class OrderIngredientController extends Controller
 {
     use AuthUser;
 
@@ -18,8 +18,8 @@ class OrderItemController extends Controller
      * @throws Exception
      */
     public function store(
-        StoreOrderItemRequest  $request,
-        OrdersServiceInterface $ordersService,
+        StoreIngredientOrderItemRequest $request,
+        OrdersServiceInterface          $ordersService,
     ): RedirectResponse
     {
         $validated = $request->validated();

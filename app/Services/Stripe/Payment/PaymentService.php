@@ -22,26 +22,26 @@ class PaymentService extends StripeService implements PaymentServiceInterface
         $this->percentage = (int) Setting::where('name', Setting::TRANSACTION_FEE_PERCENTAGE)->first()->value;
     }
 
-    /**
-     * @throws ApiErrorException
-     */
-    public function createPaymentIntent(Order $order): PaymentIntent
+    public function createPaymentIntent(Order $order, string $paymentMethodId): PaymentIntent
     {
         $paymentIntent = $this->stripeClient
             ->paymentIntents
             ->create(
                 [
                     'amount'         => $order->total_price,
-                    'currency'       => self::CURRENCY_RON,
+                    'currency'       => Setting::DEFAULT_CURRENCY_VALUE,
                     'transfer_group' => $order->id,
                 ]
             );
 
+        $order->update(['payment_method' => $paymentMethodId]);
+
         return $this->stripeClient->paymentIntents->confirm(
             $paymentIntent->id,
-            ['payment_method' => self::PAYMENT_METHOD_CARD_VISA]
+            ['payment_method' => $paymentMethodId]
         );
     }
+
 
     /**
      * @throws ApiErrorException
@@ -73,7 +73,7 @@ class PaymentService extends StripeService implements PaymentServiceInterface
                 ->create(
                     [
                         'amount'         => $this->calculateAmount($amount),
-                        'currency'       => 'ron',
+                        'currency'       => Setting::DEFAULT_CURRENCY_VALUE,
                         'destination'    => $sellerStripeId,
                         'transfer_group' => $order->id,
                     ]
@@ -103,35 +103,36 @@ class PaymentService extends StripeService implements PaymentServiceInterface
      */
     private function createInvoice(
         OrderItem $item,
-        string $sellerStripeId,
-        string $stripeCustomerId,
-        int $amount): void
+        string    $sellerStripeId,
+        string    $stripeCustomerId,
+        int       $amount
+    ): void
     {
         $product = $this->stripeClient
             ->products
             ->create(
-            [
-                'name' => $item->name,
-            ]
-        );
+                [
+                    'name' => $item->name,
+                ]
+            );
 
         $price = $this->stripeClient
             ->prices
             ->create(
-            [
-                'product'     => $product->id,
-                'unit_amount' => $item->price,
-                'currency'    => 'ron',
-            ]
-        );
+                [
+                    'product'     => $product->id,
+                    'unit_amount' => $item->price,
+                    'currency'    => Setting::DEFAULT_CURRENCY_VALUE,
+                ]
+            );
 
         $invoice = $this->stripeClient
             ->invoices
             ->create(
                 [
-                    'on_behalf_of'           => $sellerStripeId,
-                    'transfer_data'          => ['destination' => $sellerStripeId],
-                    'customer'               => $stripeCustomerId,
+                    'on_behalf_of'  => $sellerStripeId,
+                    'transfer_data' => ['destination' => $sellerStripeId],
+                    'customer'      => $stripeCustomerId,
                 ]
             );
 
@@ -142,7 +143,7 @@ class PaymentService extends StripeService implements PaymentServiceInterface
                     'customer' => $stripeCustomerId,
                     'price'    => $price->id,
                     'invoice'  => $invoice->id,
-                    ]
+                ]
             );
 
         $this->stripeClient

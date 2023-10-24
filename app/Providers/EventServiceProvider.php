@@ -8,7 +8,6 @@ use App\Events\OrderCreated;
 use App\Listeners\AdjustIngredientsQuantity;
 use App\Listeners\CreateStripeAccount;
 use App\Listeners\CreateStripeCustomer;
-use App\Listeners\RedirectToMyIngredients;
 use App\Listeners\SendCustomerChargedEmail;
 use App\Listeners\UpdateOrderStatus;
 use Illuminate\Auth\Events\Registered;
