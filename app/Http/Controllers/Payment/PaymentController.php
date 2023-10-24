@@ -8,50 +8,34 @@ use App\Services\Notification\NotificationServiceInterface;
 use App\Services\Order\OrdersServiceInterface;
 use App\Services\Stripe\Payment\PaymentServiceInterface;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class PaymentController extends Controller
 {
     public function chargeCustomer(
-        PaymentServiceInterface  $paymentService,
-        OrdersServiceInterface   $ordersService,
-        NotificationServiceInterface $notificationService,
+        Request                      $request,
+        PaymentServiceInterface      $paymentService,
+        OrdersServiceInterface       $ordersService,
+        NotificationServiceInterface $notificationService
     ): View
     {
         $order = $ordersService->getPendingOrder();
 
         if (is_null($order)) {
-            return view(
-                'payments.error',
-                [
-                    'error' => 'There are no pending orders',
-                    'orderId' => 0,
-                ]
-            );
+            return view('payments.error', ['error' => 'There are no pending orders', 'orderId' => 0]);
         }
 
         try {
-            $paymentService->createPaymentIntent($order);
+            $paymentService->createPaymentIntent($order, $request->input('payment_method_id'));
         } catch (Exception $e) {
-            $error = $e->getMessage();
-            $notificationService->notifyUsAboutPaymentErrors($order, $error);
+            $notificationService->notifyUsAboutPaymentErrors($order, $e->getMessage());
 
-            return view(
-                'payments.error',
-                [
-                    'error' => $e->getMessage(),
-                    'orderId' => $order->id,
-                ]
-            );
+            return view('payments.error', ['error' => $e->getMessage(), 'orderId' => $order->id]);
         }
 
         event(new OrderCreated($order));
 
-        return view(
-            'payments.success',
-            [
-                'order' => $order,
-            ]
-        );
+        return view('payments.success', ['order' => $order]);
     }
 }

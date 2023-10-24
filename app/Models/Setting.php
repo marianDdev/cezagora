@@ -12,7 +12,8 @@ class Setting extends Model
 {
     use HasFactory;
     public const TRANSACTION_FEE_PERCENTAGE = 'transaction_fee_percentage';
-    public const DEFAULT_CURRENCY = 'eur';
+    public const DEFAULT_CURRENCY_VALUE     = 'eur';
+    public const DEFAULT_CURRENCY_NAME     = 'default_currency';
 
     protected $fillable = ['name', 'value'];
 }

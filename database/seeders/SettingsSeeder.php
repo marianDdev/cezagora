@@ -19,7 +19,8 @@ class SettingsSeeder extends Seeder
                 'value' => env('TRANSFER_FEE_PERCENTAGE'),
             ],
             [
-                'name' =>
+                'name' => Setting::DEFAULT_CURRENCY_NAME,
+                'value' => Setting::DEFAULT_CURRENCY_VALUE
             ]
         );
     }

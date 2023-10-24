@@ -14,7 +14,7 @@ interface PaymentServiceInterface
     /**
      * @throws ApiErrorException
      */
-    public function createPaymentIntent(Order $order): PaymentIntent;
+    public function createPaymentIntent(Order $order, string $paymentMethodId): PaymentIntent;
 
     /**
      * @throws ApiErrorException

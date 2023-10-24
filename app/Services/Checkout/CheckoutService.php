@@ -18,7 +18,7 @@ class CheckoutService implements CheckoutServiceInterface
         foreach ($cartItems as $item) {
             $lineItems[] = [
                 'price_data' => [
-                    'currency'     => Setting::DEFAULT_CURRENCY,
+                    'currency'     => Setting::DEFAULT_CURRENCY_VALUE,
                     'unit_amount'  => $item->price,
                     'product_data' => [
                         'name' => $item->name,
