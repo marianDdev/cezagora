@@ -12,6 +12,10 @@ class UpdateOrderStatus
 
     public function handle(object $event): void
     {
-        $event->order->update(['status' => Order::STATUS_PAYMENT_COLLECTED]);
+        $event->order->update(
+            [
+                'status' => Order::STATUS_PAYMENT_COLLECTED
+            ]
+        );
     }
 }

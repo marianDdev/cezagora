@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Payment;
 
-use App\Models\CartItem;
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Traits\AuthUser;
 use Illuminate\Contracts\View\View;
@@ -25,7 +25,7 @@ class CheckoutController extends Controller
         );
     }
 
-    public function showSucess(): View
+    public function showSuccess(): View
     {
         return view('checkout.success');
     }

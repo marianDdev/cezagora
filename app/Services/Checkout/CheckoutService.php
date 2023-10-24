@@ -2,6 +2,8 @@
 
 namespace App\Services\Checkout;
 
+use App\Models\Setting;
+use App\Services\Stripe\Payment\PaymentServiceInterface;
 use Illuminate\Support\Collection;
 
 class CheckoutService implements CheckoutServiceInterface
@@ -16,7 +18,7 @@ class CheckoutService implements CheckoutServiceInterface
         foreach ($cartItems as $item) {
             $lineItems[] = [
                 'price_data' => [
-                    'currency'     => 'ron',
+                    'currency'     => Setting::DEFAULT_CURRENCY_VALUE,
                     'unit_amount'  => $item->price,
                     'product_data' => [
                         'name' => $item->name,

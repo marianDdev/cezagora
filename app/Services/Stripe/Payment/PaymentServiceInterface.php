@@ -9,10 +9,12 @@ use Stripe\PaymentIntent;
 
 interface PaymentServiceInterface
 {
+    public const PAYMENT_METHOD_CARD_VISA = 'pm_card_visa';
+
     /**
      * @throws ApiErrorException
      */
-    public function createPaymentIntent(Order $order): PaymentIntent;
+    public function createPaymentIntent(Order $order, string $paymentMethodId): PaymentIntent;
 
     /**
      * @throws ApiErrorException

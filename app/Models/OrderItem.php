@@ -24,8 +24,10 @@ class OrderItem extends Model
 {
     use HasFactory;
 
-    private const INGREDIENT_TYPE = 'ingredient';
-    private const PRODUCT_TYPE    = 'product';
+    public const STATUS_PENDING = 'pending';
+
+    public const INGREDIENT_TYPE = 'ingredient';
+    public const PRODUCT_TYPE    = 'product';
     private const TYPES           = [
         self::INGREDIENT_TYPE,
         self::PRODUCT_TYPE,

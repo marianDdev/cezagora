@@ -1,68 +1,101 @@
-<x-guest-layout>
-    @if(is_null($order))
-        <div id="info-popup" tabindex="-1"
-             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-            <div class="relative p-4 w-full max-w-lg h-full md:h-auto">
-                <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 md:p-8">
-                    <div class="mb-4 text-sm font-light text-gray-500 dark:text-gray-400">
-                        <p>
-                            Your cart is empty.
-                        </p>
-                    </div>
+<x-app-layout>
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        @if(is_null($order))
+            <div class="bg-white p-4 rounded-lg shadow-md text-center">
+                <p class="text-gray-500 dark:text-gray-400">Your cart is empty.</p>
+            </div>
+        @else
+            <div class="flex flex-col md:flex-row gap-6">
+                <!-- Order Items (Left Part) -->
+                <div class="flex-1 bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-lg font-medium mb-4">Your Order</h2>
+
+                    <table class="w-full text-sm text-gray-500 dark:text-gray-400">
+                        <thead class="text-sm text-blue-500 uppercase bg-gray-200">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">Seller</th>
+                                <th scope="col" class="px-6 py-3">Product type</th>
+                                <th scope="col" class="px-6 py-3">Product name</th>
+                                <th scope="col" class="px-6 py-3">Quantity</th>
+                                <th scope="col" class="px-6 py-3">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($order->items as $item)
+                                <tr class="border-b dark:border-gray-700">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->seller->name }}</th>
+                                    <td class="px-6 py-4 text-indigo-500">{{ $item->item_type }}</td>
+                                    <td class="px-6 py-4">{{ $item->name }}</td>
+                                    <td class="px-6 py-4">{{ $item->quantity }}</td>
+                                    <td class="px-6 py-4">${{ $item->price }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Payment Form (Right Part) -->
+                <div class="flex-1 bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-lg font-medium mb-4">Payment</h2>
+
+                    <form method="post" action="{{ route('payment.charge') }}" id="payment-form">
+                        @csrf
+                        <!-- Card Payment Input -->
+                        <div class="mb-4">
+                            <div id="card-element" class="p-2 border rounded"></div>
+                            <div id="card-errors" role="alert" class="text-red-500 mt-2"></div>
+                        </div>
+
+                        <x-primary-button class="w-full mt-6">
+                            Buy now for {{ $order->total_price / 100 }} LEI
+                        </x-primary-button>
+                    </form>
                 </div>
             </div>
-        </div>
-    @else
-        <table class="w-4/5 text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-sm text-blue-500 uppercase bg-gray-200">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        Seller
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Product type
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Product name
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Quantity
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Price
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($order->items as $item)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <script>
+                let stripePublicKey = "{{ config('stripe.publishable') }}";
+                let stripe          = Stripe(stripePublicKey);
+                let elements        = stripe.elements();
+                let card            = elements.create('card');
+                card.mount('#card-element');
 
-                            {{ $item->seller->name }}
-                        </th>
-                        <td class="px-6 py-4 text-indigo-500">
-                            {{ $item->item_type }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->name }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->quantity }}
-                        </td>
-                        <td class="px-6 py-4">
-                            ${{ $item->price }}
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+                card.addEventListener('change', function (event) {
+                    var displayError = document.getElementById('card-errors');
+                    if ( event.error ) {
+                        displayError.textContent = event.error.message;
+                    } else {
+                        displayError.textContent = '';
+                    }
+                });
 
-        <form class="text-center space-y-6" method="post" action="{{ route('payment.charge') }}">
-            @csrf
-            <x-primary-button class="w-full justify-center">
-                Buy now for {{ $order->total_price}} LEI
-            </x-primary-button>
+                var form = document.getElementById('payment-form');
+                form.addEventListener('submit', async function (event) {
+                    event.preventDefault();
 
-        </form>
-    @endif
-</x-guest-layout>
+                    const {
+                              paymentMethod,
+                              error
+                          } = await stripe.createPaymentMethod({
+                                                                   type : 'card',
+                                                                   card : card,
+                                                               });
+
+                    if ( error ) {
+                        var errorElement         = document.getElementById('card-errors');
+                        errorElement.textContent = error.message;
+                    } else {
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.setAttribute('type', 'hidden');
+                        hiddenInput.setAttribute('name', 'payment_method_id');
+                        hiddenInput.setAttribute('value', paymentMethod.id);
+                        form.appendChild(hiddenInput);
+                        form.submit();
+                    }
+                });
+            </script>
+        @endif
+    </div>
+</x-app-layout>

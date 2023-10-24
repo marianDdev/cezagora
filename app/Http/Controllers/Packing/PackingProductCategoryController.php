@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Packing;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PackingProductCategoryController extends Controller
 {

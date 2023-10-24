@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Payment;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateTransferRequest;
 use App\Models\Order;
 use App\Services\Notification\NotificationServiceInterface;
@@ -10,10 +11,18 @@ use App\Services\Stripe\Payment\PaymentServiceInterface;
 use App\Traits\AuthUser;
 use Exception;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class TransferController extends Controller
 {
     use AuthUser;
+
+    public function listTransfersToExecute(): View
+    {
+        $orders = Order::where('status', Order::STATUS_PAYMENT_COLLECTED)->get();
+
+        return view('transfers.index', ['orders' => $orders]);
+    }
 
     public function getTransferPage(int $orderId): View
     {
@@ -27,7 +36,8 @@ class TransferController extends Controller
         PaymentServiceInterface      $paymentService,
         CustomerServiceInterface     $customerService,
         NotificationServiceInterface $notificationService
-    ) {
+    ): RedirectResponse|View
+    {
         $validated = $request->validated();
 
         $order = Order::find($validated['order_id']);
@@ -45,5 +55,7 @@ class TransferController extends Controller
         }
 
         $notificationService->notifySellersAboutMoneyTransfers($order);
+
+        return redirect()->route('transfer.list');
     }
 }
