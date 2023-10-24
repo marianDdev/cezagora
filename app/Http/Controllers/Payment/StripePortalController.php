@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Payment;
 
+use App\Http\Controllers\Controller;
 use App\Services\Stripe\BillingPortal\BillingPortalServiceInterface;
 use App\Services\Stripe\Customer\CustomerServiceInterface;
 use App\Traits\AuthUser;

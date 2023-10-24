@@ -44,6 +44,9 @@ class OrdersService implements OrdersServiceInterface
         return $this->pendingOrder;
     }
 
+    /**
+     * @throws Exception
+     */
     public function createOrderItem(array $validated): OrderItem
     {
         $order     = $this->getCurrentOrder();

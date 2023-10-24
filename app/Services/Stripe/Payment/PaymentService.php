@@ -32,7 +32,7 @@ class PaymentService extends StripeService implements PaymentServiceInterface
             ->create(
                 [
                     'amount'         => $order->total_price,
-                    'currency'       => self::CURRENCY_RON,
+                    'currency'       => Setting::DEFAULT_CURRENCY,
                     'transfer_group' => $order->id,
                 ]
             );
@@ -73,7 +73,7 @@ class PaymentService extends StripeService implements PaymentServiceInterface
                 ->create(
                     [
                         'amount'         => $this->calculateAmount($amount),
-                        'currency'       => 'ron',
+                        'currency'       => Setting::DEFAULT_CURRENCY,
                         'destination'    => $sellerStripeId,
                         'transfer_group' => $order->id,
                     ]
@@ -121,7 +121,7 @@ class PaymentService extends StripeService implements PaymentServiceInterface
             [
                 'product'     => $product->id,
                 'unit_amount' => $item->price,
-                'currency'    => 'ron',
+                'currency'    => Setting::DEFAULT_CURRENCY,
             ]
         );
 

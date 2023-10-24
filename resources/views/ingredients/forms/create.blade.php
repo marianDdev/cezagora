@@ -9,8 +9,14 @@
                     </div>
                 @endif
             </div>
-            <div class="mb-6 text-orange-300">
-                <p>Make sure that every row of your file contains this exact column names: <span class="font-bold">name | common_name | description | function | price | quantity | availability | available_at</span></p>
+            <div class="mb-4 text-red-400">
+                <p>Important requirements before uploading your file!:</p>
+            </div>
+            <div class="mb-4 text-red-400">
+                <p>Every row of your file must contain this exact column names: <span class="font-bold text-red-600">name | common_name | description | function | price | quantity | availability | available_at</span></p>
+            </div>
+            <div class="mb-6 text-red-400">
+                <p>The prices should be set in euro cents without the currency symbol: <span class="font-bold text-red-600">Eg: for 10 eur set the price to 1000</span></p>
             </div>
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
                 @include('cards.ingredients.upload')

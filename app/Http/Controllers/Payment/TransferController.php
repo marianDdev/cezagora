@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Payment;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateTransferRequest;
 use App\Models\Order;
 use App\Services\Notification\NotificationServiceInterface;

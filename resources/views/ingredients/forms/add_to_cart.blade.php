@@ -7,7 +7,7 @@
         </ul>
     </div>
 @endif
-<form action="{{ route('order-item.store') }}" method="post">
+<form action="{{ route('ingredient.order-item.store') }}" method="post">
     @csrf
     <input id="customer_id" name="customer_id"
            value="{{ \Illuminate\Support\Facades\Auth::user()->company_id }}" type="hidden" />
@@ -15,7 +15,7 @@
            type="hidden" />
     <input id="item_id" name="item_id" value="{{ $ingredient->id }}"
            type="hidden" />
-    <input id="item_type" name="item_type" value="ingredient" type="hidden" />
+    <input id="item_type" name="item_type" value="{{ \App\Models\OrderItem::INGREDIENT_TYPE }}" type="hidden" />
     <input id="price" name="price" value="{{ $ingredient->price }}" type="hidden" />
 
     <select name="quantity"

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Payment;
 
 use App\Events\OrderCreated;
+use App\Http\Controllers\Controller;
 use App\Services\Notification\NotificationServiceInterface;
 use App\Services\Order\OrdersServiceInterface;
 use App\Services\Stripe\Payment\PaymentServiceInterface;

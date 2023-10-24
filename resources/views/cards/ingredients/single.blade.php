@@ -16,7 +16,7 @@
 <div
     class="bg-blue-50 border border-blue-200 rounded-lg p-4 md:p-4">
     <p class="text-gray-900 font-bold mb-2 whitespace-normal break-words">{{ $shortName }}</p>
-    <p class="text-gray-500 dark:text-gray-400 mb-4">Price per item: {{ $ingredient->price }}</p>
+    <p class="text-gray-500 dark:text-gray-400 mb-4">Price per item: {{ $ingredient->price / 1000 }} </p>
 
     <p class="text-gray-500 dark:text-gray-400 mb-4">Availability: {{ $ingredient->availability }}</p>
 
