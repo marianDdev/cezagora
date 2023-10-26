@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreIngredientOrderItemRequest;
+use App\Models\Ingredient;
 use App\Models\OrderItem;
 use App\Services\Order\OrdersServiceInterface;
 use App\Traits\AuthUser;

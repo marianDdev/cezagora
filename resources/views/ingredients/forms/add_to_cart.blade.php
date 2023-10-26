@@ -15,7 +15,6 @@
            type="hidden" />
     <input id="item_id" name="item_id" value="{{ $ingredient->id }}"
            type="hidden" />
-    <input id="item_type" name="item_type" value="{{ \App\Models\OrderItem::INGREDIENT_TYPE }}" type="hidden" />
     <input id="price" name="price" value="{{ $ingredient->price }}" type="hidden" />
 
     <select name="quantity"

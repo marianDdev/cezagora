@@ -11,46 +11,20 @@ class OrdersService implements OrdersServiceInterface
 {
     use AuthUser;
 
-
-    private ?Order $pendingOrder;
-
-    public function __construct()
-    {
-        $this->pendingOrder = Order::where('customer_id', $this->authUserCompany()->id)
-                                   ->where('status', Order::STATUS_PENDING)
-                                   ->first();
-    }
-
-    public function getCurrentOrder(): ?Order
-    {
-        $order = $this->pendingOrder;
-
-        if (is_null($order)) {
-            return Order::create(
-                [
-                    'customer_id' => $this->authUserCompany()->id,
-                ]
-            );
-        }
-
-        return $order;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function getPendingOrder(): Order
-    {
-        return $this->pendingOrder;
-    }
-
     /**
      * @throws Exception
      */
     public function createOrderItem(array $validated): OrderItem
     {
         $order     = $this->getCurrentOrder();
-        $data      = array_merge($validated, ['order_id' => $order->id]);
+        $data      = array_merge(
+            $validated, [
+                'item_type' => OrderItem::INGREDIENT_TYPE,
+                'order_id' => $order->id,
+                'total' => $validated['price'] * $validated['quantity']
+            ]
+        );
+
         $item      = OrderItem::create($data);
 
         if (is_null($item)) {
@@ -69,5 +43,27 @@ class OrdersService implements OrdersServiceInterface
     {
         $order->total_price += $item->total;
         $order->save();
+    }
+
+    public function getPendingOrder(): ?Order
+    {
+        return Order::where('customer_id', $this->authUserCompany()->id)
+             ->where('status', Order::STATUS_PENDING)
+             ->first();
+    }
+
+    private function getCurrentOrder(): ?Order
+    {
+        $order = $this->getPendingOrder();
+
+        if (is_null($order)) {
+            return Order::create(
+                [
+                    'customer_id' => $this->authUserCompany()->id,
+                ]
+            );
+        }
+
+        return $order;
     }
 }

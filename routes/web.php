@@ -106,22 +106,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(['prefix' => '/orders'], function () {
         Route::get('/', [OrderController::class, 'listOrders'])->name('orders');
         Route::get('/{id}', [OrderController::class, 'show'])->name('order.show');
-        Route::get('/create', [OrderController::class, 'create'])
-             ->middleware(
-                 [
-                     RedirectIfUserHasNotEnabledStripe::class,
-                     RedirectIfUserHasNotAddedCompanyDetails::class,
-                 ]
-             )
-             ->name('order.create');
-        Route::post('/', [OrderController::class, 'store'])
-             ->middleware(
-                 [
-                     RedirectIfUserHasNotEnabledStripe::class,
-                     RedirectIfUserHasNotAddedCompanyDetails::class,
-                 ]
-             )
-             ->name('order.store');
         Route::get('/{id}/edit', [OrderController::class, 'edit'])->name('order.edit');
         Route::put('/{id}', [OrderController::class, 'update'])->name('order.update');
         Route::post('/ingredient/store', [OrderIngredientController::class, 'store'])

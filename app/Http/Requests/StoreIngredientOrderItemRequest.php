@@ -19,13 +19,11 @@ class StoreIngredientOrderItemRequest extends FormRequest
     {
         return [
             'customer_id' => ['required', 'integer', Rule::exists(Company::class, 'id')],
-            'seller_id' => ['required', 'integer', Rule::exists(Company::class, 'id')],
-            'item_id' => ['required', 'integer'],
-            'item_type' => ['required', 'same:ingredient'],
-            'price' => ['required', 'integer'],
-            'quantity' => ['required', 'integer'],
-            'name' => ['required', 'string'],
-            'total' => ['nullable', 'integer']
+            'seller_id'   => ['required', 'integer', Rule::exists(Company::class, 'id')],
+            'item_id'     => ['required', 'integer'],
+            'price'       => ['required', 'integer'],
+            'quantity'    => ['required', 'integer'],
+            'name'        => ['required', 'string'],
         ];
     }
 }

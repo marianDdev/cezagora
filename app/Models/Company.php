@@ -102,11 +102,6 @@ class Company extends Model implements HasMedia
         return $this->hasMany(OrderItem::class, 'seller_id', 'id');
     }
 
-    public function getPendingOrder(): ?Order
-    {
-        return $this->orders->where('status', Order::STATUS_PENDING)->first();
-    }
-
     public function isActive(): bool
     {
         return $this->user->is_active;
