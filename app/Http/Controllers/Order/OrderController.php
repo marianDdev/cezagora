@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
 use App\Traits\AuthUser;
 use Illuminate\Contracts\View\View;
@@ -45,17 +44,5 @@ class OrderController extends Controller
         }
 
         return $order;
-    }
-
-    public function create(): View
-    {
-        return view('orders.create');
-    }
-
-    public function store(StoreOrderRequest $orderRequest)
-    {
-        $validated = $orderRequest->validated();
-
-        Order::create($validated);
     }
 }
