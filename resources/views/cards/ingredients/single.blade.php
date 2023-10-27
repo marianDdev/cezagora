@@ -14,7 +14,7 @@
 @endphp
 
 <div
-    class="bg-blue-50 border border-blue-200 rounded-lg p-4 md:p-4">
+    class="{{ $ingredient->availability === \App\Services\Ingredient\IngredientServiceInterface::NOT_AVAILABLE ?  'bg-gray-100' : 'bg-blue-50'}} border border-blue-200 rounded-lg p-4 md:p-4">
     <p class="text-gray-900 font-bold mb-2 whitespace-normal break-words">{{ $shortName }}</p>
     <p class="text-gray-500 dark:text-gray-400 mb-4">Price per item: {{ $ingredient->price / 100 }} </p>
 
@@ -35,6 +35,10 @@
 
     <p class="text-gray-500 dark:text-gray-400 mb-4">Function: {{ strtolower($ingredient->function) }}</p>
     @if($authUserOwnsIngredient === false)
-        @include('ingredients.forms.add_to_cart', ['ingredient' => $ingredient])
+        @if($ingredient->availability === \App\Services\Ingredient\IngredientServiceInterface::NOT_AVAILABLE)
+            <p class="text-red-500 dark:text-gray-400 mb-4">Out of stock</p>
+        @else
+            @include('ingredients.forms.add_to_cart', ['ingredient' => $ingredient])
+        @endif
     @endif
 </div>
