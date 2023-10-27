@@ -17,22 +17,8 @@ class OrdersService implements OrdersServiceInterface
     public function createOrderItem(array $validated): OrderItem
     {
         $order     = $this->getCurrentOrder();
-        $data      = array_merge(
-            $validated, [
-                'item_type' => OrderItem::INGREDIENT_TYPE,
-                'order_id' => $order->id,
-                'total' => $validated['price'] * $validated['quantity']
-            ]
-        );
-
-        $item      = OrderItem::create($data);
-
-        if (is_null($item)) {
-            throw new Exception('Order item was not created', 422);
-        }
-
-        $item->total = $item->price * $item->quantity;
-        $item->save();
+        $data      =  $this->getItemData($order, $validated);
+        $item      = $this->createItem($data);
 
         $this->updateTotal($order, $item);
 
@@ -65,5 +51,30 @@ class OrdersService implements OrdersServiceInterface
         }
 
         return $order;
+    }
+
+    private function getItemData(Order $order, array $validated): array
+    {
+        return array_merge(
+            $validated, [
+                          'item_type' => OrderItem::INGREDIENT_TYPE,
+                          'order_id'  => $order->id,
+                          'total'     => $validated['price'] * $validated['quantity'],
+                      ]
+        );
+    }
+
+    private function createItem(array $data): OrderItem
+    {
+        $item      = OrderItem::create($data);
+
+        if (is_null($item)) {
+            throw new Exception('Order item was not created', 422);
+        }
+
+        $item->total = $item->price * $item->quantity;
+        $item->save();
+
+        return $item;
     }
 }

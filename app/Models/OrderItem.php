@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string     $item_type
  * @property Ingredient $ingredient
  * @property string     $status
+ * @property int        $total
  */
 class OrderItem extends Model
 {

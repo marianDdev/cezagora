@@ -14,6 +14,7 @@ class Setting extends Model
     public const TRANSACTION_FEE_PERCENTAGE = 'transaction_fee_percentage';
     public const DEFAULT_CURRENCY_VALUE     = 'eur';
     public const DEFAULT_CURRENCY_NAME     = 'default_currency';
+    public const DEFAULT_CURRENCY_SYMBOL     = '€';
 
     protected $fillable = ['name', 'value'];
 }
