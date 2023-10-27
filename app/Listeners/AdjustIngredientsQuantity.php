@@ -20,8 +20,13 @@ class AdjustIngredientsQuantity
         foreach ($order->items as $item) {
             /** @var Ingredient $ingredient */
             $ingredient           = Ingredient::find($item->item_id);
-            $ingredient->quantity = $ingredient->quantity - $item->quantity;
-            $ingredient->save();
+            $availableStock = $ingredient->quantity - $item->quantity;
+            $ingredient->update(['quantity' => $availableStock]);
+
+            if ($availableStock === 0) {
+                $ingredient->update(['availability' => IngredientServiceInterface::NOT_AVAILABLE]);
+
+            }
         }
     }
 }
