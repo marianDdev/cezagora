@@ -14,6 +14,7 @@ interface IngredientServiceInterface
 
     public const AVAILABLE_NOW = 'now';
     public const AVAILABLE_ON_DEMAND = 'on_demand';
+    public const NOT_AVAILABLE = 'unavailable';
     public const AVAILABILITY_TYPES = [self::AVAILABLE_NOW, self::AVAILABLE_ON_DEMAND];
 
     public const CHUNK_LIMIT = 1000;

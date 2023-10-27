@@ -24,7 +24,10 @@ class OrderIngredientController extends Controller
     ): RedirectResponse
     {
         $validated = $request->validated();
-        $ordersService->createOrderItem($validated);
+
+        if ($validated['quantity'] > 0) {
+            $ordersService->createOrderItem($validated);
+        }
 
         return redirect(route('ingredients'));
     }
