@@ -13,9 +13,11 @@ class CheckoutController extends Controller
 
     public function show(): View
     {
-        $pendingOrder = $this->authUser()->company ? Order::where('customer_id', $this->authUserCompany()->id)
-                                                          ->where('status', Order::STATUS_PENDING)
-                                                          ->first() : null;
+        $pendingOrder = $this->authUser()->company ?
+            Order::where('customer_id', $this->authUserCompany()->id)
+                    ->where('status', Order::STATUS_PENDING)
+                    ->first() :
+            null;
 
         return view(
             'cart.show',

@@ -20,6 +20,7 @@
                                 <th scope="col" class="px-6 py-3">Product name</th>
                                 <th scope="col" class="px-6 py-3">Quantity</th>
                                 <th scope="col" class="px-6 py-3">Price</th>
+                                <th scope="col" class="px-6 py-3">Total</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,7 +31,8 @@
                                     <td class="px-6 py-4 text-indigo-500">{{ $item->item_type }}</td>
                                     <td class="px-6 py-4">{{ $item->name }}</td>
                                     <td class="px-6 py-4">{{ $item->quantity }}</td>
-                                    <td class="px-6 py-4">${{ $item->price }}</td>
+                                    <td class="px-6 py-4">{{ \App\Models\Setting::DEFAULT_CURRENCY_SYMBOL . $item->price / 100}}</td>
+                                    <td class="px-6 py-4">{{ \App\Models\Setting::DEFAULT_CURRENCY_SYMBOL . ($item->total / 100)}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -50,7 +52,7 @@
                         </div>
 
                         <x-primary-button class="w-full mt-6">
-                            Buy now for {{ $order->total_price / 100 }} LEI
+                            Buy now for {{ \App\Models\Setting::DEFAULT_CURRENCY_SYMBOL . ($order->total_price / 100) }}
                         </x-primary-button>
                     </form>
                 </div>
