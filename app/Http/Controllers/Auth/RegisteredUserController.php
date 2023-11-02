@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
-use App\Notifications\UserRegistered;
 use App\Providers\RouteServiceProvider;
 use App\Services\Notification\NotificationServiceInterface;
 use Illuminate\Auth\Events\Registered;

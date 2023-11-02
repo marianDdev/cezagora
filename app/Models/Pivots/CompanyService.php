@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Pivots;
 
+use App\Models\Company;
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Pivot;
