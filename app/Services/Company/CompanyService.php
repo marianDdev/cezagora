@@ -3,7 +3,7 @@
 namespace App\Services\Company;
 
 use App\Models\Company;
-use App\Models\CompanyCompanyCategory;
+use App\Models\Pivots\CompanyCompanyCategory;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
