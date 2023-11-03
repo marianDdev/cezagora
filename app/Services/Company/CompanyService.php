@@ -7,24 +7,27 @@ use App\Models\Pivots\CompanyCompanyCategory;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Nnjeim\World\Models\City;
+use Nnjeim\World\Models\Country;
+use Nnjeim\World\Models\State;
 
 class CompanyService implements CompanyServiceInterface
 {
     public function create(array $validated): Company
     {
         $categoriesIds = $validated['company_categories'];
-        $categoryData = [];
-        $company = Company::create(
+        $categoryData  = [];
+        $company       = Company::create(
             [
                 'name'                => $validated['name'],
                 'email'               => $validated['email'],
                 'phone'               => $validated['phone'],
-                'slug' => Str::slug($validated['name']),
+                'slug'                => Str::slug($validated['name']),
                 'product_description' => $validated['product_description'],
-                'website' => $validated['website'],
-                'tax_id' => $validated['tax_id'],
-                'vat_id' => $validated['vat_id'],
-                'mcc' => $validated['mcc'],
+                'website'             => $validated['website'],
+                'tax_id'              => $validated['tax_id'],
+                'vat_id'              => $validated['vat_id'],
+                'mcc'                 => $validated['mcc'],
             ]
         );
 
@@ -32,7 +35,7 @@ class CompanyService implements CompanyServiceInterface
 
         foreach ($categoriesIds as $categoryId) {
             $categoryData[] = [
-                'company_id' => $companyId,
+                'company_id'          => $companyId,
                 'company_category_id' => $categoryId,
             ];
         }
@@ -44,16 +47,40 @@ class CompanyService implements CompanyServiceInterface
 
     public function search(string $keyword): Collection
     {
-        return Company::where('name','LIKE',"%{$keyword}%")
-            ->orWhere('email', 'LIKE',"%{$keyword}%")
-            ->orWhere('website', 'LIKE',"%{$keyword}%")
-            ->get();
+        return Company::where('name', 'LIKE', "%{$keyword}%")
+                      ->orWhere('email', 'LIKE', "%{$keyword}%")
+                      ->orWhere('website', 'LIKE', "%{$keyword}%")
+                      ->get();
     }
 
     public function toggleActive(User $user, bool $activate): void
     {
-        $company = $user->company;
+        $company            = $user->company;
         $company->is_active = $activate;
         $company->save();
+    }
+
+    public function update(array $validated): void
+    {
+        /** @var Company $company */
+        $company = Company::find($validated['company_id']);
+
+        if (array_key_exists('mcc', $validated) && $validated['mcc'] === 'Select your merchant category code') {
+            $validated['mcc'] = null;
+        }
+
+        if (array_key_exists('company_categories', $validated)) {
+            foreach ($validated['company_categories'] as $categoryId) {
+                CompanyCompanyCategory::create(
+                    [
+                        'company_category_id' => $categoryId,
+                        'company_id'          => $company->id,
+                    ]
+                );
+            }
+        }
+
+        $company->address->update($validated);
+        $company->update($validated);
     }
 }

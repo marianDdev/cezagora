@@ -19,24 +19,24 @@ class CompanyCategory extends Model
     public const RETAILER             = 'retailer';
     public const LABORATORY           = 'laboratory';
     public const INGREDIENTS_SUPPLIER = 'ingredients supplier';
-    public const PACKING_SUPPLIER     = 'packing supplier';
+    public const PACKAGING_SUPPLIER   = 'packaging supplier';
     public const LEGAL_CONSULTANT     = 'legal consultant';
     public const MARKETING_AGENCY     = 'marketing agency';
     public const CONSUMER = 'consumer';
     public const CARRIER = 'carrier';
 
     public const TYPES = [
-        self::MANUFACTURER,
-        self::DISTRIBUTOR,
-        self::WHOLESALER,
-        self::RETAILER,
-        self::LABORATORY,
-        self::INGREDIENTS_SUPPLIER,
-        self::PACKING_SUPPLIER,
-        self::LEGAL_CONSULTANT,
-        self::MARKETING_AGENCY,
         self::CARRIER,
         self::CONSUMER,
+        self::DISTRIBUTOR,
+        self::INGREDIENTS_SUPPLIER,
+        self::LABORATORY,
+        self::LEGAL_CONSULTANT,
+        self::MANUFACTURER,
+        self::MARKETING_AGENCY,
+        self::PACKAGING_SUPPLIER,
+        self::RETAILER,
+        self::WHOLESALER,
     ];
 
     protected $fillable = ['name'];

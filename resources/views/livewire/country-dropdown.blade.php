@@ -4,9 +4,8 @@
 
         <select wire:model.live="selectedCountry" name="country"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value="" selected>Choose country</option>
             @foreach($countries as $country)
-                <option value="{{ $country->name }}">{{ $country->name }}</option>
+                <option value="{{ $country->name }}" {{ $existingCountry->name === $country->name ? 'selected' : '' }}>{{ $country->name }}</option>
             @endforeach
         </select>
         @include('components.error', ['field' => 'country'])
@@ -19,9 +18,8 @@
 
             <select wire:model.live="selectedState" name="state"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option value="" selected>Choose state</option>
                 @foreach($states as $state)
-                    <option value="{{ $state->name }}">{{ $state->name }}</option>
+                    <option value="{{ $state->name }}" {{ $existingState->name === $state->name ? 'selected' : '' }}>{{ $state->name }}</option>
                 @endforeach
             </select>
             @include('components.error', ['field' => 'state'])
@@ -35,9 +33,8 @@
             <select wire:model="selectedCity"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     name="city">
-                <option value="" selected>Choose city</option>
                 @foreach($cities as $city)
-                    <option value="{{ $city->name }}">{{ $city->name }}</option>
+                    <option value="{{ $city->name }}" {{ $existingCity->name === $city->name ? 'selected' : '' }}>{{ $city->name }}</option>
                 @endforeach
             </select>
             @include('components.error', ['field' => 'city'])

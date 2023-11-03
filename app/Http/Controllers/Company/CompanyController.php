@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
+use App\Models\Pivots\CompanyCompanyCategory;
 use App\Services\Address\AddressServiceInterface;
 use App\Services\Company\CompanyServiceInterface;
 use App\Services\User\UserServiceInterface;
@@ -68,21 +69,10 @@ class CompanyController extends Controller
         return redirect('/onboarding');
     }
 
-    public function update(UpdateCompanyRequest $request): RedirectResponse
+    public function update(UpdateCompanyRequest $request, CompanyServiceInterface $companyService): RedirectResponse
     {
         $validated = $request->validated();
-
-        /** @var Company $company */
-        $company = Company::find($validated['company_id']);
-
-        if ($request->has('mcc') && $validated['mcc'] === 'Select your merchant category code') {
-            $validated['mcc'] = null;
-        }
-
-        $company->update($validated);
-
-
-        //todo choose which address to update or add a new one
+        $companyService->update($validated);
 
         return redirect()->route('dashboard');
     }

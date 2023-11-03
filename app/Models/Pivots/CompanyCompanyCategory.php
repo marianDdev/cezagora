@@ -14,7 +14,7 @@ class CompanyCompanyCategory extends Pivot
 
     public $timestamps = false;
 
-    protected $fillable = ['company_id', 'category_id'];
+    protected $fillable = ['company_id', 'company_category_id'];
 
     public function company(): BelongsTo
     {
