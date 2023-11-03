@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Services\Ingredient\IngredientServiceInterface;
 use Livewire\Component;

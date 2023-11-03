@@ -59,6 +59,8 @@ Route::post('/contact-message', [ContactMessageController::class, 'store'])->nam
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [PagesController::class, 'dashboard'])
          ->name('dashboard');
+    Route::get('/my-products-and-services', [PagesController::class, 'renderMyProductAndServices'])
+        ->name('my.products.services');
     Route::get('/profile', [ProfileController::class, 'edit'])
          ->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

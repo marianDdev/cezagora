@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\CompanyCategory;
 use App\Models\MerchantCategoryCode;
 use App\Models\ProductsCategory;
+use App\Models\User;
 use App\Services\Pages\PagesServiceInterface;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Traits\AuthUser;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
@@ -141,5 +143,20 @@ class PagesController extends Controller
     public function userRoles(): View
     {
         return view('pages.help.user_roles');
+    }
+
+    public function renderMyProductAndServices(): View
+    {
+        $user = $this->authUser();
+        $ingredientsCount = $user->company ? $user->company->ingredients->count() : 0;
+        $productsCount = $user->company ? $user->company->products->count() : 0;
+
+        return view(
+            'pages.products_and_services',
+            [
+                'ingredientsCount' => $ingredientsCount,
+                'productsCount' => $productsCount,
+            ]
+        );
     }
 }
