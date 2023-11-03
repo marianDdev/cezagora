@@ -16,7 +16,7 @@ class PagesService implements PagesServiceInterface
         $company = $this->authUserCompany();
 
         $companyBusinessMap     = $this->getBusinessMap();
-        $companyBusinesstextMap = $this->getBusinessTitleMap();
+        $companyBusinessTextMap = $this->getBusinessTitleMap();
 
         $productsTitle = '';
         $items         = null;
@@ -25,7 +25,7 @@ class PagesService implements PagesServiceInterface
             $categoriesNames = [];
             $itemsText       = [];
             foreach ($company->categories as $category) {
-                $categoriesNames[] = $companyBusinesstextMap[$category->name];
+                $categoriesNames[] = $companyBusinessTextMap[$category->name];
                 $itemsText[]       = $companyBusinessMap[$category->name];
             }
 
@@ -45,18 +45,34 @@ class PagesService implements PagesServiceInterface
     private function getBusinessMap(): array
     {
         return [
-            CompanyCategory::MANUFACTURER         => $company->products ?? null,
-            CompanyCategory::RETAILER             => $company->products ?? null,
+            CompanyCategory::CARRIER => $company->services ?? null,
+            CompanyCategory::CONSUMER => null,
+            CompanyCategory::DISTRIBUTOR => $company->services ?? null,
             CompanyCategory::INGREDIENTS_SUPPLIER => $company->ingredients ?? null,
+            CompanyCategory::LABORATORY => $company->services ?? null,
+            CompanyCategory::LEGAL_CONSULTANT => $company->services ?? null,
+            CompanyCategory::MANUFACTURER => $company->products ?? null,
+            CompanyCategory::MARKETING_AGENCY => $company->services ?? null,
+            CompanyCategory::PACKAGING_SUPPLIER => $company->products ?? null,
+            CompanyCategory::RETAILER => $company->products ?? null,
+            CompanyCategory::WHOLESALER => $company->products ?? null,
         ];
     }
 
     private function getBusinessTitleMap(): array
     {
         return [
-            CompanyCategory::MANUFACTURER         => 'Products',
-            CompanyCategory::RETAILER             => 'Products',
+            CompanyCategory::CARRIER => 'Services',
+            CompanyCategory::CONSUMER => '',
+            CompanyCategory::DISTRIBUTOR => 'Services',
             CompanyCategory::INGREDIENTS_SUPPLIER => 'Ingredients',
+            CompanyCategory::LABORATORY => 'Services',
+            CompanyCategory::LEGAL_CONSULTANT => 'Services',
+            CompanyCategory::MANUFACTURER => 'Products',
+            CompanyCategory::MARKETING_AGENCY => 'Services',
+            CompanyCategory::PACKAGING_SUPPLIER => 'Products',
+            CompanyCategory::RETAILER => 'Products',
+            CompanyCategory::WHOLESALER => 'Products',
         ];
     }
 }

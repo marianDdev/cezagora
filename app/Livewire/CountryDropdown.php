@@ -2,7 +2,8 @@
 
 namespace App\Livewire;
 
-use Illuminate\Support\Collection;
+use App\Services\Company\CompanyServiceInterface;
+use App\Traits\AuthUser;
 use Livewire\Component;
 use Nnjeim\World\Models\City;
 use Nnjeim\World\Models\Country;
@@ -10,6 +11,8 @@ use Nnjeim\World\Models\State;
 
 class CountryDropdown extends Component
 {
+    use AuthUser;
+
     public $countries;
     public $states;
     public $cities;
@@ -18,12 +21,22 @@ class CountryDropdown extends Component
     public $selectedState   = null;
     public $selectedCity    = null;
 
-    public function mount($selectedCity = null)
+    public $existingCountry = null;
+    public $existingState   = null;
+    public $existingCity    = null;
+    private CompanyServiceInterface $companyService;
+
+    public function mount(CompanyServiceInterface $companyService, $selectedCity = null, ): void
     {
         $this->countries    = Country::where('region', 'Europe')->get();
         $this->states       = collect();
         $this->cities       = collect();
         $this->selectedCity = $selectedCity;
+
+        $address = $this->authUserCompany()->address;
+        $this->existingCountry = Country::where('iso2', $address->country_code)->first();
+        $this->existingState = State::where('country_code', $address->country_code)->first();
+        $this->existingCity = City::where('country_code', $address->country_code)->first();
 
         if (!is_null($selectedCity)) {
             $city = City::with('state.country')->find($selectedCity);

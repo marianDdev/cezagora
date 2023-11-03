@@ -6,6 +6,7 @@ use App\Models\CompanyCategory;
 use App\Models\MerchantCategoryCode;
 use App\Models\ProductsCategory;
 use App\Models\User;
+use App\Services\Company\CompanyServiceInterface;
 use App\Services\Pages\PagesServiceInterface;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Traits\AuthUser;
@@ -48,14 +49,22 @@ class PagesController extends Controller
 
     public function dashboard(
         StripeAccountServiceInterface $stripeAccountService,
-        PagesServiceInterface         $pagesService
+        PagesServiceInterface         $pagesService,
     ): View
     {
+        $company = $this->authUserCompany();
         $categories = [
             'categories' => CompanyCategory::all(),
             'mccs'       => MerchantCategoryCode::all(),
         ];
-        $data       = array_merge($categories, $pagesService->getDashboardData($stripeAccountService));
+        $companyCategoryIds = $company->categories->pluck('id')->toArray();
+        $data       = array_merge(
+            $categories,
+            $pagesService->getDashboardData($stripeAccountService),
+            ['companyCategoryIds' => $companyCategoryIds],
+        );
+
+
 
         return view('pages.dashboard', $data);
     }
