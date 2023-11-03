@@ -31,9 +31,8 @@
                 @include(
                     'cards.dashboard.my_products_and_services',
                     [
-                        'title' => sprintf('%s', $productsTitle),
+                        'company' => $company,
                         'imagePath' => 'https://picsum.photos/id/312/200',
-                        'count' => $company ? $company->ingredients->count() : 0
                         ]
                     )
 
