@@ -23,13 +23,13 @@
                             'description' => 'bla bla',
                         ]
                     )
-                
+
                 @if(!is_null($account))
                     @include('cards.dashboard.stripe_dashboard', ['imagePath' => 'https://picsum.photos/id/431/200',])
                 @endif
 
                 @include(
-                    'cards.dashboard.ingredients',
+                    'cards.dashboard.my_products_and_services',
                     [
                         'title' => sprintf('%s', $productsTitle),
                         'imagePath' => 'https://picsum.photos/id/312/200',
