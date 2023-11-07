@@ -10,6 +10,8 @@ interface CompanyServiceInterface
 {
     public function create(array $validated): Company;
 
+    public function update(array $validated): void;
+
     public function search(string $keyword): Collection;
 
     public function toggleActive(User $user, bool $activate): void;

@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Pivots;
 
+use App\Models\Company;
+use App\Models\CompanyCategory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
@@ -12,7 +14,7 @@ class CompanyCompanyCategory extends Pivot
 
     public $timestamps = false;
 
-    protected $fillable = ['company_id', 'category_id'];
+    protected $fillable = ['company_id', 'company_category_id'];
 
     public function company(): BelongsTo
     {

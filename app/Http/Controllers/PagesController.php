@@ -46,14 +46,22 @@ class PagesController extends Controller
 
     public function dashboard(
         StripeAccountServiceInterface $stripeAccountService,
-        PagesServiceInterface         $pagesService
+        PagesServiceInterface         $pagesService,
     ): View
     {
+        $company = $this->authUserCompany();
         $categories = [
             'categories' => CompanyCategory::all(),
             'mccs'       => MerchantCategoryCode::all(),
         ];
-        $data       = array_merge($categories, $pagesService->getDashboardData($stripeAccountService));
+        $companyCategoryIds = $company->categories->pluck('id')->toArray();
+        $data       = array_merge(
+            $categories,
+            $pagesService->getDashboardData($stripeAccountService),
+            ['companyCategoryIds' => $companyCategoryIds],
+        );
+
+
 
         return view('pages.dashboard', $data);
     }
@@ -141,5 +149,20 @@ class PagesController extends Controller
     public function userRoles(): View
     {
         return view('pages.help.user_roles');
+    }
+
+    public function renderMyProductAndServices(): View
+    {
+        $user = $this->authUser();
+        $ingredientsCount = $user->company ? $user->company->ingredients->count() : 0;
+        $productsCount = $user->company ? $user->company->products->count() : 0;
+
+        return view(
+            'pages.products_and_services',
+            [
+                'ingredientsCount' => $ingredientsCount,
+                'productsCount' => $productsCount,
+            ]
+        );
     }
 }

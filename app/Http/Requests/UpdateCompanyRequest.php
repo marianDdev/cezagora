@@ -29,7 +29,6 @@ class UpdateCompanyRequest extends FormRequest
             'product_description' => ['nullable', 'string'],
             'website' => ['nullable', 'url'],
             'tax_id' => ['nullable', 'string', 'min:8', 'max:10'],
-            'tax_id' => ['nullable', 'string', 'min:10', 'max:10'],
             'vat_id' => ['nullable', 'string'],
             'mcc' => ['nullable', 'string']
         ];

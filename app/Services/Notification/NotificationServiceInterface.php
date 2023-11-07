@@ -4,7 +4,6 @@ namespace App\Services\Notification;
 
 use App\Models\Order;
 use App\Models\User;
-use Illuminate\Support\Collection;
 
 interface NotificationServiceInterface
 {
