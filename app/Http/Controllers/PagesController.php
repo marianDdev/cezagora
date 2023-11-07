@@ -5,13 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\CompanyCategory;
 use App\Models\MerchantCategoryCode;
 use App\Models\ProductsCategory;
-use App\Models\User;
-use App\Services\Company\CompanyServiceInterface;
 use App\Services\Pages\PagesServiceInterface;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Traits\AuthUser;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {

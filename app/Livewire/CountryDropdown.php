@@ -2,8 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Services\Company\CompanyServiceInterface;
-use App\Traits\AuthUser;
 use Livewire\Component;
 use Nnjeim\World\Models\City;
 use Nnjeim\World\Models\Country;
@@ -11,41 +9,31 @@ use Nnjeim\World\Models\State;
 
 class CountryDropdown extends Component
 {
-    use AuthUser;
-
     public $countries;
     public $states;
     public $cities;
 
     public $selectedCountry = null;
-    public $selectedState   = null;
-    public $selectedCity    = null;
+    public $selectedState = null;
+    public $selectedCity = null;
 
-    public $existingCountry = null;
-    public $existingState   = null;
-    public $existingCity    = null;
-    private CompanyServiceInterface $companyService;
-
-    public function mount(CompanyServiceInterface $companyService, $selectedCity = null, ): void
+    public function mount(): void
     {
-        $this->countries    = Country::where('region', 'Europe')->get();
-        $this->states       = collect();
-        $this->cities       = collect();
-        $this->selectedCity = $selectedCity;
+        $this->countries = Country::where('region', 'Europe')->get();
 
-        $address = $this->authUserCompany()->address;
-        $this->existingCountry = Country::where('iso2', $address->country_code)->first();
-        $this->existingState = State::where('country_code', $address->country_code)->first();
-        $this->existingCity = City::where('country_code', $address->country_code)->first();
+        $address = auth()->user()->company->address ?? null;
+        if ($address) {
+            $this->selectedCountry = $address->country;
+            $this->states = State::whereHas('country', function ($query) use ($address) {
+                $query->where('name', $address->country);
+            })->get();
 
-        if (!is_null($selectedCity)) {
-            $city = City::with('state.country')->find($selectedCity);
-            if ($city) {
-                $this->cities          = City::where('state_id', $city->state_id)->get();
-                $this->states          = State::where('country_id', $city->state->country_id)->get();
-                $this->selectedCountry = $city->state->country_id;
-                $this->selectedState   = $city->state_id;
-            }
+            $this->selectedState = $address->state;
+            $this->cities = City::whereHas('state', function ($query) use ($address) {
+                $query->where('name', $address->state);
+            })->get();
+
+            $this->selectedCity = $address->city;
         }
     }
 
@@ -56,16 +44,19 @@ class CountryDropdown extends Component
 
     public function updatedSelectedCountry($country)
     {
-        $countryId = Country::where('name', $country)->first()->id;
-        $this->states        = State::where('country_id', $countryId)->get();
+        $this->states = State::whereHas('country', function ($query) use ($country) {
+            $query->where('name', $country);
+        })->get();
         $this->selectedState = null;
+        $this->cities = collect();
+        $this->selectedCity = null;
     }
 
     public function updatedSelectedState($state)
     {
-        $stateId = State::where('name', $state)->first()->id;
-        if (!is_null($state)) {
-            $this->cities = City::where('state_id', $stateId)->get();
-        }
+        $this->cities = City::whereHas('state', function ($query) use ($state) {
+            $query->where('name', $state);
+        })->get();
+        $this->selectedCity = null;
     }
 }
