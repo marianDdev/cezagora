@@ -49,8 +49,8 @@ class IngredientService implements IngredientServiceInterface
                            ->when(!empty($filters['availability']), function (Collection $collection) use ($filters) {
                                return $collection->where('availability', $filters['availability']);
                            })
-                           ->when(!empty($filters['max_available_at']), function (Collection $collection) use ($filters) {
-                               $maxDate = Carbon::parse($filters['max_available_at'])->format('Y-m-d');
+                           ->when(!empty($filters['available_at']), function (Collection $collection) use ($filters) {
+                               $maxDate = Carbon::parse($filters['available_at'])->format('Y-m-d');
 
                                return $collection->where('available_at', '<=', $maxDate);
                            });
