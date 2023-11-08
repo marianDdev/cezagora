@@ -5,7 +5,7 @@
         <img src="{{ url('/images/homepage/raw_materials.jpeg') }}">
     </div>
     <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-4">Discover acids, alkalis, amino acids, siliocones, antioxidants, colours, emollients, emulsifiers, preservatives, thickeners, moisturisers, colours and fragrances and more .</p>
-    <a role="link" aria-disabled="true"
+    <a href="{{ route('ingredients') }}"
        class="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center">Go to raw materials list
         <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
              viewBox="0 0 14 10">
