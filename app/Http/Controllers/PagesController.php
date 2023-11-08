@@ -49,21 +49,7 @@ class PagesController extends Controller
         PagesServiceInterface         $pagesService,
     ): View
     {
-        $company = $this->authUserCompany();
-        $categories = [
-            'categories' => CompanyCategory::all(),
-            'mccs'       => MerchantCategoryCode::all(),
-        ];
-        $companyCategoryIds = $company->categories->pluck('id')->toArray();
-        $data       = array_merge(
-            $categories,
-            $pagesService->getDashboardData($stripeAccountService),
-            ['companyCategoryIds' => $companyCategoryIds],
-        );
-
-
-
-        return view('pages.dashboard', $data);
+        return view('pages.dashboard', $pagesService->getDashboardData($stripeAccountService));
     }
 
     public function settings(): View
@@ -161,7 +147,7 @@ class PagesController extends Controller
             'pages.products_and_services',
             [
                 'ingredientsCount' => $ingredientsCount,
-                'productsCount' => $productsCount,
+                'productsCount'    => $productsCount,
             ]
         );
     }
