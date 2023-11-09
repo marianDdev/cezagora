@@ -56,10 +56,11 @@
                         <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                     </div>
                     <div class="mb-6">
+                        <x-input-label for="mcc" :value="__('Choose your Merchant Category Code')" />
                         <select id="mcc" name="mcc"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             @foreach($mccs as $mcc)
-                                <option value="{{ $mcc->code }}" {{ $company->$mcc === $mcc->code ? 'selected' : '' }}>{{ $mcc->code }} - {{ $mcc->description }}</option>
+                                <option value="{{ $mcc->code }}" {{ $company->mcc == $mcc->code ? 'selected' : '' }}>{{ $mcc->code }} - {{ $mcc->description }}</option>
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('mcc')" class="mt-2" />
@@ -71,6 +72,7 @@
                         <x-input-error :messages="$errors->get('product_description')" class="mt-2" />
                     </div>
                     <div class="mb-6">
+                        <x-input-label for="website" :value="__('Add your website including https://www')" />
                         <x-text-input id="website" type="text" name="website" value="{{ $company->website }}" autofocus
                                       autocomplete="website" placeholder="Website or social media page URL" />
                         <x-input-error :messages="$errors->get('website')" class="mt-2" />

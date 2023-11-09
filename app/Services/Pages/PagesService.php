@@ -39,6 +39,9 @@ class PagesService implements PagesServiceInterface
             'company' => $company ?? null,
             'productsTitle'   => $productsTitle,
             'items'   => $items,
+            'categories' => CompanyCategory::all(),
+            'mccs'       => $stripeAccountService->getShortMccList(),
+            'companyCategoryIds' => $company->categories->pluck('id')->toArray()
         ];
     }
 
