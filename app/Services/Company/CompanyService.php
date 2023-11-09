@@ -70,14 +70,8 @@ class CompanyService implements CompanyServiceInterface
         }
 
         if (array_key_exists('company_categories', $validated)) {
-            foreach ($validated['company_categories'] as $categoryId) {
-                CompanyCompanyCategory::create(
-                    [
-                        'company_category_id' => $categoryId,
-                        'company_id'          => $company->id,
-                    ]
-                );
-            }
+            $categoryIds = $validated['company_categories'];
+            $company->categories()->sync($categoryIds);
         }
 
         $company->address->update($validated);
