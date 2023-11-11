@@ -5,7 +5,7 @@ namespace App\Models\Pivots;
 use App\Models\Company;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class CompanyService extends Pivot
@@ -20,12 +20,12 @@ class CompanyService extends Pivot
 
     public $timestamps = false;
 
-    public function company(): HasOne
+    public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function service(): HasOne
+    public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);
     }

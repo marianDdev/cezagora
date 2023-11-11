@@ -7,9 +7,6 @@ use App\Models\Pivots\CompanyCompanyCategory;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Nnjeim\World\Models\City;
-use Nnjeim\World\Models\Country;
-use Nnjeim\World\Models\State;
 
 class CompanyService implements CompanyServiceInterface
 {

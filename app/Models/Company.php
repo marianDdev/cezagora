@@ -17,23 +17,22 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property Collection      $products
  * @property Collection      $services
  * @property Collection      $ingredients
- * @property Collection      $addresses
  * @property CompanyCategory $companyCategory
  * @property string          $name
  * @property boolean         $has_details_completed
  * @property Collection      $orders
- * @property Collection $sales
- * @property string     $email
- * @property User       $user
- * @property string     $mcc
- * @property string     $product_description
- * @property string     $phone
- * @property string     $website
- * @property string     $tax_id
- * @property string     $vat_id
- * @property Collection $categories
- * @property bool       $is_active
- * @property Address      $address
+ * @property Collection      $sales
+ * @property string          $email
+ * @property User            $user
+ * @property string          $mcc
+ * @property string          $product_description
+ * @property string          $phone
+ * @property string          $website
+ * @property string          $tax_id
+ * @property string          $vat_id
+ * @property Collection      $categories
+ * @property bool            $is_active
+ * @property Address         $address
  */
 class Company extends Model implements HasMedia
 {

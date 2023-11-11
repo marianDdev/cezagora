@@ -3,7 +3,6 @@
 namespace App\Services\User;
 
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class UserService implements UserServiceInterface

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -20,7 +21,6 @@ use Spatie\Translatable\HasTranslations;
  * @property int          $company_id
  * @property string       $first_name
  * @property string       $last_name
- * @property Company      $companies
  * @property boolean      $stripe_account_enabled
  * @property int          $id
  * @property string       $stripe_account_id
@@ -77,12 +77,12 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsTo(Company::class);
     }
 
-    public function products(): HasMany
+    public function products(): HasManyThrough
     {
         return $this->hasManyThrough(Product::class, Company::class);
     }
 
-    public function addresses(): BelongsToMany
+    public function addresses(): HasManyThrough
     {
         return $this->hasManyThrough(Address::class, Company::class);
     }
