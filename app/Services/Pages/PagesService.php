@@ -21,6 +21,8 @@ class PagesService implements PagesServiceInterface
         $productsTitle = '';
         $items         = null;
 
+        $categoriesIds = [];
+
         if ($company && $company->categories) {
             $categoriesNames = [];
             $itemsText       = [];
@@ -31,6 +33,7 @@ class PagesService implements PagesServiceInterface
 
             $productsTitle = implode(',', $categoriesNames);
             $items         = implode(',', $itemsText);
+            $categoriesIds = $company->categories->pluck('id')->toArray();
         }
 
         return [
@@ -41,7 +44,7 @@ class PagesService implements PagesServiceInterface
             'items'   => $items,
             'categories' => CompanyCategory::all(),
             'mccs'       => $stripeAccountService->getShortMccList(),
-            'companyCategoryIds' => $company->categories->pluck('id')->toArray()
+            'companyCategoryIds' => $categoriesIds
         ];
     }
 

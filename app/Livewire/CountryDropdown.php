@@ -34,6 +34,9 @@ class CountryDropdown extends Component
             })->get();
 
             $this->selectedCity = $address->city;
+        } else {
+            $this->states = collect();
+            $this->cities = collect();
         }
     }
 

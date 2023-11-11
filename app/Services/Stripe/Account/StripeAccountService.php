@@ -19,8 +19,8 @@ class StripeAccountService extends StripeService implements StripeAccountService
      */
     public function create(Company $company): Account
     {
-        $address = $company->addresses->first();
-        $countryCode = $company->addresses->first()->country_code;
+        $address = $company->address;
+        $countryCode = $company->address->country_code;
 
         return $this->stripeClient
             ->accounts
