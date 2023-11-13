@@ -3,10 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\MerchantCategoryCode;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class MercgantCategorySeeder extends Seeder
+class MerchantCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.

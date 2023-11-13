@@ -20,7 +20,7 @@
                             'email' => $company->email ?? null,
                             'phone' => $company->phone ?? null,
                             'admin' => $user->getFullName(),
-                            'description' => 'bla bla',
+                            'description' => $company->product_description ?? '',
                         ]
                     )
 
