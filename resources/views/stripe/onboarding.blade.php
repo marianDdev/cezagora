@@ -3,7 +3,7 @@
         <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
             <div class="mr-auto place-self-center lg:col-span-7">
                 <h1 class="max-w-2xl mb-4 text-2xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-3xl dark:text-white">Please Connect with Stripe to set up your payments account before managing your products and services.</h1>
-                <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">Stripe Connect is the fastest and easiest way to integrate payments into CezAgora marketplace. Please complet this short onboarding steps to be able to receive payments for your products and services.</p>
+                <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">Stripe Connect is the fastest and easiest way to integrate payments into CezAgora marketplace. Please complete this short onboarding steps to be able to receive payments for your products and services.</p>
                 <a href="{{ route('onboarding.redirect') }}"
                    class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-blue-500 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                     Signup on Stripe with no extra costs
