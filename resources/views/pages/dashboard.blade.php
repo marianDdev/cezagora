@@ -16,7 +16,7 @@
                             'mccs' => $mccs,
                             'company' => $company,
                             'title' => $company->name ?? null,
-                            'imagePath' => 'https://picsum.photos/id/445/200',
+                            'imagePath' => 'https://t3.ftcdn.net/jpg/05/73/16/54/240_F_573165412_X2ACbn2ZmngbcY3zDE1GCQrCAMvXM75X.jpg',
                             'email' => $company->email ?? null,
                             'phone' => $company->phone ?? null,
                             'admin' => $user->getFullName(),
@@ -24,15 +24,11 @@
                         ]
                     )
 
-                @if(!is_null($account))
-                    @include('cards.dashboard.stripe_dashboard', ['imagePath' => 'https://picsum.photos/id/431/200',])
-                @endif
-
                 @include(
                     'cards.dashboard.my_products_and_services',
                     [
                         'company' => $company,
-                        'imagePath' => 'https://picsum.photos/id/312/200',
+                        'imagePath' => 'https://t4.ftcdn.net/jpg/05/66/13/05/240_F_566130504_Z8omSiCut4psfaLFkYCaNu8XiIkkDQKD.jpg',
                         ]
                     )
 
@@ -40,7 +36,7 @@
                         'cards.dashboard.orders',
                         [
                             'title' => 'Orders',
-                            'imagePath' => 'https://picsum.photos/id/180/200',
+                            'imagePath' => 'https://t4.ftcdn.net/jpg/05/45/84/05/240_F_545840555_MUq39bHj21yG6XTpLuzPEpR7BLguhOMF.jpg',
                              'countOrders' => $company ? $company->orders->count() : 0,
                             ]
                         )
@@ -49,10 +45,14 @@
                         'cards.dashboard.sales',
                         [
                             'title' => 'Sales',
-                            'imagePath' => 'https://picsum.photos/id/180/200',
+                            'imagePath' => 'https://t4.ftcdn.net/jpg/05/21/95/57/240_F_521955761_2fIGXQXbHiwzNribojXzmGFSnO5IyMaz.jpg',
                              'countSales' => $company ? $company->sales->count() : 0,
                             ]
                         )
+                
+                @if(!is_null($account))
+                    @include('cards.dashboard.stripe_dashboard', ['imagePath' => 'https://t4.ftcdn.net/jpg/05/97/91/83/240_F_597918379_Qz6aOWjXmiyduFxbwKcjYBLHPlY8FMKO.jpg',])
+                @endif
             </div>
         </div>
     </section>

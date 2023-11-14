@@ -26,4 +26,8 @@
         @else
             <h3 class="mb-10 mt-16 text-2xl font-bold leading-none tracking-tight text-red-400 md:text-2xl lg:text-2xl dark:text-white text-center">No matching ingredients under keyword "{{ $keyword }}"</h3>
     @endif
+
+    @if(empty($companies) || empty($ingredients))
+            @include('pages._contact-form')
+        @endif
 </x-guest-layout>
