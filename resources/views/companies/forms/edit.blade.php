@@ -15,7 +15,7 @@
 
 <!-- Main modal -->
 <div id="edit-company" tabindex="-1" aria-hidden="true"
-     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+     class="{{ session()->has('errors') && session()->get('errors')->hasBag('default') ? '' : 'hidden' }} fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-md max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -91,7 +91,7 @@
                         <x-input-error :messages="$errors->get('vat_id')" class="mt-2" />
                     </div>
                     <livewire:country-dropdown />
-                    <x-primary-button class="mb-10">
+                    <x-primary-button class="mb-10" :data-modal-hide="!$errors->any() ? 'edit-company' : 'do not close'">
                         {{ __('Update company') }}
                     </x-primary-button>
                 </form>

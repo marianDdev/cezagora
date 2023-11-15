@@ -18,19 +18,26 @@ class UpdateCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company_id' => ['required', 'integer', Rule::exists(Company::class, 'id')],
-            'company_categories' => ['nullable', 'array'],
-            'name' => ['nullable', 'string', 'max:256'],
-            'email'      => ['nullable', 'email'],
-            'phone'      => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
-            'country' => ['nullable', 'string', 'max:256'],
-            'city' => ['nullable', 'string', 'max:256'],
-            'state' => ['nullable', 'string', 'max:256'],
+            'company_id'          => ['required', 'integer', Rule::exists(Company::class, 'id')],
+            'company_categories'  => ['nullable', 'array'],
+            'name'                => ['nullable', 'string', 'max:256'],
+            'email'               => ['nullable', 'email'],
+            'phone'               => ['required', 'regex:/^(?:\+|\b00)[1-9]\d{8,}$/'],
+            'country'             => ['nullable', 'string', 'max:256'],
+            'city'                => ['nullable', 'string', 'max:256'],
+            'state'               => ['nullable', 'string', 'max:256'],
             'product_description' => ['nullable', 'string'],
-            'website' => ['nullable', 'url'],
-            'tax_id' => ['nullable', 'string', 'min:8', 'max:10'],
-            'vat_id' => ['nullable', 'string'],
-            'mcc' => ['nullable', 'string']
+            'website'             => ['nullable', 'url'],
+            'tax_id'              => ['nullable', 'string', 'min:8', 'max:10'],
+            'vat_id'              => ['nullable', 'string'],
+            'mcc'                 => ['nullable', 'string'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'phone.regex' => 'Phone number format is invalid. Add country prefix without parentheses, dashes, or dots.',
         ];
     }
 }
