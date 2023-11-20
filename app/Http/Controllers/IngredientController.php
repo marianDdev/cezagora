@@ -40,11 +40,12 @@ class IngredientController extends Controller
     public function listMyIngredients(): View
     {
         $authCompany = $this->authUserCompany();
+        $ingredients = $authCompany->ingredients()->orderByDesc('created_at')->paginate(12);
 
         return view(
             'ingredients.index',
             [
-                'ingredients' => $authCompany->ingredients()->paginate(12),
+                'ingredients' => $ingredients,
             ]
         );
     }
@@ -60,12 +61,8 @@ class IngredientController extends Controller
 
         Ingredient::create($validated);
 
-        return redirect()->route('ingredient.create')
-                         ->with(
-                             [
-                                 'successful_message' => 'Ingredient added successfully!',
-                             ]
-                         );
+        return redirect()->route('my-ingredients')
+                         ->with(['successful_message' => 'Ingredient added successfully!']);
     }
 
     /**
