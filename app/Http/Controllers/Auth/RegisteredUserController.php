@@ -39,6 +39,6 @@ class RegisteredUserController extends Controller
         $notificationService->sendWelcomeEmail($user);
         $notificationService->notifyUsAboutUserRegistered($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('dashboard');
     }
 }

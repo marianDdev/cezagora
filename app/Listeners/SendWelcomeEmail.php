@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Models\User;
 use App\Notifications\WelcomeEmail;
 use Illuminate\Auth\Events\Registered;
 
@@ -12,7 +13,9 @@ class SendWelcomeEmail
      */
     public function __construct(Registered $event)
     {
-        $event->user->notify(new WelcomeEmail($event->user));
+        /** @var User $user */
+        $user = $event->user;
+        $user->notify(new WelcomeEmail($user));
     }
 
     /**
