@@ -58,11 +58,15 @@ class IngredientController extends Controller
     public function store(StoreIngredientRequest $request): RedirectResponse
     {
         $validated = $request->validated();
+        $ingredient = Ingredient::create($validated);
 
-        Ingredient::create($validated);
+        if (!$ingredient instanceof Ingredient) {
+            return redirect()->route('ingredient.create')
+                             ->with(['error_message' => 'Something went wrong']);
+        }
 
         return redirect()->route('my-ingredients')
-                         ->with(['successful_message' => 'Ingredient added successfully!']);
+            ->with(['successful_message' => 'Ingredient added successfully!']);
     }
 
     /**

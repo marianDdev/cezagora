@@ -8,6 +8,11 @@
                         <p class="mb-4 text-xl tracking-tight font-bold text-gray-500">{{ session('successful_message') }}</p>
                     </div>
                 @endif
+                @if(session('error_message'))
+                    <div class="alert">
+                        <p class="mb-4 text-xl tracking-tight font-bold text-gray-500">{{ session('error_message') }}</p>
+                    </div>
+                @endif
             </div>
             <div class="mb-4 text-red-400">
                 <p>Important requirements before uploading your file!:</p>

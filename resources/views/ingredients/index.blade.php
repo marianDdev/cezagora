@@ -12,6 +12,11 @@
                 <h1 class="max-w-2xl mb-4 text-2xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
                     Discover our entire list of ingredients.
                 </h1>
+                @if(session('successful_message'))
+                    <div class="alert alert-success">
+                        <p class="mb-4 text-xl tracking-tight font-bold text-gray-500">{{ session('successful_message') }}</p>
+                    </div>
+                @endif
             @endif
         </div>
     </section>
