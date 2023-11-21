@@ -106,7 +106,7 @@
                             Ioana Comandariu
                         </h3>
                         <span class="text-gray-500 dark:text-gray-400">COO & Co-Founder</span>
-                        <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">With her extensive experience in the cosmetics industry and exceptional skills in sales and recruitment, Lisa is the driving force behind our operational excellence and growth.</p>
+                        <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">With her extensive experience in the cosmetics industry and exceptional skills in sales and recruitment, Ioana is the driving force behind our operational excellence and growth.</p>
                         <ul class="flex space-x-4 sm:mt-0">
                             <li>
                                 <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
