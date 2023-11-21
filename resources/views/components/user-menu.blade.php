@@ -11,7 +11,7 @@
             data-dropdown-placement="bottom">
         <span class="sr-only">Open user menu</span>
         @if(Auth::check())
-            <div class="relative inline-flex items-center justify-center w-16 h-16 overflow-hidden bg-blue-300 rounded-full dark:bg-gray-600">
+            <div class="relative inline-flex items-center justify-center w-16 h-16 overflow-hidden bg-red-300 rounded-full dark:bg-gray-600">
                 <span class="text-xl font-bold text-gray-600 dark:text-gray-300">{{ $initials }}</span>
             </div>
         @else

@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property int     $id
  * @property int     $quantity
- * @property string  $availabiliy
  * @property string  $available_at
  * @property Company $company
  * @property string  $availability
