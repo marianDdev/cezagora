@@ -27,7 +27,7 @@ class IngredientController extends Controller
 
         $filtered = $service->filter($filters);
 
-        return view('ingredients.main', [
+        return view('ingredients.index', [
             'allIngredients' => $filtersData['allIngredients'],
             'companies' => $filtersData['companies'],
             'functions' => $filtersData['functions'],
@@ -43,7 +43,7 @@ class IngredientController extends Controller
         $ingredients = $authCompany->ingredients()->orderByDesc('created_at')->paginate(12);
 
         return view(
-            'ingredients.index',
+            'ingredients.my_ingredients',
             [
                 'ingredients' => $ingredients,
             ]
