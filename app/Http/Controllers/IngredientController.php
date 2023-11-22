@@ -2,39 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilterIngredientsRequest;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
 use App\Models\Ingredient;
 use App\Services\File\FileServiceInterface;
 use App\Services\Ingredient\IngredientServiceInterface;
-use App\Services\SearchServiceInterface;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Throwable;
 
 class IngredientController extends Controller
 {
-    public function index(
-        Request $request,
-        IngredientServiceInterface $service
-    ): View
+    public function index(FilterIngredientsRequest $request, IngredientServiceInterface $service): View
     {
+        $validated = $request->validated();
         $filtersData = $service->getFiltersData();
-        $filters = collect($request->all())->filter()->all();
-
-        $filtered = $service->filter($filters);
+        $filtered = $service->filter($validated);
 
         return view('ingredients.index', [
+            'authCompany' => $this->authUserCompany(),
             'allIngredients' => $filtersData['allIngredients'],
             'companies' => $filtersData['companies'],
             'functions' => $filtersData['functions'],
             'filteredIngredients' => $filtered,
         ]);
-
-
     }
 
     public function listMyIngredients(): View
