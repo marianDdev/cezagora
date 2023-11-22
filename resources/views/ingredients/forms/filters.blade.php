@@ -1,4 +1,4 @@
-<form class="hidden lg:block" action="{{ route('ingredients') }}" method="GET">
+<form class="hidden lg:block" action="{{ route('ingredients') }}" method="GET" id="filters">
     <div class="border-b border-gray-200 py-6">
         <h3 class="-my-3 flow-root">
             <!-- Expand/collapse section button -->
@@ -15,7 +15,7 @@
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="{{ null }}">Filter by seller</option>
                     @foreach($companies as $company)
-                        <option value="{{ $company->id }}">{{ $company->name }}</option>
+                        <option value="{{ $company->id }}">{{ $authCompany->id === $company->id ? 'You' : $company->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -110,4 +110,18 @@
     <button type="submit"
             class="bg-indigo-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg mt-6">Apply filters
     </button>
+    <button type="submit"
+            class="bg-indigo-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg mt-6">
+        <a href="{{ route('ingredients') }}">
+            Clear filters
+        </a>
+    </button>
+
 </form>
+<script>
+    function clearFilters() {
+        let form = document.querySelector('#filters'); // Replace with your form's class
+        form.reset();
+        form.submit();
+    }
+</script>

@@ -8,6 +8,7 @@ use App\Models\Ingredient;
 use App\Models\User;
 use App\Traits\AuthUser;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\LazyCollection;
@@ -17,49 +18,56 @@ class IngredientService implements IngredientServiceInterface
 {
     use AuthUser;
 
-    public function getAll(): Collection
+    public function getAllFromActiveCompaniesQuery()
     {
-        $companies = Company::where('is_active', true)->has('ingredients')->get();
-        $companiesIds = $companies->pluck('id');
-
-        return Ingredient::whereIn('company_id', $companiesIds)->get();
+        return Ingredient::whereHas('company', function ($query) {
+            $query->where('is_active', true);
+        });
     }
+
     public function filter(array $filters): Collection
     {
-        $ingredients = $this->getAll();
+        $ingredients = $this->getAllFromActiveCompaniesQuery();
 
-        return $ingredients->when(!empty($filters['company_id']), function (Collection $collection) use ($filters) {
-            return $collection->where('company_id', $filters['company_id']);
+        return $ingredients->when(!empty($filters['company_id']), function (Builder $query) use ($filters) {
+            return $query->where('company_id', $filters['company_id']);
         })
-                           ->when(!empty($filters['name']), function (Collection $collection) use ($filters) {
-                               return $collection->where('name', 'LIKE', "%{$filters['name']}%");
+                           ->when(!empty($filters['name']), function (Builder $query) use ($filters) {
+                               $name = addcslashes($filters['name'], '%_');
+
+                               return $query->where('name', 'LIKE', "%$name%");
                            })
-                           ->when(!empty($filters['common_name']), function (Collection $collection) use ($filters) {
-                               return $collection->where('common_name', 'LIKE', "%{$filters['common_name']}%");
+                           ->when(!empty($filters['common_name']), function (Builder $query) use ($filters) {
+                               $commonName = addcslashes($filters['common_name'], '%_');
+
+                               return $query->where('common_name', 'LIKE', "%$commonName%");
                            })
-                           ->when(!empty($filters['functions']), function (Collection $collection) use ($filters) {
-                               return $collection->whereIn('function', $filters['functions']);
+                           ->when(!empty($filters['functions']), function (Builder $query) use ($filters) {
+                               return $query->whereIn('function', $filters['functions']);
                            })
-                           ->when(!empty($filters['min_price']), function (Collection $collection) use ($filters) {
-                               return $collection->where('price', '>=', $filters['min_price']);
+                           ->when(!empty($filters['min_price']), function (Builder $query) use ($filters) {
+                               $minPrice = $filters['min_price'] * 100;
+                               return $query->where('price', '>=', $minPrice);
                            })
-                           ->when(!empty($filters['max_price']), function (Collection $collection) use ($filters) {
-                               return $collection->where('price', '<=', $filters['max_price']);
+                           ->when(!empty($filters['max_price']), function (Builder $query) use ($filters) {
+                               $maxPrice = $filters['max_price'] * 100;
+                               return $query->where('price', '<=', $maxPrice);
                            })
-                           ->when(!empty($filters['availability']), function (Collection $collection) use ($filters) {
-                               return $collection->where('availability', $filters['availability']);
+                           ->when(!empty($filters['availability']), function (Builder $query) use ($filters) {
+                               return $query->where('availability', $filters['availability']);
                            })
-                           ->when(!empty($filters['available_at']), function (Collection $collection) use ($filters) {
+                           ->when(!empty($filters['available_at']), function (Builder $query) use ($filters) {
                                $maxDate = Carbon::parse($filters['available_at'])->format('Y-m-d');
 
-                               return $collection->where('available_at', '<=', $maxDate);
-                           });
+                               return $query->where('available_at', '<=', $maxDate);
+                           })
+                           ->get();
     }
 
     public function getFiltersData(): array
     {
         $companies = Company::where('is_active', true)->has('ingredients')->get();
-        $all = $this->getAll();
+        $all       = $this->getAllFromActiveCompaniesQuery()->get();
         $functions = $all->unique('function')->pluck('function');
 
         return [
@@ -87,10 +95,10 @@ class IngredientService implements IngredientServiceInterface
 
     public function search(string $keyword): Collection
     {
-        return Ingredient::where('name','LIKE',"%{$keyword}%")
-                      ->orWhere('common_name', 'LIKE',"%{$keyword}%")
-                      ->orWhere('function', 'LIKE',"%{$keyword}%")
-                      ->get();
+        return Ingredient::where('name', 'LIKE', "%{$keyword}%")
+                         ->orWhere('common_name', 'LIKE', "%{$keyword}%")
+                         ->orWhere('function', 'LIKE', "%{$keyword}%")
+                         ->get();
     }
 
     public function deleteAll(User $user): void
