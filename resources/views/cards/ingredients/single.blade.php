@@ -20,7 +20,7 @@
 
     <p class="text-gray-500 dark:text-gray-400 mb-4">Availability: {{ $ingredient->availability }}</p>
 
-    @if($ingredient->availability === \App\Services\Ingredient\IngredientServiceInterface::AVAILABLE_NOW)
+    @if($ingredient->availability === \App\Services\Ingredient\IngredientServiceInterface::AVAILABLE_ON_DEMAND)
         <p class="text-gray-500 dark:text-gray-400 mb-4">Available at: {{ \Carbon\Carbon::parse($ingredient->available_at)->format('d-m-Y') }}
         </p>
     @endif

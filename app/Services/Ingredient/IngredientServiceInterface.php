@@ -8,7 +8,7 @@ use Illuminate\Support\LazyCollection;
 
 interface IngredientServiceInterface
 {
-    public function getAll(): Collection;
+    public function getAllFromActiveCompaniesQuery();
     public const IMPORT_FILE_NAME = 'import_file';
     public const IMPORTS          = 'imports';
 

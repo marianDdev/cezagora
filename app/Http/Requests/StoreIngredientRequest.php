@@ -25,7 +25,7 @@ class StoreIngredientRequest extends FormRequest
             'description' => ['required', 'string'],
             'function' => ['required', 'string'],
             'price' => ['required', 'integer'],
-            'quantity' => ['required', 'integer'],
+            'quantity' => ['required', 'integer', 'max:99999'],
             'availability' => ['required', 'string', Rule::in(IngredientServiceInterface::AVAILABILITY_TYPES)],
             'available_at' => ['required_if:availability,on_demand', 'date', 'after_or_equal:' . Carbon::today()]
         ];

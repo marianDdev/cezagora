@@ -26,7 +26,7 @@ class PagesController extends Controller
 
     public function about(): View
     {
-        return view('pages.about');
+        return view('pages.about.index');
     }
 
     public function contact(): View
