@@ -5,7 +5,7 @@
             Cosmin Codrea
         </h3>
         <span class="text-gray-500 dark:text-gray-400">CPO & Co-Founder</span>
-        <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">A biochemistry PhD candidate and enthusiast, Cosmin brings a deep scientific understanding to our product development, ensuring our offerings are both innovative and industry-relevant.</p>
+        <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">A chemical engineering PhD candidate and enthusiast, Cosmin brings a deep scientific understanding to our product development, ensuring our offerings are both innovative and industry-relevant.</p>
         <ul class="flex space-x-4 sm:mt-0">
             <li>
                 <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
