@@ -18,17 +18,21 @@
                         ])
 
                         <!-- Product grid -->
-                        <div class="lg:col-span-3">
-                            <section class="bg-white dark:bg-gray-900">
-                                <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
-                                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                        @foreach($filteredIngredients as $ingredient)
-                                            @include('cards.ingredients.single', ['ingredient' => $ingredient])
-                                        @endforeach
+                        @if($filteredIngredients->count() > 0)
+                            <div class="lg:col-span-3">
+                                <section class="bg-white dark:bg-gray-900">
+                                    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
+                                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                            @foreach($filteredIngredients as $ingredient)
+                                                @include('cards.ingredients.single', ['ingredient' => $ingredient])
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
-                            </section>
-                        </div>
+                                </section>
+                            </div>
+                        @else
+                            <h3 class="mb-10 mt-16 text-2xl font-bold leading-none text-red-400 md:text-2xl lg:text-2xl dark:text-white text-center">There are no ingredients matching your criteria.</h3>
+                        @endif
                     </div>
                 </section>
             </main>
