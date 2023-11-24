@@ -18,12 +18,6 @@ class IngredientService implements IngredientServiceInterface
 {
     use AuthUser;
 
-    public function getAllFromActiveCompaniesQuery()
-    {
-        return Ingredient::whereHas('company', function ($query) {
-            $query->where('is_active', true);
-        });
-    }
 
     public function filter(array $filters): Collection
     {
@@ -47,10 +41,12 @@ class IngredientService implements IngredientServiceInterface
                            })
                            ->when(!empty($filters['min_price']), function (Builder $query) use ($filters) {
                                $minPrice = $filters['min_price'] * 100;
+
                                return $query->where('price', '>=', $minPrice);
                            })
                            ->when(!empty($filters['max_price']), function (Builder $query) use ($filters) {
                                $maxPrice = $filters['max_price'] * 100;
+
                                return $query->where('price', '<=', $maxPrice);
                            })
                            ->when(!empty($filters['availability']), function (Builder $query) use ($filters) {
@@ -105,5 +101,12 @@ class IngredientService implements IngredientServiceInterface
     {
         $company = $user->company;
         Ingredient::where('company_id', $company->id)->delete();
+    }
+
+    private function getAllFromActiveCompaniesQuery()
+    {
+        return Ingredient::whereHas('company', function ($query) {
+            $query->where('is_active', true);
+        });
     }
 }
