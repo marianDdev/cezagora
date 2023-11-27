@@ -31,18 +31,16 @@ class WelcomeEmail extends Notification
         return ['mail'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->from(env('MAIL_FROM_ADDRESS'))
-            ->greeting(sprintf('Hi %s', $this->user->first_name))
-            ->subject('Welcome to CezAgora')
-            ->line('Welcome to CezAgora')
-            ->line('Thank you for using CezAgora!');
+            ->from(env('MAIL_FROM_ADDRESS'), 'CezAgora')
+            ->subject('Welcome to CezAgora – Your Gateway to Cosmetic Innovations')
+            ->view('vendor.notifications.welcome-email', [
+                'user' => $this->user,
+            ]);
     }
+
 
     /**
      * Get the array representation of the notification.

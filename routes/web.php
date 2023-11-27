@@ -154,6 +154,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //webhooks
     Route::post('/webhooks/payment-intent', [WebhookController::class, 'handlePaymentIntentSucceeded'])->name('webhook.paymentIntent');
     Route::post('/webhooks/transfers', [WebhookController::class, 'handleTransfers'])->name('webhook.trasfers');
+
+    //email previews
+    Route::get('preview/{emailName}', [PagesController::class, 'previewEmail'])->name('preview.email');
 });
 
 require __DIR__ . '/auth.php';
