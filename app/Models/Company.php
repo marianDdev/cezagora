@@ -89,7 +89,7 @@ class Company extends Model implements HasMedia
 
     public function packingProducts(): HasMany
     {
-        return $this->hasMany(PackingProduct::class);
+        return $this->hasMany(Packaging::class);
     }
 
     public function orders(): HasMany

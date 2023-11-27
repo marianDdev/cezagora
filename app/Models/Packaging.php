@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class PackingProduct extends Model
+class Packaging extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'company_id',
-        'packing_product_category_id',
+        'packaging_category_id',
         'name',
         'description',
         'slug',
@@ -31,6 +31,6 @@ class PackingProduct extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(PackingProductCategory::class);
+        return $this->belongsTo(PackagingCategory::class);
     }
 }
