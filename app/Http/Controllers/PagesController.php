@@ -9,6 +9,7 @@ use App\Services\Pages\PagesServiceInterface;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Traits\AuthUser;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 
 class PagesController extends Controller
 {
@@ -150,5 +151,13 @@ class PagesController extends Controller
                 'productsCount'    => $productsCount,
             ]
         );
+    }
+
+    public function previewEmail(string $emailName): View
+    {
+        $name = $emailName;
+        $user = $this->authUser();
+
+        return view(sprintf('vendor.notifications.%s', $name), ['user' => $user]);
     }
 }
