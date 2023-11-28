@@ -17,6 +17,13 @@
                         'count' => $ingredientsCount
                         ]
                     )
+                @include(
+                    'cards.dashboard.packaging',
+                    [
+                        'imagePath' => 'https://t4.ftcdn.net/jpg/05/68/81/15/240_F_568811549_cddvPdfy3L8AFGNYsJmS45UwuWs2PNJr.jpg',
+                        'count' => $packagingCount
+                        ]
+                    )
 
                 @include(
                     'cards.dashboard.products',

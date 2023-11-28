@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Order\OrderIngredientController;
+use App\Http\Controllers\Packaging\PackagingController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\Payment\CheckoutController;
 use App\Http\Controllers\Payment\PaymentController;
@@ -142,6 +143,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [TransferController::class, 'listTransfersToExecute'])->name('transfer.list');
         Route::get('/{orderId}', [TransferController::class, 'getTransferPage'])->name('transfer.show');
         Route::post('/', [TransferController::class, 'transferToSellers'])->name('transfer.create');
+    });
+
+    Route::group(['prefix' => '/packagings'], function () {
+        Route::get('/', [PackagingController::class, 'index'])->name('packagings.index');
+        Route::get('/{id}', [PackagingController::class, 'show'])->name('packagings.show');
+        Route::get('/create', [PackagingController::class, 'create'])->name('packagings.create');
+        Route::post('/', [PackagingController::class, 'store'])->name('packagings.store');
+        Route::get('/edit/{id}', [PackagingController::class, 'edit'])->name('packagings.edit');
+        Route::patch('/{id}', [PackagingController::class, 'update'])->name('packagings.update');
     });
 
     //stripe

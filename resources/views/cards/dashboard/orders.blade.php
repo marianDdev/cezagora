@@ -12,7 +12,7 @@
             <h3 class="text-xl font-bold tracking-tight text-gray-400">
                 <a role="link" aria-disabled="true">{{ $title }}</a>
             </h3>
-            <span class="text-gray-500">You have no active orders yet</span>
+            <span class="text-gray-500">{{ __('messages.no_orders') }}</span>
             <span
                 class="text-gray-500"></span>
         </div>
@@ -26,7 +26,7 @@
             <h3 class="text-xl font-bold tracking-tight text-indigo-500">
                 <a href="{{ route('orders') }}">{{ $title }}</a>
             </h3>
-            <span class="text-gray-500 dark:text-gray-400">You have {{ $countOrders }} active orders</span>
+            <span class="text-gray-500 dark:text-gray-400">You have {{ $countOrders }} {{__('messages.active')}} {{__('messages.orders')}}</span>
             <span
                 class="text-gray-500 dark:text-gray-400"></span>
         </div>

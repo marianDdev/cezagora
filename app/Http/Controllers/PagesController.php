@@ -143,12 +143,14 @@ class PagesController extends Controller
         $user = $this->authUser();
         $ingredientsCount = $user->company ? $user->company->ingredients->count() : 0;
         $productsCount = $user->company ? $user->company->products->count() : 0;
+        $packagingCount = $user->company ? $user->company->packagings->count() : 0;
 
         return view(
             'pages.products_and_services',
             [
                 'ingredientsCount' => $ingredientsCount,
                 'productsCount'    => $productsCount,
+                'packagingCount'    => $packagingCount,
             ]
         );
     }
