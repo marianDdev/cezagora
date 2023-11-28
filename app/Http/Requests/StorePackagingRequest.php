@@ -26,8 +26,8 @@ class StorePackagingRequest extends FormRequest
             'capacity'              => ['required', 'integer', 'min:1'],
             'colour'                => ['required', 'string'],
             'material'              => ['required', 'string'],
-            'neck_size'             => ['required', 'integer', 'min:1'],
-            'bottom_shape'          => ['required', 'string'],
+            'neck_size'             => ['nullable', 'integer', 'min:1',],
+            'bottom_shape'          => ['nullable', 'string'],
         ];
     }
 }

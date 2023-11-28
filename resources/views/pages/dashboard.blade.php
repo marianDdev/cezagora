@@ -4,8 +4,8 @@
 
             <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{__('messages.user_dashboard', ['user_full_name' => $user->getFullName()])}}</h2>
-                @if(is_null(\Illuminate\Support\Facades\Auth::user()->company) && \Illuminate\Support\Facades\Auth::user()->stripe_account_enabled == false)
-                    <p class="font-light text-orange-300 lg:mb-16 sm:text-xl">Please keep in mind that certain actions can be performed only after adding company details and the payment onboarding is completed.</p>
+                @if(is_null($company) && $user->stripe_account_enabled)
+                    <p class="font-light text-orange-300 lg:mb-16 sm:text-xl">{{ __('messages.required_company_details_and_stripe_onboarding') }}</p>
                 @endif
             </div>
 

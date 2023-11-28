@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Packaging;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePackagingRequest;
 use App\Models\Packaging;
+use App\Models\PackagingCategory;
 use App\Traits\AuthUser;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -20,14 +21,32 @@ class PackagingController extends Controller
 
     public function listMyPackaging(): View
     {
-        $packaging = $this->authUserCompany()->packagings;
+        $company   = $this->authUserCompany();
+        $packaging = $company->packagings;
+        $categories = PackagingCategory::all();
 
-        return view('packaging.index', ['packagings' => $packaging]);
+        return view(
+            'packaging.index',
+            [
+                'packagings' => $packaging,
+                'company'    => $company,
+                'categories' => $categories,
+            ]
+        );
     }
 
     public function create(): View
     {
-        return view('packaging.forms.create');
+        $company    = $this->authUserCompany();
+        $categories = PackagingCategory::all();
+
+        return view(
+            'packaging.forms.create',
+            [
+                'company'    => $company,
+                'categories' => $categories,
+            ]
+        );
     }
 
     public function store(StorePackagingRequest $request): RedirectResponse
@@ -36,6 +55,6 @@ class PackagingController extends Controller
 
         Packaging::create($validated);
 
-        return redirect()->route('my.packagings');
+        return redirect()->route('my-packaging');
     }
 }

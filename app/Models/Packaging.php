@@ -33,6 +33,6 @@ class Packaging extends Model implements HasMedia
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(PackagingCategory::class);
+        return $this->belongsTo(PackagingCategory::class, 'packaging_category_id');
     }
 }

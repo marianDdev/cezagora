@@ -33,6 +33,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property Collection      $categories
  * @property bool            $is_active
  * @property Address         $address
+ * @property Collection      $packagings
  */
 class Company extends Model implements HasMedia
 {

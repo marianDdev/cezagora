@@ -148,6 +148,7 @@ class PagesController extends Controller
         return view(
             'pages.products_and_services',
             [
+                'user' => $user,
                 'ingredientsCount' => $ingredientsCount,
                 'productsCount'    => $productsCount,
                 'packagingCount'    => $packagingCount,

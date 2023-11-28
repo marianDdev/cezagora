@@ -25,7 +25,7 @@
             </div>
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
                 @include('cards.files.upload', ['route' => 'packaging.upload'])
-                @include('cards.ingredients.add_one')
+                @include('cards.packaging.add_manually', ['company' => $company])
             </div>
         </div>
     </section>

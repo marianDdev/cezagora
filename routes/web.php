@@ -153,7 +153,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(['prefix' => '/packagings'], function () {
         Route::get('/', [PackagingController::class, 'index'])->name('packagings.index');
         Route::get('/create', [PackagingController::class, 'create'])->name('packagings.create');
-        Route::post('/', [PackagingController::class, 'store'])->name('packagings.store');
+        Route::post('/', [PackagingController::class, 'store'])->name('packaging.store');
         Route::get('/edit/{id}', [PackagingController::class, 'edit'])->name('packagings.edit');
         Route::patch('/{id}', [PackagingController::class, 'update'])->name('packagings.update');
     });
