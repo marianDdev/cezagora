@@ -67,7 +67,7 @@ class FileService implements FileServiceInterface
             throw new Exception(
                 sprintf(
                     'Your file should have the recommended columns: %s',
-                    implode(' | ', self::REQUIRED_KEYS)
+                    implode(' | ', self::INGREDIENTS_REQUIRED_KEYS)
                 )
             );
         }
@@ -76,8 +76,8 @@ class FileService implements FileServiceInterface
     private function hasNecessaryDetails(array $header): bool
     {
         $headerFlipped = array_flip($header);
-        $requiredKeys = array_flip(self::REQUIRED_KEYS);
+        $requiredKeys = array_flip(self::INGREDIENTS_REQUIRED_KEYS);
 
-        return count(array_intersect_key($requiredKeys, $headerFlipped)) === count(self::REQUIRED_KEYS);
+        return count(array_intersect_key($requiredKeys, $headerFlipped)) === count(self::INGREDIENTS_REQUIRED_KEYS);
     }
 }

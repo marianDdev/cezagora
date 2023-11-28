@@ -57,7 +57,14 @@ return [
     'packaging_count'                                                => 'You have :count packaging products',
     'products_count'                                                 => 'You have :count products',
     'create_company_before_add_ingredients'                          => 'Please complete your company details and payment onboarding before adding ingredients',
+    'create_company_before_add_packaging'                            => 'Please complete your company details and payment onboarding before adding packaging products',
     'add_first_ingredients'                                          => 'Click here to add your first ingredients',
     'add_first_products'                                             => 'Click here to add your first products',
     'add_first_packaging'                                            => 'Click here to add your first packaging products',
+    'add_multiple_ingredients'                                       => "Import ingredients via Excel or input them manually.",
+    'add_multiple_packaging'                                         => "Import packaging products via Excel or input them manually.",
+    'upload_requirements'                                            => 'Essential Pre-upload File Requirements:',
+    'required_column_names'                                          => "Your file should have rows with these specific column names: name | common_name | description | function | price | quantity | availability | available_at.",
+    'required_price_format'                                          => "Prices must be in euro cents, excluding the currency symbol (e.g., €10 as '1000').",
+
 ];

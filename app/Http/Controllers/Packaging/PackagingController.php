@@ -15,15 +15,21 @@ class PackagingController extends Controller
 
     public function index(): View
     {
-        $packagings = $this->authUserCompany()->packagings;
+        return view('packaging.index', ['packagings' => Packaging::all()]);
+    }
 
-        return view('packaging.index', ['packagings' => $packagings]);
+    public function listMyPackaging(): View
+    {
+        $packaging = $this->authUserCompany()->packagings;
+
+        return view('packaging.index', ['packagings' => $packaging]);
     }
 
     public function create(): View
     {
         return view('packaging.forms.create');
     }
+
     public function store(StorePackagingRequest $request): RedirectResponse
     {
         $validated = $request->validated();
