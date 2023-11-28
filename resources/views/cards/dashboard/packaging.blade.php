@@ -2,17 +2,20 @@
     <a href="{{ route('my.products.services') }}">
         <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{ $imagePath}}" />
         <div class="p-5">
-                <div class="p-5">
+            <div class="p-5">
 
-                        <a href="{{ route('packagings.index') }}">
-                            <h3 class="text-xl font-bold text-indigo-500">
-                                Packaging products
-                            </h3>
-                        </a>
-                    @if($count > 0)
-                        <span class="text-gray-500 dark:text-gray-400">You have {{ $count }} products</span>
-                    @endif
-                </div>
+                <a href="{{ route('packagings.index') }}">
+                    <h3 class="text-xl font-bold text-indigo-500">
+                        {{ ucfirst(__('messages.packaging')) }}
+                    </h3>
+                </a>
+                @if($count > 0)
+                    <span
+                        class="text-gray-500 dark:text-gray-400">{{ __('messages.packaging_count', ['count' => $count]) }}</span>
+                @else
+                    <a href="{{ route('packagings.create') }}" class="text-indigo-500">{{ __('messages.add_first_packaging') }}</a>
+                @endif
+            </div>
         </div>
     </a>
 </div>

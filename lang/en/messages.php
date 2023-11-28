@@ -2,8 +2,8 @@
 
 return [
     'ingredients'                                                    => 'Ingredients',
-    'products'                                                       => 'Products',
-    'packaging'                                                      => 'Packaging',
+    'products'                                                       => 'products',
+    'packaging'                                                      => 'packaging',
     'discover_raw_materials_ingredients_services_in_one_place'       => 'Discover cosmetic raw materials, ingredients and services in one place.',
     'signup_now_join_manufacturers_suppliers_distributors_retailers' => 'Signup now and join our cosmetics community of manufacturers,ingredients and packing suppliers, distributors and retailers.',
     'get_access_to_service_provider'                                 => 'Get access to a wide variety of service providers, such as laboratories,compliance consultants, marketing agencies, couriers and many other relevant categories of CezAgora users.',
@@ -53,4 +53,11 @@ return [
     'orders'                                                         => 'orders',
     'no_sales'                                                       => 'You have no sales yet',
     'sales_count'                                                    => 'You have :countSales sales',
+    'ingredients_count'                                              => 'You have :count ingredients',
+    'packaging_count'                                                => 'You have :count packaging products',
+    'products_count'                                                 => 'You have :count products',
+    'create_company_before_add_ingredients'                          => 'Please complete your company details and payment onboarding before adding ingredients',
+    'add_first_ingredients'                                          => 'Click here to add your first ingredients',
+    'add_first_products'                                             => 'Click here to add your first products',
+    'add_first_packaging'                                            => 'Click here to add your first packaging products',
 ];

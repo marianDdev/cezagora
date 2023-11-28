@@ -3,7 +3,7 @@
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
 
             <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
-                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">My products and services</h2>
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ __('messages.products_services') }}</h2>
                 @if(is_null(\Illuminate\Support\Facades\Auth::user()->company) && \Illuminate\Support\Facades\Auth::user()->stripe_account_enabled == false)
                     <p class="font-light text-orange-300 lg:mb-16 sm:text-xl">Please keep in mind that certain actions can be performed only after adding company details and the payment onboarding is completed.</p>
                 @endif
