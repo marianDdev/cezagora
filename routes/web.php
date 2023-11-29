@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Order\OrderIngredientController;
+use App\Http\Controllers\Packaging\PackagingController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\Payment\CheckoutController;
 use App\Http\Controllers\Payment\PaymentController;
@@ -45,6 +47,10 @@ Route::get('/contact-message-sent', [PagesController::class, 'contactMessageSent
 Route::group(['prefix' => '/ingredients'], function () {
     Route::get('/', [IngredientController::class, 'index'])->name('ingredients');
     Route::post('/', [IngredientController::class, 'search'])->name('ingredients.search');
+});
+
+Route::group(['prefix' => '/packagings'], function () {
+    Route::get('/', [PackagingController::class, 'index'])->name('packaging.index');
 });
 
 Route::group(['prefix' => '/search'], function () {
@@ -144,6 +150,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [TransferController::class, 'transferToSellers'])->name('transfer.create');
     });
 
+    Route::group(['prefix' => '/packaging'], function () {
+        Route::get('/create', [PackagingController::class, 'create'])->name('packaging.create');
+        Route::post('/', [PackagingController::class, 'store'])->name('packaging.store');
+        Route::get('/edit/{id}', [PackagingController::class, 'edit'])->name('packaging.edit');
+        Route::patch('/{id}', [PackagingController::class, 'update'])->name('packaging.update');
+    });
+
+    Route::get('/my-packaging', [PackagingController::class, 'listMyPackaging'])
+         ->middleware(
+             [
+                 RedirectIfUserHasNotAddedCompanyDetails::class,
+                 RedirectIfUserHasNotEnabledStripe::class,
+             ]
+         )
+         ->name('my-packaging');
+
     //stripe
     Route::get('/onboarding', [StripeOnboardingController::class, 'index'])->name('onboarding');
     Route::get('/onboarding/redirect', [StripeOnboardingController::class, 'redirect'])->name('onboarding.redirect');
@@ -157,6 +179,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //email previews
     Route::get('preview/{emailName}', [PagesController::class, 'previewEmail'])->name('preview.email');
+
+    Route::post('/upload', [FileController::class, 'upload'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('upload');
 });
 
 require __DIR__ . '/auth.php';

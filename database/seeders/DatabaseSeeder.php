@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
         $this->call(WorldSeeder::class);
         $this->call(CompanyCategoriesSeeder::class);
         $this->call(ProducstCategoriesSeeder::class);
-        $this->call(PackingProductsSeeder::class);
+        $this->call(PackagingCategoriesSeeder::class);
         $this->call(SettingsSeeder::class);
     }
 }

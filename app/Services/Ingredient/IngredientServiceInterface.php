@@ -11,10 +11,21 @@ interface IngredientServiceInterface
     public const IMPORT_FILE_NAME = 'import_file';
     public const IMPORTS          = 'imports';
 
-    public const AVAILABLE_NOW = 'now';
+    public const AVAILABLE_NOW       = 'now';
     public const AVAILABLE_ON_DEMAND = 'on_demand';
-    public const NOT_AVAILABLE = 'unavailable';
-    public const AVAILABILITY_TYPES = [self::AVAILABLE_NOW, self::AVAILABLE_ON_DEMAND];
+    public const NOT_AVAILABLE       = 'unavailable';
+    public const AVAILABILITY_TYPES  = [self::AVAILABLE_NOW, self::AVAILABLE_ON_DEMAND];
+
+    public const REQUIRED_KEYS = [
+        'name',
+        'common_name',
+        'description',
+        'function',
+        'price',
+        'quantity',
+        'availability',
+        'available_at',
+    ];
 
     public const CHUNK_LIMIT = 1000;
 

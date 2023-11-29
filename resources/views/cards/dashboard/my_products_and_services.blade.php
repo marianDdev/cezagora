@@ -5,7 +5,7 @@
             <div class="p-5">
                 <a href="{{ route('my.products.services') }}">
                     <h3 class="text-xl font-bold tracking-tight text-indigo-500">
-                        My products and services
+                        {{__('messages.products_services')}}
                     </h3>
                 </a>
             </div>

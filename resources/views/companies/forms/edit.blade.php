@@ -1,5 +1,5 @@
 <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">
-    My company
+    {{__('messages.my_company')}}
 </h3>
 <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Name:</span> {{ $title }}</p>
 <p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Email:</span> {{ $email }}</p>
@@ -10,7 +10,7 @@
 <button data-modal-target="edit-company" data-modal-toggle="edit-company"
         class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         type="button">
-    Update your company's details
+    {{ __('messages.update_company') }}
 </button>
 
 <!-- Main modal -->
