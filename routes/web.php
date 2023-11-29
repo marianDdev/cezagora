@@ -50,7 +50,7 @@ Route::group(['prefix' => '/ingredients'], function () {
 });
 
 Route::group(['prefix' => '/packagings'], function () {
-    Route::get('/', [PackagingController::class, 'index'])->name('packagings.index');
+    Route::get('/', [PackagingController::class, 'index'])->name('packaging.index');
 });
 
 Route::group(['prefix' => '/search'], function () {
@@ -150,12 +150,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [TransferController::class, 'transferToSellers'])->name('transfer.create');
     });
 
-    Route::group(['prefix' => '/packagings'], function () {
-        Route::get('/', [PackagingController::class, 'index'])->name('packagings.index');
-        Route::get('/create', [PackagingController::class, 'create'])->name('packagings.create');
+    Route::group(['prefix' => '/packaging'], function () {
+        Route::get('/create', [PackagingController::class, 'create'])->name('packaging.create');
         Route::post('/', [PackagingController::class, 'store'])->name('packaging.store');
-        Route::get('/edit/{id}', [PackagingController::class, 'edit'])->name('packagings.edit');
-        Route::patch('/{id}', [PackagingController::class, 'update'])->name('packagings.update');
+        Route::get('/edit/{id}', [PackagingController::class, 'edit'])->name('packaging.edit');
+        Route::patch('/{id}', [PackagingController::class, 'update'])->name('packaging.update');
     });
 
     Route::get('/my-packaging', [PackagingController::class, 'listMyPackaging'])

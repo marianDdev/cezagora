@@ -33,6 +33,7 @@ use App\Services\Stripe\Payment\PaymentServiceInterface;
 use App\Services\User\UserService;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Pluralizer;
 use Illuminate\Support\ServiceProvider;
 use Stripe\StripeClient;
 

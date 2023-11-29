@@ -21,12 +21,12 @@ class PackagingController extends Controller
 
     public function listMyPackaging(): View
     {
-        $company   = $this->authUserCompany();
-        $packaging = $company->packagings;
+        $company    = $this->authUserCompany();
+        $packaging  = $company->packagings()->orderByDesc('created_at')->paginate(12);
         $categories = PackagingCategory::all();
 
         return view(
-            'packaging.index',
+            'packaging.my_packaging',
             [
                 'packagings' => $packaging,
                 'company'    => $company,

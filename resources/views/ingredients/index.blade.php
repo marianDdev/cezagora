@@ -4,7 +4,7 @@
             <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
                     <h1 class="text-4xl font-bold tracking-tight text-gray-900">
-                        Discover our entire list of ingredients.
+                        {{ __('messages.discover_packaging_list') }}
                     </h1>
                 </div>
 
@@ -31,7 +31,7 @@
                                 </section>
                             </div>
                         @else
-                            <h3 class="mb-10 mt-16 text-2xl font-bold leading-none text-red-400 md:text-2xl lg:text-2xl dark:text-white text-center">There are no ingredients matching your criteria.</h3>
+                            <h3 class="mb-10 mt-16 text-2xl font-bold leading-none text-red-400 md:text-2xl lg:text-2xl dark:text-white text-center">{{ __('messages.search_no_result') }}</h3>
                         @endif
                     </div>
                 </section>
