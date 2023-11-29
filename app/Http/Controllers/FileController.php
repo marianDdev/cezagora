@@ -14,17 +14,33 @@ class FileController extends Controller
         $validated  = $request->validated();
         $entityName = $validated['entity'];
 
-        switch ($entityName) {
-            case 'ingredient':
-                try {
-                    $fileService->upload($validated['entity']);
+        $routes = $this->getRoutes($entityName);
 
-                    return view('ingredients.check-upload-status');
-                } catch (Exception $e) {
-                    return view('ingredients.error', ['uploadError' => $e->getMessage()]);
-                }
+        try {
+            $fileService->upload($validated['entity']);
+
+            return view('files.check-upload-status', ['route' => $routes['index']]);
+        } catch (Exception $e) {
+            return view('files.error', ['uploadError' => $e->getMessage(), 'route' => $routes['create']]);
+        }
+    }
+
+    private function getRoutes(string $entityName): array
+    {
+        $routes = [];
+        switch ($entityName) {
+            case FileServiceInterface::INGREDIENT:
+                $routes['index']  = 'my-ingredients';
+                $routes['create'] = 'ingredient.create';
+
+                break;
+            case FileServiceInterface::PACKAGING:
+                $routes['index']  = 'my-packaging';
+                $routes['create'] = 'packaging.create';
+
+                break;
         }
 
-        return view('dashboard');
+        return $routes;
     }
 }

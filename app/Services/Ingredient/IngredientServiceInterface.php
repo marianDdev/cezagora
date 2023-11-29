@@ -30,8 +30,6 @@ interface IngredientServiceInterface
 
     public function getFiltersData(): array;
 
-    public function bulkInsert(LazyCollection $rows): void;
-
     public function search(string $keyword): Collection;
 
     public function deleteAll(User $user): void;
