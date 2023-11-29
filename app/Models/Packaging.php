@@ -17,7 +17,6 @@ class Packaging extends Model implements HasMedia
         'packaging_category_id',
         'name',
         'description',
-        'slug',
         'price',
         'capacity',
         'colour',

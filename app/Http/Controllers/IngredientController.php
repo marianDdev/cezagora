@@ -7,12 +7,9 @@ use App\Http\Requests\SearchRequest;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
 use App\Models\Ingredient;
-use App\Services\File\FileServiceInterface;
 use App\Services\Ingredient\IngredientServiceInterface;
-use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Throwable;
 
 class IngredientController extends Controller
 {
@@ -61,28 +58,6 @@ class IngredientController extends Controller
 
         return redirect()->route('my-ingredients')
                          ->with(['successful_message' => 'Ingredient added successfully!']);
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function insertIngredientsFromFile(
-        FileServiceInterface       $fileService,
-        IngredientServiceInterface $ingredientService
-    ): View|RedirectResponse
-    {
-        try {
-            $file = $fileService->addToMediaCollection(IngredientServiceInterface::IMPORT_FILE_NAME, IngredientServiceInterface::IMPORTS);
-            $fileService->validateFileHeader($file);
-
-            $fileRows = $fileService->extractRows($file);
-            $ingredientService->bulkInsert($fileRows);
-
-            return view('ingredients.check-upload-status');
-        } catch (Exception $e) {
-            return view('ingredients.error', ['error' => $e->getMessage()]);
-        }
-
     }
 
     public function edit(string $slug): View
