@@ -17,7 +17,7 @@ class UploadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'model' => ['required', 'string', Rule::in(FileServiceInterface::MODELS)],
+            'entity' => ['required', 'string', Rule::in(FileServiceInterface::MODELS)],
         ];
     }
 }

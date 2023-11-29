@@ -7,6 +7,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 interface FileServiceInterface
 {
+    public const IMPORT_FILE_NAME = 'import_file';
+    public const IMPORTS          = 'imports';
     public const MODELS = [
         'ingredient',
         'packaging',
@@ -27,9 +29,5 @@ interface FileServiceInterface
     public const INGREDIENT = 'ingredient';
     public const PRODUCT    = 'product';
 
-    public function addToMediaCollection(string $fileName, string $collectionName): Media;
-
-    public function extractRows(Media $file): LazyCollection;
-
-    public function validateFileHeader(Media $file): void;
+    public function upload(string $entityName): void;
 }

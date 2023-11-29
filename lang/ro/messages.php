@@ -43,6 +43,7 @@ return [
     'add_manually'                                                   => 'Adauga manual',
     'upload'                                                         => 'incarca fisier',
     'add_multiple_packaging'                                         => "Importa ambalaje din Excel sau adauga-le manual.",
+    'add_multiple_ingredients'                                       => "Importa ingrediente si materii prime din Excel sau adauga-le manual.",
     'required_price_format'                                          => "Preturile trebuie introduse in euro centi, fara simbolul monedei (de exemplu: in loc de €10 introduceti 1000).",
     'upload_requirements'                                            => 'Criterii esentiale pentru adaugare prin incarcare fisier:',
     'required_column_names'                                          => "Fisierul dvs trebuie sa aiba exact aceste nume de coloane: name | common_name | description | function | price | quantity | availability | available_at.",
@@ -97,5 +98,5 @@ return [
     'silver'                                                         => 'argintiu',
     'gold'                                                           => 'auriu',
     'transparent'                                                    => 'transparent',
-
+    'no_required_columns'                                            => "Fisierul dvs nu contine coloanele obligatorii.",
 ];

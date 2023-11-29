@@ -8,9 +8,6 @@ use Illuminate\Support\LazyCollection;
 
 interface IngredientServiceInterface
 {
-    public const IMPORT_FILE_NAME = 'import_file';
-    public const IMPORTS          = 'imports';
-
     public const AVAILABLE_NOW       = 'now';
     public const AVAILABLE_ON_DEMAND = 'on_demand';
     public const NOT_AVAILABLE       = 'unavailable';

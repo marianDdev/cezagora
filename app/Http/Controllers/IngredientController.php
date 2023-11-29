@@ -19,6 +19,7 @@ class IngredientController extends Controller
     public function index(FilterIngredientsRequest $request, IngredientServiceInterface $service): View
     {
         $validated   = $request->validated();
+        dd($validated);
         $filtersData = $service->getFiltersData();
         $filtered    = $service->filter($validated);
 
@@ -61,28 +62,6 @@ class IngredientController extends Controller
 
         return redirect()->route('my-ingredients')
                          ->with(['successful_message' => 'Ingredient added successfully!']);
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function insertIngredientsFromFile(
-        FileServiceInterface       $fileService,
-        IngredientServiceInterface $ingredientService
-    ): View|RedirectResponse
-    {
-        try {
-            $file = $fileService->addToMediaCollection(IngredientServiceInterface::IMPORT_FILE_NAME, IngredientServiceInterface::IMPORTS);
-            $fileService->validateFileHeader($file);
-
-            $fileRows = $fileService->extractRows($file);
-            $ingredientService->bulkInsert($fileRows);
-
-            return view('ingredients.check-upload-status');
-        } catch (Exception $e) {
-            return view('ingredients.error', ['error' => $e->getMessage()]);
-        }
-
     }
 
     public function edit(string $slug): View

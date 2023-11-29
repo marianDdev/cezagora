@@ -11,6 +11,7 @@ use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\SimpleExcel\SimpleExcelReader;
+use Throwable;
 
 class FileService implements FileServiceInterface
 {
@@ -29,10 +30,34 @@ class FileService implements FileServiceInterface
     }
 
     /**
+     * @throws Throwable
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
+    public function upload(string $entityName): void
+    {
+        $file = $this->addToMediaCollection($entityName, sprintf('%ss', $entityName));
+        $this->validateFileHeader($file, $entityName);
+        $fileRows = $this->extractRows($file, $entityName);
+        switch ($entityName) {
+            case 'ingredient':
+                $this->insertIngredientsFromFile($fileRows);
+        }
+    }
+
+    /**
+     * @throws Throwable
+     */
+    private function insertIngredientsFromFile(LazyCollection $fileRows): void
+    {
+        $this->ingredientService->bulkInsert($fileRows);
+    }
+
+    /**
      * @throws FileIsTooBig
      * @throws FileDoesNotExist
      */
-    public function addToMediaCollection(string $fileName, string $collectionName): Media
+    private function addToMediaCollection(string $fileName, string $collectionName): Media
     {
         $user = $this->authUser();
 
@@ -40,9 +65,10 @@ class FileService implements FileServiceInterface
                     ->toMediaCollection($collectionName);
     }
 
-    public function extractRows(Media $file): LazyCollection
+    private function extractRows(Media $file): LazyCollection
     {
-        $filePath = storage_path('app/public/' . $file->id . '/' . $file->file_name);
+        $path     = sprintf('app/public/%d/%s', $file->id, $file->file_name);
+        $filePath = storage_path($path);
 
         return SimpleExcelReader::create($filePath)->getRows();
     }
@@ -50,34 +76,36 @@ class FileService implements FileServiceInterface
     /**
      * @throws Exception
      */
-    public function validateFileHeader(Media $file): void
+    private function validateFileHeader(Media $file, string $entityName): void
     {
-        $filePath = storage_path('app/public/' . $file->id . '/' . $file->file_name);
-        $header = SimpleExcelReader::create($filePath)->getHeaders();
+        $path     = sprintf('app/public/%d/%s', $file->id, $file->file_name);
+        $filePath = storage_path($path);
+        $header   = SimpleExcelReader::create($filePath)->getHeaders();
 
-        $this->validateKeysExist($header);
+        $this->validateKeysExist($header, $entityName);
     }
 
     /**
      * @throws Exception
      */
-    private function validateKeysExist(array $header): void
+    private function validateKeysExist(array $header, string $entityName): void
     {
-        if (!$this->hasNecessaryDetails($header)) {
-            throw new Exception(
-                sprintf(
-                    'Your file should have the recommended columns: %s',
-                    implode(' | ', self::INGREDIENTS_REQUIRED_KEYS)
-                )
-            );
+        if (!$this->hasNecessaryDetails($header, $entityName)) {
+            throw new Exception(__('messages.no_required_columns'));
         }
     }
 
-    private function hasNecessaryDetails(array $header): bool
+    private function hasNecessaryDetails(array $header, string $entityName): bool
     {
         $headerFlipped = array_flip($header);
-        $requiredKeys = array_flip(self::INGREDIENTS_REQUIRED_KEYS);
 
-        return count(array_intersect_key($requiredKeys, $headerFlipped)) === count(self::INGREDIENTS_REQUIRED_KEYS);
+        switch ($entityName) {
+            case self::INGREDIENT:
+                $requiredKeys = array_flip(self::INGREDIENTS_REQUIRED_KEYS);
+
+                return count(array_intersect_key($requiredKeys, $headerFlipped)) === count(self::INGREDIENTS_REQUIRED_KEYS);
+        }
+
+        return false;
     }
 }
