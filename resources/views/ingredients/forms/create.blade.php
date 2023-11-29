@@ -18,9 +18,7 @@
                 <p>Important requirements before uploading your file!:</p>
             </div>
             <div class="mb-4 text-red-400">
-                <p>Every row of your file must contain this exact column names: <span
-                        class="font-bold text-red-600">name | common_name | description | function | price | quantity | availability | available_at</span>
-                </p>
+                <p>{{ __('messages.ingredients_required_column_names') }}</p>
             </div>
             <div class="mb-6 text-red-400">
                 <p>The prices should be set in euro cents without the currency symbol: <span

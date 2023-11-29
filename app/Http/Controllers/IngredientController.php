@@ -7,19 +7,15 @@ use App\Http\Requests\SearchRequest;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
 use App\Models\Ingredient;
-use App\Services\File\FileServiceInterface;
 use App\Services\Ingredient\IngredientServiceInterface;
-use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Throwable;
 
 class IngredientController extends Controller
 {
     public function index(FilterIngredientsRequest $request, IngredientServiceInterface $service): View
     {
         $validated   = $request->validated();
-        dd($validated);
         $filtersData = $service->getFiltersData();
         $filtered    = $service->filter($validated);
 

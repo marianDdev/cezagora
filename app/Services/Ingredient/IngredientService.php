@@ -2,7 +2,6 @@
 
 namespace App\Services\Ingredient;
 
-use App\Jobs\InsertIngredientsFromFile;
 use App\Models\Company;
 use App\Models\Ingredient;
 use App\Models\User;
@@ -71,22 +70,6 @@ class IngredientService implements IngredientServiceInterface
             'companies'      => $companies,
             'functions'      => $functions,
         ];
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function bulkInsert(LazyCollection $rows): void
-    {
-        $company = $this->authUserCompany();
-        $chunks  = $rows->chunk(self::CHUNK_LIMIT);
-        $batch   = Bus::batch([])
-                      ->name('Insert ingredients from file')
-                      ->dispatch();
-
-        foreach ($chunks as $chunk) {
-            $batch->add(new InsertIngredientsFromFile($company, $chunk->toArray()));
-        }
     }
 
     public function search(string $keyword): Collection

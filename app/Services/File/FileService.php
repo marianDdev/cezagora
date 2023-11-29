@@ -2,10 +2,13 @@
 
 namespace App\Services\File;
 
+use App\Jobs\InsertIngredientsFromFileJob;
+use App\Jobs\InsertPackagingFromFileJob;
 use App\Services\Ingredient\IngredientServiceInterface;
 use App\Services\Product\ProductServiceInterface;
 use App\Traits\AuthUser;
 use Exception;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\LazyCollection;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
@@ -38,19 +41,34 @@ class FileService implements FileServiceInterface
     {
         $file = $this->addToMediaCollection($entityName, sprintf('%ss', $entityName));
         $this->validateFileHeader($file, $entityName);
-        $fileRows = $this->extractRows($file, $entityName);
-        switch ($entityName) {
-            case 'ingredient':
-                $this->insertIngredientsFromFile($fileRows);
-        }
+        $fileRows = $this->extractRows($file);
+        $this->bulkInsert($fileRows, $entityName);
     }
 
     /**
      * @throws Throwable
      */
-    private function insertIngredientsFromFile(LazyCollection $fileRows): void
+    private function bulkInsert(LazyCollection $rows, string $entityName): void
     {
-        $this->ingredientService->bulkInsert($fileRows);
+        $company = $this->authUserCompany();
+        $chunks  = $rows->chunk(self::CHUNK_LIMIT);
+        $batch   = Bus::batch([])
+                      ->name('Insert ingredients from file')
+                      ->dispatch();
+
+        switch ($entityName) {
+            case self::INGREDIENT:
+                foreach ($chunks as $chunk) {
+                    $batch->add(new InsertIngredientsFromFileJob($company, $chunk->toArray()));
+                }
+                break;
+
+            case self::PACKAGING:
+                foreach ($chunks as $chunk) {
+                    $batch->add(new InsertPackagingFromFileJob($company, $chunk->toArray()));
+                }
+                break;
+        }
     }
 
     /**
@@ -104,6 +122,10 @@ class FileService implements FileServiceInterface
                 $requiredKeys = array_flip(self::INGREDIENTS_REQUIRED_KEYS);
 
                 return count(array_intersect_key($requiredKeys, $headerFlipped)) === count(self::INGREDIENTS_REQUIRED_KEYS);
+            case self::PACKAGING:
+                $requiredKeys = array_flip(self::PACKAGING_REQUIRED_KEYS);
+
+                return count(array_intersect_key($requiredKeys, $headerFlipped)) === count(self::PACKAGING_REQUIRED_KEYS);
         }
 
         return false;
