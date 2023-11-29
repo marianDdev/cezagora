@@ -49,7 +49,7 @@ Route::group(['prefix' => '/ingredients'], function () {
     Route::post('/', [IngredientController::class, 'search'])->name('ingredients.search');
 });
 
-Route::group(['prefix' => '/packagings'], function () {
+Route::group(['prefix' => '/packaging'], function () {
     Route::get('/', [PackagingController::class, 'index'])->name('packaging.index');
 });
 
