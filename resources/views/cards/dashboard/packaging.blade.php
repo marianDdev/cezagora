@@ -28,7 +28,7 @@
                 <h3 class="text-xl font-bold tracking-tight text-gray-500">
                     {{ ucfirst(__('messages.packaging')) }}
                 </h3>
-                <a href="{{ route('packagings.create') }}"
+                <a href="{{ route('packaging.create') }}"
                    class="text-indigo-500">{{ __('messages.add_first_packaging') }}</a>
             @else
                 <a href="{{ route('my-packaging') }}">
