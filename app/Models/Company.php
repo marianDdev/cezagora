@@ -33,6 +33,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property Collection      $categories
  * @property bool            $is_active
  * @property Address         $address
+ * @property Collection      $packagings
  */
 class Company extends Model implements HasMedia
 {
@@ -87,9 +88,9 @@ class Company extends Model implements HasMedia
         return $this->hasMany(Ingredient::class);
     }
 
-    public function packingProducts(): HasMany
+    public function packagings(): HasMany
     {
-        return $this->hasMany(PackingProduct::class);
+        return $this->hasMany(Packaging::class);
     }
 
     public function orders(): HasMany

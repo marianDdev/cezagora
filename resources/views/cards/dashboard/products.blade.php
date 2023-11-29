@@ -5,16 +5,16 @@
                 <div class="p-5">
                     @if($count === 0)
                         <h3 class="text-xl font-bold tracking-tight text-gray-500">
-                            Products
+                            {{ ucfirst(__('messages.products')) }}
                         </h3>
-                        <a href="#" class="text-indigo-500">Click here to add your first products</a>
+                        <a href="#" class="text-indigo-500">{{ __('messages.add_first_products') }}</a>
                     @else
                         <a href="#">
                             <h3 class="text-xl font-bold tracking-tight text-indigo-500">
-                                Products
+                                {{ ucfirst(__('messages.products')) }}
                             </h3>
                         </a>
-                        <span class="text-gray-500 dark:text-gray-400">You have {{ $count }} products</span>
+                        <span class="text-gray-500 dark:text-gray-400">{{ __('messages.products_count', ['count' => $count]) }}</span>
                     @endif
                 </div>
         </div>

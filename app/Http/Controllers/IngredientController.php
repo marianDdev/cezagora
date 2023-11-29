@@ -18,15 +18,15 @@ class IngredientController extends Controller
 {
     public function index(FilterIngredientsRequest $request, IngredientServiceInterface $service): View
     {
-        $validated = $request->validated();
+        $validated   = $request->validated();
         $filtersData = $service->getFiltersData();
-        $filtered = $service->filter($validated);
+        $filtered    = $service->filter($validated);
 
         return view('ingredients.index', [
-            'authCompany' => $this->authUserCompany(),
-            'allIngredients' => $filtersData['allIngredients'],
-            'companies' => $filtersData['companies'],
-            'functions' => $filtersData['functions'],
+            'authCompany'         => $this->authUserCompany(),
+            'allIngredients'      => $filtersData['allIngredients'],
+            'companies'           => $filtersData['companies'],
+            'functions'           => $filtersData['functions'],
             'filteredIngredients' => $filtered,
         ]);
     }
@@ -51,7 +51,7 @@ class IngredientController extends Controller
 
     public function store(StoreIngredientRequest $request): RedirectResponse
     {
-        $validated = $request->validated();
+        $validated  = $request->validated();
         $ingredient = Ingredient::create($validated);
 
         if (!$ingredient instanceof Ingredient) {
@@ -60,7 +60,7 @@ class IngredientController extends Controller
         }
 
         return redirect()->route('my-ingredients')
-            ->with(['successful_message' => 'Ingredient added successfully!']);
+                         ->with(['successful_message' => 'Ingredient added successfully!']);
     }
 
     /**
@@ -72,7 +72,7 @@ class IngredientController extends Controller
     ): View|RedirectResponse
     {
         try {
-            $file     = $fileService->addToMediaCollection(IngredientServiceInterface::IMPORT_FILE_NAME, IngredientServiceInterface::IMPORTS);
+            $file = $fileService->addToMediaCollection(IngredientServiceInterface::IMPORT_FILE_NAME, IngredientServiceInterface::IMPORTS);
             $fileService->validateFileHeader($file);
 
             $fileRows = $fileService->extractRows($file);
@@ -104,7 +104,7 @@ class IngredientController extends Controller
 
     public function search(SearchRequest $request, IngredientServiceInterface $service): View
     {
-        $validated = $request->validated();
+        $validated   = $request->validated();
         $ingredients = $service->search($validated['keyword']);
 
         return view(

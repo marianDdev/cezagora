@@ -7,7 +7,13 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 interface FileServiceInterface
 {
-    public const REQUIRED_KEYS = [
+    public const MODELS = [
+        'ingredient',
+        'packaging',
+        'product',
+    ];
+
+    public const INGREDIENTS_REQUIRED_KEYS = [
         'name',
         'common_name',
         'description',

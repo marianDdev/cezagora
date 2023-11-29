@@ -5,14 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class PackingProduct extends Model
+class Packaging extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'company_id',
-        'packing_product_category_id',
+        'packaging_category_id',
         'name',
         'description',
         'slug',
@@ -31,6 +33,6 @@ class PackingProduct extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(PackingProductCategory::class);
+        return $this->belongsTo(PackagingCategory::class, 'packaging_category_id');
     }
 }
