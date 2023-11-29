@@ -122,4 +122,5 @@ return [
     'silver'                                                   => 'silver',
     'gold'                                                     => 'gold',
     'transparent'                                              => 'transparent',
+    'no_required_columns' => "Your file doesn't have the recommended columns",
 ];
