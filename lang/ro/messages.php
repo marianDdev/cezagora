@@ -3,8 +3,11 @@
 return [
     'ingredients'                                                    => 'ingrediente',
     'products'                                                       => 'produse',
-    'packaging'                                                      => 'produse de ambalare',
+    'packaging'                                                      => 'ambalaje',
     'discover_raw_materials_ingredients_services_in_one_place'       => 'Descoperiți materii prime, ingrediente și servicii cosmetice într-un singur loc.',
+    'join_manufacturers_suppliers_distributors_retailers'            => 'alăturați-vă comunității noastre de producători, furnizori de ingrediente și ambalaje, distribuitori și comercianți cu amănuntul de produse cosmetice.',
+    'signup'                                                         => 'inscrieți-vă',
+    'now'                                                            => 'acum',
     'signup_now_join_manufacturers_suppliers_distributors_retailers' => 'Înscrieți-vă acum și alăturați-vă comunității noastre de producători, furnizori de ingrediente și ambalaje, distribuitori și comercianți cu amănuntul de produse cosmetice.',
     'get_access_to_service_provider'                                 => 'Obțineți acces la o mare varietate de furnizori de servicii, cum ar fi laboratoare, consultanți de conformitate, agenții de marketing, curieri și multe alte categorii relevante de utilizatori CezAgora.',
     'contact_us'                                                     => 'Contactați-ne',
