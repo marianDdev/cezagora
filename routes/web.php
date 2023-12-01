@@ -6,6 +6,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Order\OrderIngredientController;
+use App\Http\Controllers\Order\OrderItemController;
 use App\Http\Controllers\Packaging\PackagingController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\Payment\CheckoutController;
@@ -138,6 +139,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{id}', [OrderIngredientController::class, 'show'])->name('order-item.show');
 
         Route::post('/{id}/cancel', [OrderIngredientController::class, 'cancel'])->name('order-item.cancel');
+        Route::delete('/{id}', [OrderItemController::class, 'delete'])->name('order-item.delete');
     });
 
     Route::group(['prefix' => '/payments'], function () {
