@@ -39,17 +39,17 @@ class OrdersService implements OrdersServiceInterface
         }
     }
 
-    private function increaseTotal(Order $order, OrderItem $item): void
-    {
-        $order->total_price += $item->total;
-        $order->save();
-    }
-
     public function getPendingOrder(): ?Order
     {
         return Order::where('customer_id', $this->authUserCompany()->id)
                     ->where('status', Order::STATUS_PENDING)
                     ->first();
+    }
+
+    private function increaseTotal(Order $order, OrderItem $item): void
+    {
+        $order->total_price += $item->total;
+        $order->save();
     }
 
     private function getCurrentOrder(): ?Order
