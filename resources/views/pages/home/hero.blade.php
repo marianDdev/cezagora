@@ -9,7 +9,7 @@
             </a>
         </div>
         <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
-            <img src="{{ url('/images/homepage/hero_square.jpeg') }}">
+            <img src="https://as2.ftcdn.net/v2/jpg/04/11/45/45/1000_F_411454519_Bot7uDtKYkplfKF6dSqsOxuqEZ0KVHeW.jpg">
         </div>
     </div>
 </section>
