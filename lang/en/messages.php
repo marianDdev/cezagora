@@ -130,4 +130,5 @@ return [
     'try_again'                                                => 'Try again',
     'make_sure_value_not_empty'                                => 'Please make sure that the value for :key is not empty',
     'invalid_category'                                         => ':category is not a valid caregory',
+    'delete'                                        => 'Delete',
 ];

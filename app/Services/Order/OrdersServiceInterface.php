@@ -11,5 +11,5 @@ interface OrdersServiceInterface
 
     public function createOrderItem(array $validated): OrderItem;
 
-    public function updateTotal(Order $order, OrderItem $item): void;
+    public function deleteItem(OrderItem $item): void;
 }
