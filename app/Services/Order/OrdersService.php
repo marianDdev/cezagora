@@ -16,9 +16,9 @@ class OrdersService implements OrdersServiceInterface
      */
     public function createOrderItem(array $validated): OrderItem
     {
-        $order     = $this->getCurrentOrder();
-        $data      =  $this->getItemData($order, $validated);
-        $item      = $this->createItem($data);
+        $order = $this->getCurrentOrder();
+        $data  = $this->getItemData($order, $validated);
+        $item  = $this->createItem($data);
 
         $this->increaseTotal($order, $item);
 
@@ -30,8 +30,13 @@ class OrdersService implements OrdersServiceInterface
         $order = $item->order;
         $itemTotal = $item->total;
         $item->delete();
-        $orderTotal = $order->total_price - $itemTotal;
-        $order->update(['total_price' => $orderTotal]);
+
+        if ($order->items->count() === 0) {
+            $order->delete();
+        } else {
+            $orderTotal = $order->total_price - $itemTotal;
+            $order->update(['total_price' => $orderTotal]);
+        }
     }
 
     private function increaseTotal(Order $order, OrderItem $item): void
@@ -43,8 +48,8 @@ class OrdersService implements OrdersServiceInterface
     public function getPendingOrder(): ?Order
     {
         return Order::where('customer_id', $this->authUserCompany()->id)
-             ->where('status', Order::STATUS_PENDING)
-             ->first();
+                    ->where('status', Order::STATUS_PENDING)
+                    ->first();
     }
 
     private function getCurrentOrder(): ?Order
@@ -75,7 +80,7 @@ class OrdersService implements OrdersServiceInterface
 
     private function createItem(array $data): OrderItem
     {
-        $item      = OrderItem::create($data);
+        $item = OrderItem::create($data);
 
         if (is_null($item)) {
             throw new Exception('Order item was not created', 422);
