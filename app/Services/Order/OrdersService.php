@@ -20,12 +20,21 @@ class OrdersService implements OrdersServiceInterface
         $data      =  $this->getItemData($order, $validated);
         $item      = $this->createItem($data);
 
-        $this->updateTotal($order, $item);
+        $this->increaseTotal($order, $item);
 
         return $item;
     }
 
-    public function updateTotal(Order $order, OrderItem $item): void
+    public function deleteItem(OrderItem $item): void
+    {
+        $order = $item->order;
+        $itemTotal = $item->total;
+        $item->delete();
+        $orderTotal = $order->total_price - $itemTotal;
+        $order->update(['total_price' => $orderTotal]);
+    }
+
+    private function increaseTotal(Order $order, OrderItem $item): void
     {
         $order->total_price += $item->total;
         $order->save();

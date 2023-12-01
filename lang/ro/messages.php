@@ -107,4 +107,5 @@ return [
     'make_sure_value_not_empty'                                      => 'Asigurati-va ca exista valoarea pentru :key',
     'invalid_category'                                               => ':category nu este o caegorie valida',
     'my_company'                                                     => 'Compania mea',
+    'delete'                                              => 'Elimina',
 ];

@@ -21,6 +21,7 @@
                                 <th scope="col" class="px-6 py-3">Quantity</th>
                                 <th scope="col" class="px-6 py-3">Price</th>
                                 <th scope="col" class="px-6 py-3">Total</th>
+                                <th scope="col" class="px-6 py-3">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,6 +34,9 @@
                                     <td class="px-6 py-4">{{ $item->quantity }}</td>
                                     <td class="px-6 py-4">{{ \App\Models\Setting::DEFAULT_CURRENCY_SYMBOL . $item->price / 100}}</td>
                                     <td class="px-6 py-4">{{ \App\Models\Setting::DEFAULT_CURRENCY_SYMBOL . ($item->total / 100)}}</td>
+                                    <td class="px-6 py-4">
+                                        @include('cart._delete_modal')
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
