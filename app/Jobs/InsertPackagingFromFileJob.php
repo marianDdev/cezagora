@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\Company;
 use App\Models\Packaging;
 use App\Models\PackagingCategory;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -43,6 +44,10 @@ class InsertPackagingFromFileJob implements ShouldQueue
                     'packaging_category_id' => $categoryId,
                 ]
             );
+
+            $availableAt           = $datum['available_at'];
+            $date                  = Carbon::parse($availableAt)->format('Y-m-d h:i:s');
+            $datum['available_at'] = $date;
 
             $this->validateValues($datum);
 

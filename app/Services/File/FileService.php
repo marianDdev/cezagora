@@ -53,7 +53,7 @@ class FileService implements FileServiceInterface
         $company = $this->authUserCompany();
         $chunks  = $rows->chunk(self::CHUNK_LIMIT);
         $batch   = Bus::batch([])
-                      ->name('Insert ingredients from file')
+                      ->name(sprintf('Insert %ss from file', $entityName))
                       ->dispatch();
 
         switch ($entityName) {
