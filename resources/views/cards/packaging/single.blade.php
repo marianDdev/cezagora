@@ -27,7 +27,7 @@
                 <p class="text-gray-500 dark:text-gray-400 mb-2">{{ ucfirst(__('messages.quantity')) }}: <span
                         class="text-gray-500 dark:text-gray-400 font-bold">{{ $packaging->quantity }}</span></p>
                 <p class="text-gray-500 dark:text-gray-400 mb-2">{{ ucfirst(__('messages.availability')) }}: <span
-                        class="text-gray-500 dark:text-gray-400 font-bold">{{ $packaging->availability }}</span></p>
+                        class="text-gray-500 dark:text-gray-400 font-bold">{{ ucfirst(__(sprintf('messages.%s', $packaging->availability))) }}</span></p>
                 @if($packaging->availability === 'on_demand')
                     <p class="text-gray-500 dark:text-gray-400 mb-2">{{ ucfirst(__('messages.available_at')) }}: <span
                             class="text-gray-500 dark:text-gray-400 font-bold">{{ \Carbon\Carbon::parse($packaging->available_at)->format('Y-m-d') }}</span></p>
