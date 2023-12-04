@@ -10,7 +10,8 @@
                     </h3>
                 </a>
                 <p class="text-gray-500 dark:text-gray-400 mb-2">{{ ucfirst(__('messages.category')) }}: <span
-                        class="text-gray-500 dark:text-gray-400 font-bold">{{ $packaging->category->name }}</span></p>
+                        class="text-gray-500 dark:text-gray-400 font-bold">{{ ucfirst(__(sprintf('messages.%s', $packaging->category->name))) }}</span>
+                </p>
                 <p class="text-gray-500 dark:text-gray-400 mb-2">{{ ucfirst(__('messages.price')) }}: <span
                         class="text-gray-500 dark:text-gray-400 font-bold">{{ $packaging->price }}</span></p>
                 <p class="text-gray-500 dark:text-gray-400 mb-2">{{ ucfirst(__('messages.colour')) }}: <span
@@ -23,6 +24,14 @@
                         class="text-gray-500 dark:text-gray-400 font-bold">{{ $packaging->neck_size }}</span></p>
                 <p class="text-gray-500 dark:text-gray-400 mb-2">{{ ucfirst(__('messages.bottom_shape')) }}: <span
                         class="text-gray-500 dark:text-gray-400 font-bold">{{ $packaging->bottom_shape }}</span></p>
+                <p class="text-gray-500 dark:text-gray-400 mb-2">{{ ucfirst(__('messages.quantity')) }}: <span
+                        class="text-gray-500 dark:text-gray-400 font-bold">{{ $packaging->quantity }}</span></p>
+                <p class="text-gray-500 dark:text-gray-400 mb-2">{{ ucfirst(__('messages.availability')) }}: <span
+                        class="text-gray-500 dark:text-gray-400 font-bold">{{ $packaging->availability }}</span></p>
+                @if($packaging->availability === 'on_demand')
+                    <p class="text-gray-500 dark:text-gray-400 mb-2">{{ ucfirst(__('messages.available_at')) }}: <span
+                            class="text-gray-500 dark:text-gray-400 font-bold">{{ \Carbon\Carbon::parse($packaging->available_at)->format('Y-m-d') }}</span></p>
+                @endif
             </div>
         </div>
     </a>

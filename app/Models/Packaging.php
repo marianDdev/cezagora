@@ -23,6 +23,9 @@ class Packaging extends Model implements HasMedia
         'material',
         'neck_size',
         'bottom_shape',
+        'quantity',
+        'availability',
+        'available_at',
     ];
 
     public function company(): BelongsTo

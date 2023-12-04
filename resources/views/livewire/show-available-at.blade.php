@@ -4,7 +4,7 @@
             <div
                 class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
                 aria-controls="filter-section-2" aria-expanded="false">
-                <span class="font-medium text-gray-900">Availability</span>
+                <span class="font-medium text-gray-900">{{ ucfirst(__('messages.availability')) }}</span>
             </div>
         </h3>
         <div class="pt-6" id="filter-section-2">
@@ -12,9 +12,9 @@
                 <div class="flex items-center">
                     <select wire:model.live="availableAt" name="availability"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="{{ null }}">Select availability method</option>
+                        <option value="{{ null }}">{{ __('messages.select_availability') }}</option>
                         @foreach($availabilityTypes as $availability)
-                            <option value="{{ $availability }}">{{ $availability }}</option>
+                            <option value="{{ $availability }}">{{ __(sprintf('messages.%s',$availability ))  }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -27,7 +27,7 @@
                 <div
                     class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
                     aria-controls="filter-section-2" aria-expanded="false">
-                    <span class="font-medium text-gray-900">Max available date</span>
+                    <span class="font-medium text-gray-900">{{ __('messages.max_available_date') }}</span>
                 </div>
             </h3>
             <div class="pt-6" id="filter-section-2">

@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use App\Models\Company;
 use App\Models\PackagingCategory;
+use App\Services\Ingredient\IngredientServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -28,6 +30,9 @@ class StorePackagingRequest extends FormRequest
             'material'              => ['required', 'string'],
             'neck_size'             => ['nullable', 'integer', 'min:1',],
             'bottom_shape'          => ['nullable', 'string'],
+            'quantity'              => ['required', 'integer', 'max:99999'],
+            'availability'          => ['required', 'string', Rule::in(IngredientServiceInterface::AVAILABILITY_TYPES)],
+            'available_at'          => ['required_if:availability,on_demand', 'date', 'after_or_equal:' . Carbon::today()],
         ];
     }
 }
