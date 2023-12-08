@@ -13,12 +13,8 @@ class WelcomeEmail extends Notification
 
     private User $user;
 
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->user = $user;
     }
 
     /**
@@ -31,13 +27,13 @@ class WelcomeEmail extends Notification
         return ['mail'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(User $notifiable): MailMessage
     {
         return (new MailMessage)
             ->from(env('MAIL_FROM_ADDRESS'), 'CezAgora')
             ->subject('Welcome to CezAgora – Your Gateway to Cosmetic Innovations')
             ->view('vendor.notifications.welcome-email', [
-                'user' => $this->user,
+                'user' => $notifiable,
             ]);
     }
 
