@@ -103,6 +103,11 @@ class Company extends Model implements HasMedia
         return $this->hasMany(OrderItem::class, 'seller_id', 'id');
     }
 
+    public function labServices(): HasMany
+    {
+        return $this->hasMany(Laboratory::class);
+    }
+
     public function isActive(): bool
     {
         return $this->user->is_active;

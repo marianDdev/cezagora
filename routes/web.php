@@ -4,6 +4,7 @@ use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\LaboratoryController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Order\OrderIngredientController;
 use App\Http\Controllers\Order\OrderItemController;
@@ -68,7 +69,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [PagesController::class, 'dashboard'])
          ->name('dashboard');
     Route::get('/my-products-and-services', [PagesController::class, 'renderMyProductAndServices'])
-        ->name('my.products.services');
+         ->name('my.products.services');
     Route::get('/profile', [ProfileController::class, 'edit'])
          ->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -183,6 +184,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('preview/{emailName}', [PagesController::class, 'previewEmail'])->name('preview.email');
 
     Route::post('/upload', [FileController::class, 'upload'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('upload');
+
+    Route::get('/my-lab-services', [LaboratoryController::class, 'listMyLabServices'])
+         ->middleware(
+             [
+                 RedirectIfUserHasNotAddedCompanyDetails::class,
+                 RedirectIfUserHasNotEnabledStripe::class,
+             ]
+         )
+         ->name('my_lab_services');
+    Route::group(['prefix' => '/laboratories'], function () {
+        Route::get('/create', [LaboratoryController::class, 'create'])->name('labs.create');
+        Route::post('/', [LaboratoryController::class, 'store'])->name('labs.store');
+    });
 });
 
 require __DIR__ . '/auth.php';
