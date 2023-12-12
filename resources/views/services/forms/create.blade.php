@@ -14,15 +14,6 @@
                     </div>
                 @endif
             </div>
-            {{--            <div class="mb-4 text-red-400 font-bold">--}}
-            {{--                <p>{{ __('messages.upload_requirements') }}</p>--}}
-            {{--            </div>--}}
-            {{--            <div class="mb-4 text-red-400">--}}
-            {{--                <p>{{ __('messages.packaging_required_column_names') }}</p>--}}
-            {{--            </div>--}}
-            {{--            <div class="mb-6 text-red-400">--}}
-            {{--                <p>{{ __('messages.required_price_format') }}</p>--}}
-            {{--            </div>--}}
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
                 @include('cards.files.upload', ['entityName' => 'laboratory'])
                 @include('cards.services.add_manually', ['company' => $company])

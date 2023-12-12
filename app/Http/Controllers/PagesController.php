@@ -135,22 +135,11 @@ class PagesController extends Controller
         return view('pages.help.user_roles');
     }
 
-    public function renderMyProductAndServices(): View
+    public function renderMyProductAndServices(PagesServiceInterface $service): View
     {
-        $user = $this->authUser();
-        $ingredientsCount = $user->company ? $user->company->ingredients->count() : 0;
-        $productsCount = $user->company ? $user->company->products->count() : 0;
-        $packagingCount = $user->company ? $user->company->packagings->count() : 0;
+        $data = $service->getProductAndServicesData();
 
-        return view(
-            'pages.products_and_services',
-            [
-                'user' => $user,
-                'ingredientsCount' => $ingredientsCount,
-                'productsCount'    => $productsCount,
-                'packagingCount'    => $packagingCount,
-            ]
-        );
+        return view('pages.products_and_services', $data);
     }
 
     public function previewEmail(string $emailName): View
