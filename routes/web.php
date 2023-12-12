@@ -197,7 +197,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     //services
-    Route::get('/my-services', [ServiceController::class, 'listServices'])
+    Route::get('/my-services', [ServiceController::class, 'listMyServices'])
          ->middleware(
              [
                  RedirectIfUserHasNotAddedCompanyDetails::class,
@@ -206,6 +206,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
          )
          ->name('my_services');
     Route::group(['prefix' => '/services'], function () {
+        Route::get('/', [ServiceController::class, 'index'])->name('services.index');
         Route::get('/create', [ServiceController::class, 'create'])->name('service.create');
         Route::post('/', [ServiceController::class, 'store'])->name('service.store');
     });

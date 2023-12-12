@@ -36,8 +36,8 @@
                 @include(
                    'cards.products_and_services.services',
                    [
-                       'imagePath' => 'https://t4.ftcdn.net/jpg/02/83/46/39/240_F_283463951_Hdt61pKqT09VoIZEbEsi90LnLe9q0Qo8.jpg',
-                       'count' => $productsCount,
+                       'imagePath' => 'https://t3.ftcdn.net/jpg/03/03/54/36/240_F_303543606_tnwHT6FSbrjmSo8TIhKZ3io2pkinyCWi.jpg',
+                       'count' => $servicesCount,
                        ]
                    )
 
