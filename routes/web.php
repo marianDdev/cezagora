@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\IngredientController;
-use App\Http\Controllers\LaboratoryController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Order\OrderIngredientController;
 use App\Http\Controllers\Order\OrderItemController;
@@ -205,10 +205,27 @@ Route::middleware(['auth', 'verified'])->group(function () {
              ]
          )
          ->name('my_services');
+
     Route::group(['prefix' => '/services'], function () {
         Route::get('/', [ServiceController::class, 'index'])->name('services.index');
         Route::get('/create', [ServiceController::class, 'create'])->name('service.create');
         Route::post('/', [ServiceController::class, 'store'])->name('service.store');
+    });
+
+    //equipment
+    Route::get('/my-equipment', [EquipmentController::class, 'listMyEquipment'])
+         ->middleware(
+             [
+                 RedirectIfUserHasNotAddedCompanyDetails::class,
+                 RedirectIfUserHasNotEnabledStripe::class,
+             ]
+         )
+         ->name('my_equipment');
+
+    Route::group(['prefix' => '/equipment'], function () {
+        Route::get('/', [EquipmentController::class, 'index'])->name('equipment.index');
+        Route::get('/create', [EquipmentController::class, 'create'])->name('equipment.create');
+        Route::post('/', [EquipmentController::class, 'store'])->name('equipment.store');
     });
 });
 

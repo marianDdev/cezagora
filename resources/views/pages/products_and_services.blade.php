@@ -13,7 +13,6 @@
                 @include(
                     'cards.products_and_services.ingredients',
                     [
-                        'imagePath' => 'https://t4.ftcdn.net/jpg/01/47/49/91/240_F_147499122_4KXxa1Z019XaEfEvPYnCTdaQ7uc1GOBB.jpg',
                         'count' => $ingredientsCount,
                         ]
                     )
@@ -40,6 +39,13 @@
                        'count' => $servicesCount,
                        ]
                    )
+
+                @include(
+                  'cards.products_and_services.equipment',
+                  [
+                      'count' => $servicesCount,
+                      ]
+                  )
 
             </div>
         </div>

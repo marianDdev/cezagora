@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Company;
 use App\Models\User;
+use App\Services\Service\EquipmentServiceInterface;
 use App\Services\Service\ServicesServiceInterface;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
