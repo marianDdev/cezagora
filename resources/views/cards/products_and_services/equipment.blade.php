@@ -20,7 +20,7 @@
 @else
 
     <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
-        <a href="{{ route('my-packaging') }}">
+        <a href="{{ route('my_equipment') }}">
             <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{ url('/images/homepage/equipment.png') }}" />
         </a>
         <div class="p-5">
