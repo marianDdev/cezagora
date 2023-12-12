@@ -20,8 +20,10 @@ use App\Services\Pages\PagesService;
 use App\Services\Pages\PagesServiceInterface;
 use App\Services\Product\ProductService;
 use App\Services\Product\ProductServiceInterface;
-use App\Services\SearchService;
-use App\Services\SearchServiceInterface;
+use App\Services\Search\SearchService;
+use App\Services\Search\SearchServiceInterface;
+use App\Services\Service\ServicesService;
+use App\Services\Service\ServicesServiceInterface;
 use App\Services\Stripe\Account\StripeAccountService;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Services\Stripe\BillingPortal\BillingPortalService;
@@ -33,9 +35,7 @@ use App\Services\Stripe\Payment\PaymentServiceInterface;
 use App\Services\User\UserService;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Pluralizer;
 use Illuminate\Support\ServiceProvider;
-use Stripe\StripeClient;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -59,6 +59,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SearchServiceInterface::class, SearchService::class);
         $this->app->bind(StripeAccountServiceInterface::class, StripeAccountService::class);
         $this->app->bind(UserServiceInterface::class, UserService::class);
+        $this->app->bind(ServicesServiceInterface::class, ServicesService::class);
     }
 
     /**

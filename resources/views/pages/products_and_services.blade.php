@@ -11,14 +11,14 @@
 
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
                 @include(
-                    'cards.dashboard.ingredients',
+                    'cards.products_and_services.ingredients',
                     [
                         'imagePath' => 'https://t4.ftcdn.net/jpg/01/47/49/91/240_F_147499122_4KXxa1Z019XaEfEvPYnCTdaQ7uc1GOBB.jpg',
                         'count' => $ingredientsCount,
                         ]
                     )
                 @include(
-                    'cards.dashboard.packaging',
+                    'cards.products_and_services.packaging',
                     [
                         'imagePath' => 'https://t4.ftcdn.net/jpg/05/68/81/15/240_F_568811549_cddvPdfy3L8AFGNYsJmS45UwuWs2PNJr.jpg',
                         'count' => $packagingCount,
@@ -26,12 +26,20 @@
                     )
 
                 @include(
-                    'cards.dashboard.products',
+                    'cards.products_and_services.products',
                     [
                         'imagePath' => 'https://t4.ftcdn.net/jpg/02/83/46/39/240_F_283463951_Hdt61pKqT09VoIZEbEsi90LnLe9q0Qo8.jpg',
                         'count' => $productsCount,
                         ]
                     )
+
+                @include(
+                   'cards.products_and_services.services',
+                   [
+                       'imagePath' => 'https://t4.ftcdn.net/jpg/02/83/46/39/240_F_283463951_Hdt61pKqT09VoIZEbEsi90LnLe9q0Qo8.jpg',
+                       'count' => $productsCount,
+                       ]
+                   )
 
             </div>
         </div>

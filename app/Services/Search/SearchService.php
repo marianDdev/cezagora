@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Search;
 
 use App\Services\Company\CompanyServiceInterface;
 use App\Services\Ingredient\IngredientServiceInterface;
-use Illuminate\Support\Collection;
 
 class SearchService implements SearchServiceInterface
 {

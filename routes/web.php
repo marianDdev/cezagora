@@ -4,6 +4,7 @@ use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\LaboratoryController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Order\OrderIngredientController;
 use App\Http\Controllers\Order\OrderItemController;
@@ -15,7 +16,9 @@ use App\Http\Controllers\Payment\StripeOnboardingController;
 use App\Http\Controllers\Payment\StripePortalController;
 use App\Http\Controllers\Payment\TransferController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QualificationController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\Service\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Middleware\RedirectIfUserHasNotAddedCompanyDetails;
@@ -68,7 +71,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [PagesController::class, 'dashboard'])
          ->name('dashboard');
     Route::get('/my-products-and-services', [PagesController::class, 'renderMyProductAndServices'])
-        ->name('my.products.services');
+         ->name('my.products.services');
     Route::get('/profile', [ProfileController::class, 'edit'])
          ->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -168,6 +171,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
          )
          ->name('my-packaging');
 
+    //qualifications
+    Route::group(['prefix' => '/qualifications'], function () {
+        Route::get('/{companyId}', [QualificationController::class, 'listByCompanyId'])->name('qualifications.list_by_company');
+        Route::get('/create', [QualificationController::class, 'create'])->name('qualification.create');
+        Route::post('/', [QualificationController::class, 'store'])->name('qualification.store');
+    });
+    Route::get('my-qualifications', [QualificationController::class, 'showMyQualifications'])->name('my-qualifications');
+
     //stripe
     Route::get('/onboarding', [StripeOnboardingController::class, 'index'])->name('onboarding');
     Route::get('/onboarding/redirect', [StripeOnboardingController::class, 'redirect'])->name('onboarding.redirect');
@@ -183,6 +194,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('preview/{emailName}', [PagesController::class, 'previewEmail'])->name('preview.email');
 
     Route::post('/upload', [FileController::class, 'upload'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('upload');
+
+
+    //services
+    Route::get('/my-services', [ServiceController::class, 'listServices'])
+         ->middleware(
+             [
+                 RedirectIfUserHasNotAddedCompanyDetails::class,
+                 RedirectIfUserHasNotEnabledStripe::class,
+             ]
+         )
+         ->name('my_services');
+    Route::group(['prefix' => '/services'], function () {
+        Route::get('/create', [ServiceController::class, 'create'])->name('service.create');
+        Route::post('/', [ServiceController::class, 'store'])->name('service.store');
+    });
 });
 
 require __DIR__ . '/auth.php';
