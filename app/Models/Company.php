@@ -118,4 +118,9 @@ class Company extends Model implements HasMedia
     {
         return $this->user->is_active;
     }
+
+    public function equipments(): HasMany
+    {
+        return $this->hasMany(Equipment::class);
+    }
 }
