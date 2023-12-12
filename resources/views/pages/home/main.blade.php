@@ -5,6 +5,7 @@
             <div class="grid md:grid-cols-2 gap-8">
                 @include('pages.home.raw_materials')
                 @include('pages.home.packaging')
+                @include('pages.home.equipment')
                 @include('pages.home.formulation')
                 @include('pages.home.laboratory')
                 @include('pages.home.compliance')

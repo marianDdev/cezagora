@@ -22,8 +22,8 @@ use App\Services\Product\ProductService;
 use App\Services\Product\ProductServiceInterface;
 use App\Services\Search\SearchService;
 use App\Services\Search\SearchServiceInterface;
-use App\Services\Service\ServicesService;
-use App\Services\Service\ServicesServiceInterface;
+use App\Services\Service\EquipmentService;
+use App\Services\Service\EquipmentServiceInterface;
 use App\Services\Stripe\Account\StripeAccountService;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Services\Stripe\BillingPortal\BillingPortalService;
@@ -59,7 +59,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SearchServiceInterface::class, SearchService::class);
         $this->app->bind(StripeAccountServiceInterface::class, StripeAccountService::class);
         $this->app->bind(UserServiceInterface::class, UserService::class);
-        $this->app->bind(ServicesServiceInterface::class, ServicesService::class);
+        $this->app->bind(EquipmentServiceInterface::class, EquipmentService::class);
     }
 
     /**
