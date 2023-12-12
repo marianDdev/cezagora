@@ -7,7 +7,7 @@
             <h3 class="text-xl font-bold tracking-tight text-gray-400">
                 <a role="link" aria-disabled="true">{{ $title }}</a>
             </h3>
-            <span class="text-gray-500 dark:text-gray-400">{{ __('messages.no_sales') }}</span>
+            <span class="text-gray-500 dark:text-gray-400">{{ __('messages.no_qualifications') }}</span>
             <span
                 class="text-gray-500 dark:text-gray-400"></span>
         </div>
@@ -22,9 +22,11 @@
             <h3 class="text-xl font-bold tracking-tight text-indigo-500">
                 <a href="{{ route('my-qualifications') }}">{{ $title }}</a>
             </h3>
-            <span class="text-gray-500 dark:text-gray-400">{{ __('messages.sales_count', ['qualificationsCount' => $qualificationsCount]) }}</span>
+            <span
+                class="text-gray-500 dark:text-gray-400">{{ __('messages.qualifications_count', ['count' => $qualificationsCount]) }}</span>
             <span
                 class="text-gray-500 dark:text-gray-400"></span>
+            @include('qualifications.forms.create')
         </div>
     </div>
 @endif
