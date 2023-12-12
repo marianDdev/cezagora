@@ -50,6 +50,15 @@
                             ]
                         )
 
+                @include(
+                        'cards.dashboard.qualifications',
+                        [
+                            'title' => 'Qualifications',
+                            'imagePath' => 'https://t4.ftcdn.net/jpg/03/35/23/21/240_F_335232104_56YtebC4KR78tVt1eYrJiQbAptGMimke.jpg',
+                            'qualificationsCount' => $company ? $company->qualifications->count() : 0,
+                            ]
+                        )
+
                 @if(!is_null($account))
                     @include('cards.dashboard.stripe_dashboard', ['imagePath' => 'https://t4.ftcdn.net/jpg/05/97/91/83/240_F_597918379_Qz6aOWjXmiyduFxbwKcjYBLHPlY8FMKO.jpg',])
                 @endif

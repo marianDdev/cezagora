@@ -16,7 +16,9 @@ use App\Http\Controllers\Payment\StripeOnboardingController;
 use App\Http\Controllers\Payment\StripePortalController;
 use App\Http\Controllers\Payment\TransferController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QualificationController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\Service\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Middleware\RedirectIfUserHasNotAddedCompanyDetails;
@@ -169,6 +171,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
          )
          ->name('my-packaging');
 
+    //qualifications
+    Route::group(['prefix' => '/qualifications'], function () {
+        Route::get('/{companyId}', [QualificationController::class, 'listByCompanyId'])->name('qualifications.list_by_company');
+        Route::get('/create', [QualificationController::class, 'create'])->name('qualification.create');
+        Route::post('/', [QualificationController::class, 'store'])->name('qualification.store');
+    });
+    Route::get('my-qualifications', [QualificationController::class, 'showMyQualifications'])->name('my-qualifications');
+
     //stripe
     Route::get('/onboarding', [StripeOnboardingController::class, 'index'])->name('onboarding');
     Route::get('/onboarding/redirect', [StripeOnboardingController::class, 'redirect'])->name('onboarding.redirect');
@@ -185,17 +195,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/upload', [FileController::class, 'upload'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('upload');
 
-    Route::get('/my-lab-services', [LaboratoryController::class, 'listMyLabServices'])
+
+    //services
+    Route::get('/my-services', [ServiceController::class, 'listServices'])
          ->middleware(
              [
                  RedirectIfUserHasNotAddedCompanyDetails::class,
                  RedirectIfUserHasNotEnabledStripe::class,
              ]
          )
-         ->name('my_lab_services');
-    Route::group(['prefix' => '/laboratories'], function () {
-        Route::get('/create', [LaboratoryController::class, 'create'])->name('labs.create');
-        Route::post('/', [LaboratoryController::class, 'store'])->name('labs.store');
+         ->name('my_services');
+    Route::group(['prefix' => '/services'], function () {
+        Route::get('/create', [ServiceController::class, 'create'])->name('service.create');
+        Route::post('/', [ServiceController::class, 'store'])->name('service.store');
     });
 });
 

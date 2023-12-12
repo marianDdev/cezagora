@@ -34,6 +34,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property bool            $is_active
  * @property Address         $address
  * @property Collection      $packagings
+ * @property Collection      $qualifications
  */
 class Company extends Model implements HasMedia
 {
@@ -78,9 +79,9 @@ class Company extends Model implements HasMedia
         return $this->hasMany(Product::class);
     }
 
-    public function services(): BelongsToMany
+    public function services(): HasMany
     {
-        return $this->belongsToMany(Service::class);
+        return $this->hasMany(Service::class);
     }
 
     public function ingredients(): HasMany
@@ -106,6 +107,11 @@ class Company extends Model implements HasMedia
     public function labServices(): HasMany
     {
         return $this->hasMany(Laboratory::class);
+    }
+
+    public function qualifications(): HasMany
+    {
+        return $this->hasMany(Qualification::class);
     }
 
     public function isActive(): bool

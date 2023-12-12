@@ -10,7 +10,7 @@
         <div class="p-5">
             <a role="link" aria-disabled="true">
                 <h3 class="text-xl font-bold tracking-tight text-gray-400">
-                    {{__('messages.laboratory_services')}}
+                    {{__('messages.services')}}
                 </h3>
             </a>
             <span
@@ -26,18 +26,18 @@
         <div class="p-5">
             @if($count === 0)
                 <h3 class="text-xl font-bold tracking-tight text-gray-500">
-                    {{ ucfirst(__('messages.laboratory_services')) }}
+                    {{ ucfirst(__('messages.services')) }}
                 </h3>
-                <a href="{{ route('labs.create') }}"
-                   class="text-indigo-500">{{ __('messages.add_first_laboratory_services') }}</a>
+                <a href="{{ route('service.create') }}"
+                   class="text-indigo-500">{{ __('messages.add_first_services') }}</a>
             @else
-                <a href="{{ route('my_lab_services') }}">
+                <a href="{{ route('my_services') }}">
                     <h3 class="text-xl font-bold tracking-tight text-indigo-500">
-                        {{ ucfirst(__('messages.laboratory_services')) }}
+                        {{ ucfirst(__('messages.services')) }}
                     </h3>
                 </a>
                 <span
-                    class="text-gray-500 dark:text-gray-400">{{ __('messages.lab_services_count', ['count' => $count]) }}</span>
+                    class="text-gray-500 dark:text-gray-400">{{ __('messages.services_count', ['count' => $count]) }}</span>
             @endif
         </div>
     </div>

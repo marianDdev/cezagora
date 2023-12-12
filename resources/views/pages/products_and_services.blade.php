@@ -34,7 +34,7 @@
                     )
 
                 @include(
-                   'cards.products_and_services.lab_services',
+                   'cards.products_and_services.services',
                    [
                        'imagePath' => 'https://t4.ftcdn.net/jpg/02/83/46/39/240_F_283463951_Hdt61pKqT09VoIZEbEsi90LnLe9q0Qo8.jpg',
                        'count' => $productsCount,

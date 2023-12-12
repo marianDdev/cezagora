@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchRequest;
-use App\Services\SearchServiceInterface;
-use Illuminate\Support\Collection;
+use App\Services\Search\SearchServiceInterface;
 use Illuminate\View\View;
 
 class SearchController extends Controller
