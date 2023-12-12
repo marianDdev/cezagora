@@ -10,18 +10,19 @@ use Illuminate\Http\RedirectResponse;
 
 class ServiceController extends Controller
 {
-    public function listServices(): View
+    public function index(): View
+    {
+        $services = Service::orderBy('created_at', 'desc')->paginate(12);
+
+        return view('services.index', ['services' => $services]);
+    }
+
+    public function listMyServices(): View
     {
         $company = $this->authUserCompany();
         $services = $company->services()->orderByDesc('created_at')->paginate(12);
 
-        return view(
-            'packaging.my_packaging',
-            [
-                'services' => $services,
-                'company'     => $company,
-            ]
-        );
+        return view('services.my_services', ['services' => $services, 'company' => $company]);
     }
 
     public function create(): View
@@ -41,6 +42,6 @@ class ServiceController extends Controller
         $validated = $request->validated();
         Service::create($validated);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('my_services');
     }
 }
