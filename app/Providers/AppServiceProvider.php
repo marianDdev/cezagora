@@ -22,8 +22,8 @@ use App\Services\Product\ProductService;
 use App\Services\Product\ProductServiceInterface;
 use App\Services\Search\SearchService;
 use App\Services\Search\SearchServiceInterface;
-use App\Services\Service\EquipmentService;
-use App\Services\Service\EquipmentServiceInterface;
+use App\Services\Equipment\EquipmentService;
+use App\Services\Equipment\EquipmentServiceInterface;
 use App\Services\Stripe\Account\StripeAccountService;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Services\Stripe\BillingPortal\BillingPortalService;
@@ -35,7 +35,10 @@ use App\Services\Stripe\Payment\PaymentServiceInterface;
 use App\Services\User\UserService;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Nnjeim\World\Models\Country;
+use Nnjeim\World\Models\Language;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -68,5 +71,31 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         URL::forceScheme('https');
+
+        $codeToFlagMap = [
+            'en' => Country::where('iso2', 'GB')->first()->emoji,
+            'pl' => Country::where('iso2', 'PL')->first()->emoji,
+            'ro' => Country::where('iso2', 'RO')->first()->emoji,
+            'de' => Country::where('iso2', 'DE')->first()->emoji,
+            'fr' => Country::where('iso2', 'FR')->first()->emoji,
+            'es' => Country::where('iso2', 'ES')->first()->emoji,
+        ];
+
+        $codeToLanguageMap = [
+            'en' => 'English',
+            'ro' => 'Română',
+            'pl' => 'Polski',
+            'de' => 'Deutsch',
+            'fr' => 'Français',
+            'es' => 'Español',
+        ];
+
+        $flags = [];
+
+        foreach ($codeToFlagMap as $code => $flag) {
+            $flags[$code] = $flag;
+        }
+
+        View::share(['languages' => $codeToLanguageMap, 'flags' => $flags]);
     }
 }
