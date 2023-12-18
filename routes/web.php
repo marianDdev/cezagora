@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Order\OrderIngredientController;
 use App\Http\Controllers\Order\OrderItemController;
@@ -66,6 +67,8 @@ Route::get('/companies-categories', function () {
 })->name('companies-categories');
 
 Route::post('/contact-message', [ContactMessageController::class, 'store'])->name('contact-message.store');
+
+Route::post('/language-switch', [LanguageController::class, 'switchLanguage'])->name('language.switch');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [PagesController::class, 'dashboard'])
