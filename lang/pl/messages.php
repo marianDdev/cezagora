@@ -176,5 +176,6 @@ return [
     'safety_equipment'                                         => 'Sprzęt BHP',
     'production_machinery'                                     => 'Maszyny produkcyjne',
     'label_printing'                                           => 'Druk etykiet',
-
+    "check_products_services_suppliers"                        => "Sprawdź naszą pełną listę dostawców produktów i usług",
+    "discover_suppliers"                                       => "Odkryj naszą obszerną kolekcję dostawców",
 ];
