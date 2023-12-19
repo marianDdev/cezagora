@@ -176,4 +176,6 @@ return [
     'safety_equipment'                                         => "Sicherheitsausrüstung",
     'production_machinery'                                     => "Produktionsmaschinen",
     'label_printing'                                           => "Etikettendruck",
+    "check_products_services_suppliers"                        => "Überprüfen Sie unsere gesamte Liste von Produkt- und Dienstleistungsanbietern",
+    "discover_suppliers"                                       => "Entdecken Sie unsere umfangreiche Sammlung von Lieferanten",
 ];

@@ -76,7 +76,7 @@ return [
     'add_multiple_ingredients'                                 => "Import ingredients via Excel or input them manually.",
     'add_multiple_packaging'                                   => "Import packaging products via Excel or input them manually.",
     'add_multiple_services'                                    => "Import services via Excel or input them manually.",
-    'add_multiple_equipment'                                    => "Import equipment via Excel or input them manually.",
+    'add_multiple_equipment'                                   => "Import equipment via Excel or input them manually.",
     'upload_requirements'                                      => 'Essential Pre-upload File Requirements:',
     'packaging_required_column_names'                          => "Your file should have rows with these specific column names: category | name | description | price | price | capacity | colour | material | neck_size | bottom_shape | quantity | availability | available_at",
     'ingredients_required_column_names'                        => "Your file should have rows with these specific column names: name | common_name | description | function | price | quantity | availability | available_at.",
@@ -176,4 +176,6 @@ return [
     'safety_equipment'                                         => 'Safety equipment',
     'production_machinery'                                     => 'Production machinery',
     'label_printing'                                           => 'Label printing',
+    "check_products_services_suppliers"                        => "Check our entire list of products and services suppliers",
+    "discover_suppliers"                                       => "Discover our vast collection of suppliers",
 ];
