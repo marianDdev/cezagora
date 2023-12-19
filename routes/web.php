@@ -48,6 +48,7 @@ Route::get('/settings', [PagesController::class, 'settings'])->name('settings');
 Route::get('/account-deactivated', [PagesController::class, 'accountDeactivatedConfirmationPage'])->name('account.deactivated.page');
 Route::get('/account-reactivated', [PagesController::class, 'accountReactivatedConfirmationPage'])->name('account.reactivated.page');
 Route::get('/contact-message-sent', [PagesController::class, 'contactMessageSent'])->name('contact.message.sent');
+Route::get('/products-services-categories', [PagesController::class, 'showProductsAndServicesCategories'])->name('products.services.categories');
 
 Route::group(['prefix' => '/ingredients'], function () {
     Route::get('/', [IngredientController::class, 'index'])->name('ingredients');

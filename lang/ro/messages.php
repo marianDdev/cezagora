@@ -153,4 +153,6 @@ return [
     'safety_equipment'                                               => 'Echipamente de securitate',
     'production_machinery'                                           => 'Mașini de producție',
     'label_printing'                                                 => 'Tipărire etichete',
+    "check_products_services_suppliers"                              => "Verificați întreaga noastră listă de furnizori de produse și servicii",
+    "discover_suppliers"                                             => "Descoperiți vasta noastră colecție de furnizori",
 ];

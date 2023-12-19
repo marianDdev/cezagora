@@ -149,4 +149,9 @@ class PagesController extends Controller
 
         return view(sprintf('vendor.notifications.%s', $name), ['user' => $user]);
     }
+
+    public function showProductsAndServicesCategories(): View
+    {
+        return view('pages.products_services_categories');
+    }
 }
