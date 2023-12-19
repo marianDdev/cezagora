@@ -1,6 +1,6 @@
 @php
-    $userHasCompany = !is_null(Auth::user()->company);
-    $userHasSales = $userHasCompany && Auth::user()->company->sales->count() > 0;
+    $userHasCompany = !is_null($company);
+    $userHasSales = $userHasCompany && $company->sales->count() > 0;
 @endphp
 
 @if(!$userHasSales)
