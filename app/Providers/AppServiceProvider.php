@@ -8,6 +8,8 @@ use App\Services\Checkout\CheckoutService;
 use App\Services\Checkout\CheckoutServiceInterface;
 use App\Services\Company\CompanyService;
 use App\Services\Company\CompanyServiceInterface;
+use App\Services\Document\DocumentService;
+use App\Services\Document\DocumentServiceInterface;
 use App\Services\File\FileService;
 use App\Services\File\FileServiceInterface;
 use App\Services\Ingredient\IngredientService;
@@ -35,9 +37,7 @@ use App\Services\Stripe\Payment\PaymentServiceInterface;
 use App\Services\User\UserService;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Nnjeim\World\Models\Country;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -62,6 +62,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(StripeAccountServiceInterface::class, StripeAccountService::class);
         $this->app->bind(UserServiceInterface::class, UserService::class);
         $this->app->bind(EquipmentServiceInterface::class, EquipmentService::class);
+        $this->app->bind(DocumentServiceInterface::class, DocumentService::class);
     }
 
     /**

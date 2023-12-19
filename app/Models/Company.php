@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
@@ -104,11 +105,6 @@ class Company extends Model implements HasMedia
         return $this->hasMany(OrderItem::class, 'seller_id', 'id');
     }
 
-    public function labServices(): HasMany
-    {
-        return $this->hasMany(Laboratory::class);
-    }
-
     public function qualifications(): HasMany
     {
         return $this->hasMany(Qualification::class);
@@ -122,5 +118,10 @@ class Company extends Model implements HasMedia
     public function equipments(): HasMany
     {
         return $this->hasMany(Equipment::class);
+    }
+
+    public function documents(): HasManyThrough
+    {
+        return $this->hasManyThrough(Document::class, Ingredient::class);
     }
 }
