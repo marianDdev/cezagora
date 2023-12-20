@@ -18,6 +18,7 @@ use App\Http\Controllers\Payment\StripePortalController;
 use App\Http\Controllers\Payment\TransferController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QualificationController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Service\ServiceController;
 use App\Http\Controllers\UserController;
@@ -230,6 +231,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [EquipmentController::class, 'index'])->name('equipment.index');
         Route::get('/create', [EquipmentController::class, 'create'])->name('equipment.create');
         Route::post('/', [EquipmentController::class, 'store'])->name('equipment.store');
+    });
+
+    Route::group(['prefix' => '/ratings'], function () {
+        Route::get('/{companyId}', [RatingController::class, 'index'])->name('ratings.index');
+        Route::post('/', [RatingController::class, 'submitRating'])->name('rating.submit');
     });
 });
 
