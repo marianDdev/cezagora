@@ -19,6 +19,7 @@ class OrderController extends Controller
             'orders.index',
             [
                 'orders' => $company?->orders,
+                'company' => $company
             ]
         );
     }

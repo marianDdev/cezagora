@@ -1,72 +1,64 @@
 <x-app-layout>
-    <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Your orders</h2>
-    </div>
-    @foreach($orders as $order)
-        <table class="w-4/5 text-sm text-left text-gray-500 dark:text-gray-400 mb-10">
-            <thead class="text-sm text-blue-500 uppercase bg-gray-200">
-                <tr>
-                    <th scope="col" class="px-6 py-3" style="color: indigo">
-                        Order #{{ $order->id }}
-                    </th>
-                </tr>
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        Seller
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Item type
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Item name
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Quantity
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Price
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Status
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Action
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($order->items as $item)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+    <div class="bg-white">
+        <div>
+            <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+                    <h1 class="text-4xl font-bold tracking-tight text-gray-900">
+                        Your orders
+                    </h1>
+                </div>
 
-                            {{ $item->seller->name }}
-                        </th>
-                        <td class="px-6 py-4 text-indigo-500">
-                            {{ $item->item_type }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->name }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->quantity }}
-                        </td>
-                        <td class="px-6 py-4">
-                            ${{ $item->price }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->status }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <form action="{{ route('order-item.cancel', ['id' => $item->id]) }}" method="POST">
-                            @csrf
-                                <x-primary-button class="ml-4">
-                                    {{ __('Cancel') }}
-                                </x-primary-button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @endforeach
+                <section aria-labelledby="products-heading" class="pb-24 pt-6">
+                    <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+                        <!-- Product grid -->
+                        <div class="lg:col-span-3">
+                            <section class="bg-white dark:bg-gray-900">
+                                <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
+                                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                        @foreach($orders as $order)
+                                            @foreach($order->items as $item)
+                                                <div
+                                                    class="bg-blue-50 border border-blue-200 rounded-lg p-2 md:p-2">
+                                                    <p class="text-gray-500 dark:text-gray-400 mb-2">Order id: <span
+                                                            class="font-bold text-gray-700"> #{{ $order->id }}</span>
+                                                    </p>
+                                                    <p class="text-gray-500 dark:text-gray-400 mb-2">Seller: <span
+                                                            class="font-bold text-gray-700">{{ $item->seller->name }}</span>
+                                                    </p>
+
+                                                    <p class="text-gray-500 dark:text-gray-400 mb-2">Item type: {{ $item->item_type }} </p>
+
+                                                    <p class="text-gray-500 dark:text-gray-400 mb-2">Item name: {{ $item->name }}</p>
+
+                                                    <p class="text-gray-500 dark:text-gray-400 mb-2">Item quantity: {{ $item->quantity }}
+                                                    </p>
+
+                                                    <p class="text-gray-500 dark:text-gray-400 mb-2">Price: ${{ $item->price }}</p>
+                                                    <p class="text-gray-500 dark:text-gray-400 mb-2">Status: {{ $item->status }}</p>
+
+                                                    <div class="mb-6">
+                                                        <form
+                                                            action="{{ route('order-item.cancel', ['id' => $item->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <x-primary-button>
+                                                                {{ __('Cancel') }}
+                                                            </x-primary-button>
+                                                        </form>
+                                                    </div>
+                                                    @if(!$company->givenRatings()->where('reviewee_id', $item->seller->id)->exists())
+                                                        @include('components.rating', ['seller' => $item->seller])
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
 </x-app-layout>

@@ -124,4 +124,14 @@ class Company extends Model implements HasMedia
     {
         return $this->hasManyThrough(Document::class, Ingredient::class);
     }
+
+    public function receivedRatings(): HasMany
+    {
+        return $this->hasMany(Rating::class, 'reviewee_id');
+    }
+
+    public function givenRatings(): HasMany
+    {
+        return $this->hasMany(Rating::class, 'reviewer_id');
+    }
 }
