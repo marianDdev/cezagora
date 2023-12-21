@@ -234,7 +234,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::group(['prefix' => '/ratings'], function () {
-        Route::get('/{companyId}', [RatingController::class, 'index'])->name('ratings.index');
+        Route::get('/{slug}', [RatingController::class, 'index'])->name('ratings.index');
         Route::post('/', [RatingController::class, 'submitRating'])->name('rating.submit');
     });
 });
