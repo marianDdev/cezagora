@@ -38,7 +38,7 @@
     <p class="text-gray-500 dark:text-gray-400 mb-2">Available quantity: {{ $ingredient->quantity }}</p>
 
     <p class="text-gray-500 dark:text-gray-400 mb-2">Seller:
-        <a href="{{ route('ratings.index', ['companyId' => $ingredient->company->id]) }}" class="text-indigo-500">
+        <a href="{{ route('ratings.index', ['slug' => $ingredient->company->slug]) }}" class="text-indigo-500">
             {{ $seller }}
 
         @php
