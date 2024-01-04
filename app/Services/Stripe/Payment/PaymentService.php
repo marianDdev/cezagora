@@ -2,9 +2,13 @@
 
 namespace App\Services\Stripe\Payment;
 
+use App\Models\Campaign;
+use App\Models\Company;
+use App\Models\CompanyCampaign;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Setting;
+use App\Services\Campaign\CampaignServiceInterface;
 use App\Services\Stripe\StripeService;
 use Exception;
 use Stripe\Customer;
@@ -72,7 +76,7 @@ class PaymentService extends StripeService implements PaymentServiceInterface
                 ->transfers
                 ->create(
                     [
-                        'amount'         => $this->calculateAmount($amount),
+                        'amount'         => $this->calculateAmount($item->seller, $amount),
                         'currency'       => Setting::DEFAULT_CURRENCY_VALUE,
                         'destination'    => $sellerStripeId,
                         'transfer_group' => $order->id,
@@ -91,9 +95,15 @@ class PaymentService extends StripeService implements PaymentServiceInterface
         }
     }
 
-    private function calculateAmount(int $amount): int
+    private function calculateAmount(Company $company, int $amount): int
     {
+        $campaign = Campaign::where('name', CampaignServiceInterface::SIGNUP_BONUS)->first();
+        $companyCampaign = CompanyCampaign::where(['company_id' => $company->id, 'campaign_id' => $campaign->id])->first();
+
         $feeAmount = $amount * $this->percentage / 100;
+        if (!is_null($companyCampaign) && $companyCampaign->count < $campaign->limit) {
+            $feeAmount = 0;
+        }
 
         return $amount - $feeAmount;
     }

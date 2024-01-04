@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\EquipmentController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Middleware\RedirectIfUserHasNotAddedCompanyDetails;
 use App\Http\Middleware\RedirectIfUserHasNotEnabledStripe;
+use App\Http\Middleware\RedirectIfUserNotAdmin;
 use App\Models\CompanyCategory;
 use Illuminate\Support\Facades\Route;
 
@@ -237,6 +239,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{slug}', [RatingController::class, 'index'])->name('ratings.index');
         Route::post('/', [RatingController::class, 'submitRating'])->name('rating.submit');
     });
+
+    Route::group(
+        [
+            'prefix' => '/campaigns',
+            'middleware' => RedirectIfUserNotAdmin::class
+        ],
+        function () {
+        Route::get('/', [CampaignController::class, 'index'])->name('campaigns.index');
+        Route::get('/create', [CampaignController::class, 'create'])->name('campaign.create');
+        Route::post('/', [CampaignController::class, 'store'])->name('campaign.store');
+    });
+
 });
 
 require __DIR__ . '/auth.php';

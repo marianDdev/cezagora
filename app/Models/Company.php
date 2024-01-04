@@ -134,4 +134,9 @@ class Company extends Model implements HasMedia
     {
         return $this->hasMany(Rating::class, 'reviewer_id');
     }
+
+    public function campaigns(): HasMany
+    {
+        return $this->hasMany(CompanyCampaign::class);
+    }
 }
