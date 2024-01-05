@@ -36,6 +36,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property Address         $address
  * @property Collection      $packagings
  * @property Collection      $qualifications
+ * @property Collection      $campaigns
  */
 class Company extends Model implements HasMedia
 {

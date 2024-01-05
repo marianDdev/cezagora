@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Events\CompanyCreated;
-use App\Events\IngredientsFileProcessed;
 use App\Events\OrderCreated;
 use App\Listeners\AdjustIngredientsQuantity;
 use App\Listeners\CreateCompanyCampaign;
