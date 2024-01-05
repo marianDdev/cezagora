@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Setting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -43,7 +44,7 @@ class OrderProcessed extends Notification
             ->from(env('MAIL_FROM_ADDRESS'))
             ->greeting(sprintf('Hi %s', $this->seller))
             ->subject('your order is processed')
-            ->line(sprintf('You have received %d from CezAgora on behalf of %s', $this->amount, $this->customer))
+            ->line(sprintf('You have received %d %s from CezAgora on behalf of %s', $this->amount / 100, Setting::DEFAULT_CURRENCY_VALUE, $this->customer))
             ->line('Thank you for using CezAgora!');
     }
 
