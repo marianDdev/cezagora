@@ -21,5 +21,7 @@ interface PaymentServiceInterface
      */
     public function getPaymentIntent(int $id): PaymentIntent;
 
+    public function confirmPaymentIntent(string $intentId, string $paymentMethodId): void;
+
     public function executeTransfers(Order $order, Customer $stripeCustomer);
 }

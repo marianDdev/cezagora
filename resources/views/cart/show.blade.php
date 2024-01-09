@@ -69,7 +69,7 @@
                 card.mount('#card-element');
 
                 card.addEventListener('change', function (event) {
-                    var displayError = document.getElementById('card-errors');
+                    const displayError = document.getElementById('card-errors');
                     if ( event.error ) {
                         displayError.textContent = event.error.message;
                     } else {
@@ -77,28 +77,50 @@
                     }
                 });
 
-                var form = document.getElementById('payment-form');
+                const form = document.getElementById('payment-form');
                 form.addEventListener('submit', async function (event) {
                     event.preventDefault();
 
-                    const {
-                              paymentMethod,
-                              error
-                          } = await stripe.createPaymentMethod({
+                    const {paymentMethod, error } = await stripe.createPaymentMethod({
                                                                    type : 'card',
                                                                    card : card,
                                                                });
 
-                    if ( error ) {
-                        var errorElement         = document.getElementById('card-errors');
-                        errorElement.textContent = error.message;
-                    } else {
-                        const hiddenInput = document.createElement('input');
-                        hiddenInput.setAttribute('type', 'hidden');
-                        hiddenInput.setAttribute('name', 'payment_method_id');
-                        hiddenInput.setAttribute('value', paymentMethod.id);
-                        form.appendChild(hiddenInput);
-                        form.submit();
+                    if (error) {
+                        document.getElementById('card-errors').textContent = error.message;
+                    }else {
+                        fetch('/payments/create-intent', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({
+                                                     paymentMethodId: paymentMethod.id,
+                                                 })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                // Confirm the card payment using the client secret received from the backend
+                                stripe.confirmCardPayment(data.clientSecret, {
+                                    payment_method: paymentMethod.id,
+                                }).then(function(confirmResult) {
+                                    if (confirmResult.error) {
+                                        // Handle errors here
+                                        document.getElementById('card-errors').textContent = confirmResult.error.message;
+                                    } else {
+                                        // PaymentIntent was successfully confirmed
+                                        if (confirmResult.paymentIntent.status === 'succeeded') {
+                                            // Redirect or update the UI on success
+                                            window.location.href = '/payment/success'; // Redirect to a success page
+                                        }
+                                    }
+                                });
+                            })
+                            .catch(error => {
+                                // Handle errors from fetch here
+                                console.error('Error:', error);
+                            });
                     }
                 });
             </script>

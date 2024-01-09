@@ -4,7 +4,6 @@ namespace App\Services\Stripe\Payment;
 
 use App\Models\Campaign;
 use App\Models\Company;
-use App\Models\CompanyCampaign;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Setting;
@@ -29,24 +28,24 @@ class PaymentService extends StripeService implements PaymentServiceInterface
 
     public function createPaymentIntent(Order $order, string $paymentMethodId): PaymentIntent
     {
-        $paymentIntent = $this->stripeClient
-            ->paymentIntents
-            ->create(
-                [
-                    'amount'         => $order->total_price,
-                    'currency'       => Setting::DEFAULT_CURRENCY_VALUE,
-                    'transfer_group' => $order->id,
-                ]
-            );
+        $paymentIntent = $this->stripeClient->paymentIntents->create([
+                                                                         'amount'              => $order->total_price,
+                                                                         'currency'            => Setting::DEFAULT_CURRENCY_VALUE,
+                                                                         'transfer_group'      => $order->id,
+                                                                     ]);
 
         $order->update(['payment_method' => $paymentMethodId]);
 
-        return $this->stripeClient->paymentIntents->confirm(
-            $paymentIntent->id,
+        return $paymentIntent;
+    }
+
+    public function confirmPaymentIntent(string $intentId, string $paymentMethodId): void
+    {
+        $this->stripeClient->paymentIntents->confirm(
+            $intentId,
             ['payment_method' => $paymentMethodId]
         );
     }
-
 
     /**
      * @throws ApiErrorException
@@ -81,7 +80,7 @@ class PaymentService extends StripeService implements PaymentServiceInterface
                         'currency'       => Setting::DEFAULT_CURRENCY_VALUE,
                         'destination'    => $sellerStripeId,
                         'transfer_group' => $order->id,
-                        'description' => sprintf(
+                        'description'    => sprintf(
                             'Transfer %d for order with id %d to %s that has account id: %s',
                             $amount,
                             $order->id,
@@ -178,6 +177,7 @@ class PaymentService extends StripeService implements PaymentServiceInterface
 
                 if ($shouldUseSignupBonus) {
                     $campaign->update(['count' => $campaign->count + 1]);
+
                     return 0;
                 }
             }

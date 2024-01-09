@@ -154,6 +154,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::group(['prefix' => '/payments'], function () {
         Route::post('/', [PaymentController::class, 'chargeCustomer'])->name('payment.charge');
+        Route::post('/create-intent', [PaymentController::class, 'createIntent'])->name('payment.create-intent');
+
     });
 
     Route::group(['prefix' => '/transfers'], function () {
@@ -192,10 +194,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/onboarding/verify', [StripeOnboardingController::class, 'verify'])->name('onboarding.verify');
 
     Route::post('/create-customer-portal-session', [StripePortalController::class, 'createSession'])->name('create.stripe.portal.session');
-
-    //webhooks
-    Route::post('/webhooks/payment-intent', [WebhookController::class, 'handlePaymentIntentSucceeded'])->name('webhook.paymentIntent');
-    Route::post('/webhooks/transfers', [WebhookController::class, 'handleTransfers'])->name('webhook.trasfers');
 
     //email previews
     Route::get('preview/{emailName}', [PagesController::class, 'previewEmail'])->name('preview.email');
@@ -249,6 +247,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [CampaignController::class, 'index'])->name('campaigns.index');
         Route::get('/create', [CampaignController::class, 'create'])->name('campaign.create');
         Route::post('/', [CampaignController::class, 'store'])->name('campaign.store');
+    });
+
+    //webhooks
+    Route::group(['prefix' => '/webhooks'], function () {
+        Route::post('/payment-intent', [WebhookController::class, 'handlePaymentIntent'])->name('webhook.paymentIntent');
+        Route::post('/transfers', [WebhookController::class, 'handleTransfers'])->name('webhook.trasfers');
     });
 
 });
