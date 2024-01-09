@@ -39,9 +39,9 @@ class PaymentController extends Controller
 
             if ($paymentIntent->status === PaymentIntent::STATUS_SUCCEEDED) {
                 $paymentService->confirmPaymentIntent($paymentIntent->id, $paymentMethodId);
-
-                event(new OrderCreated($order));
             }
+
+            event(new OrderCreated($order));
 
             return view('payments.success', ['order' => $order]);
         } catch (Exception $e) {
@@ -74,6 +74,13 @@ class PaymentController extends Controller
             $paymentService->confirmPaymentIntent($paymentIntent->id, $paymentMethodId);
         }
 
+        event(new OrderCreated($order));
+
         return response()->json(['clientSecret' => $paymentIntent->client_secret]);
+    }
+
+    public function showSuccessPage(): View
+    {
+        return view('payments.success');
     }
 }

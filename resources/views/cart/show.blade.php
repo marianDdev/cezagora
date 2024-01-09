@@ -43,13 +43,11 @@
                     </table>
                 </div>
 
-                <!-- Payment Form (Right Part) -->
                 <div class="flex-1 bg-white p-6 rounded-lg shadow-md">
                     <h2 class="text-lg font-medium mb-4">Payment</h2>
 
                     <form method="post" action="{{ route('payment.charge') }}" id="payment-form">
                         @csrf
-                        <!-- Card Payment Input -->
                         <div class="mb-4">
                             <div id="card-element" class="p-2 border rounded"></div>
                             <div id="card-errors" role="alert" class="text-red-500 mt-2"></div>
@@ -81,45 +79,43 @@
                 form.addEventListener('submit', async function (event) {
                     event.preventDefault();
 
-                    const {paymentMethod, error } = await stripe.createPaymentMethod({
+                    const {
+                              paymentMethod,
+                              error
+                          } = await stripe.createPaymentMethod({
                                                                    type : 'card',
                                                                    card : card,
                                                                });
 
-                    if (error) {
+                    if ( error ) {
                         document.getElementById('card-errors').textContent = error.message;
-                    }else {
+                    } else {
                         fetch('/payments/create-intent', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            method : 'POST',
+                            headers : {
+                                'Content-Type' : 'application/json',
+                                'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                             },
-                            body: JSON.stringify({
-                                                     paymentMethodId: paymentMethod.id,
-                                                 })
+                            body : JSON.stringify({
+                                                      paymentMethodId : paymentMethod.id,
+                                                  })
                         })
                             .then(response => response.json())
                             .then(data => {
-                                // Confirm the card payment using the client secret received from the backend
                                 stripe.confirmCardPayment(data.clientSecret, {
-                                    payment_method: paymentMethod.id,
-                                }).then(function(confirmResult) {
-                                    if (confirmResult.error) {
-                                        // Handle errors here
+                                    payment_method : paymentMethod.id,
+                                }).then(function (confirmResult) {
+                                    if ( confirmResult.error ) {
                                         document.getElementById('card-errors').textContent = confirmResult.error.message;
                                     } else {
-                                        // PaymentIntent was successfully confirmed
-                                        if (confirmResult.paymentIntent.status === 'succeeded') {
-                                            // Redirect or update the UI on success
-                                            window.location.href = '/payment/success'; // Redirect to a success page
+                                        if ( confirmResult.paymentIntent.status === 'succeeded' ) {
+                                            window.location.href = '{{ route('payment.success', ['customer' =>  $order->customer->name, 'orderId' => $order->id]) }}';
                                         }
                                     }
                                 });
                             })
                             .catch(error => {
-                                // Handle errors from fetch here
-                                console.error('Error:', error);
+                                document.getElementById('card-errors').textContent = error.message;
                             });
                     }
                 });

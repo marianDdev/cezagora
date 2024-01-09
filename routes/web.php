@@ -153,6 +153,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::group(['prefix' => '/payments'], function () {
+        Route::get('/success', [PaymentController::class, 'showSuccessPage'])->name('payment.success');
         Route::post('/', [PaymentController::class, 'chargeCustomer'])->name('payment.charge');
         Route::post('/create-intent', [PaymentController::class, 'createIntent'])->name('payment.create-intent');
 
