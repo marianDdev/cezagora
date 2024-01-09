@@ -36,6 +36,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property Address         $address
  * @property Collection      $packagings
  * @property Collection      $qualifications
+ * @property Collection      $campaigns
  */
 class Company extends Model implements HasMedia
 {
@@ -133,5 +134,10 @@ class Company extends Model implements HasMedia
     public function givenRatings(): HasMany
     {
         return $this->hasMany(Rating::class, 'reviewer_id');
+    }
+
+    public function campaigns(): HasMany
+    {
+        return $this->hasMany(CompanyCampaign::class);
     }
 }

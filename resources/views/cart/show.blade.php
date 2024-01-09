@@ -43,13 +43,11 @@
                     </table>
                 </div>
 
-                <!-- Payment Form (Right Part) -->
                 <div class="flex-1 bg-white p-6 rounded-lg shadow-md">
                     <h2 class="text-lg font-medium mb-4">Payment</h2>
 
                     <form method="post" action="{{ route('payment.charge') }}" id="payment-form">
                         @csrf
-                        <!-- Card Payment Input -->
                         <div class="mb-4">
                             <div id="card-element" class="p-2 border rounded"></div>
                             <div id="card-errors" role="alert" class="text-red-500 mt-2"></div>
@@ -69,7 +67,7 @@
                 card.mount('#card-element');
 
                 card.addEventListener('change', function (event) {
-                    var displayError = document.getElementById('card-errors');
+                    const displayError = document.getElementById('card-errors');
                     if ( event.error ) {
                         displayError.textContent = event.error.message;
                     } else {
@@ -77,7 +75,7 @@
                     }
                 });
 
-                var form = document.getElementById('payment-form');
+                const form = document.getElementById('payment-form');
                 form.addEventListener('submit', async function (event) {
                     event.preventDefault();
 
@@ -90,15 +88,35 @@
                                                                });
 
                     if ( error ) {
-                        var errorElement         = document.getElementById('card-errors');
-                        errorElement.textContent = error.message;
+                        document.getElementById('card-errors').textContent = error.message;
                     } else {
-                        const hiddenInput = document.createElement('input');
-                        hiddenInput.setAttribute('type', 'hidden');
-                        hiddenInput.setAttribute('name', 'payment_method_id');
-                        hiddenInput.setAttribute('value', paymentMethod.id);
-                        form.appendChild(hiddenInput);
-                        form.submit();
+                        fetch('/payments/create-intent', {
+                            method : 'POST',
+                            headers : {
+                                'Content-Type' : 'application/json',
+                                'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body : JSON.stringify({
+                                                      paymentMethodId : paymentMethod.id,
+                                                  })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                stripe.confirmCardPayment(data.clientSecret, {
+                                    payment_method : paymentMethod.id,
+                                }).then(function (confirmResult) {
+                                    if ( confirmResult.error ) {
+                                        document.getElementById('card-errors').textContent = confirmResult.error.message;
+                                    } else {
+                                        if ( confirmResult.paymentIntent.status === 'succeeded' ) {
+                                            window.location.href = '{{ route('payment.success', ['customer' =>  $order->customer->name, 'orderId' => $order->id]) }}';
+                                        }
+                                    }
+                                });
+                            })
+                            .catch(error => {
+                                document.getElementById('card-errors').textContent = error.message;
+                            });
                     }
                 });
             </script>

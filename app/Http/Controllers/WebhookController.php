@@ -2,18 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderCreated;
+use App\Models\Order;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Stripe\Exception\SignatureVerificationException;
+use Stripe\Stripe;
+use Stripe\Webhook;
+use UnexpectedValueException;
 
 class WebhookController extends Controller
 {
-    public function handlePaymentIntentSucceeded(Request $request)
+    public function handlePaymentIntent(Request $request)
     {
-        $payload = json_decode($request->getContent(), true);
-    }
+        Stripe::setApiKey(config('stripe.secret'));
+        $payload         = $request->getContent();
+        $signatureHeader = $request->header('Stripe-Signature');
+        $event           = null;
 
-    public function handleTransfers(Request $request)
-    {
-        $payload = json_decode($request->getContent(), true);
+        try {
+            $event = Webhook::constructEvent(
+                $payload,
+                $signatureHeader,
+                config('stripe.payment_intent_webhook_secret')
+            );
+        } catch (UnexpectedValueException|SignatureVerificationException $e) {
+            return view('payments.error', ['error' => $e->getMessage()]);
+        }
+
+        if ($event->type == 'payment_intent.succeeded') {
+            $paymentIntent = $event->data->object;
+            $order         = Order::find($paymentIntent->metadata->order_id);
+            event(new OrderCreated($order));
+
+            return view('payments.success', ['order' => $order]);
+        }
+
+        return response()->json(['status' => 'success']);
     }
 }

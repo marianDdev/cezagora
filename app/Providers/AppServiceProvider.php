@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Services\Address\AddressService;
 use App\Services\Address\AddressServiceInterface;
+use App\Services\Campaign\CampaignService;
+use App\Services\Campaign\CampaignServiceInterface;
 use App\Services\Checkout\CheckoutService;
 use App\Services\Checkout\CheckoutServiceInterface;
 use App\Services\Company\CompanyService;
@@ -63,6 +65,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserServiceInterface::class, UserService::class);
         $this->app->bind(EquipmentServiceInterface::class, EquipmentService::class);
         $this->app->bind(DocumentServiceInterface::class, DocumentService::class);
+        $this->app->bind(CampaignServiceInterface::class, CampaignService::class);
     }
 
     /**
