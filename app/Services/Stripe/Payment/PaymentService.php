@@ -2,10 +2,14 @@
 
 namespace App\Services\Stripe\Payment;
 
+use App\Models\Campaign;
+use App\Models\Company;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Setting;
+use App\Services\Campaign\CampaignServiceInterface;
 use App\Services\Stripe\StripeService;
+use Carbon\Carbon;
 use Exception;
 use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
@@ -24,24 +28,24 @@ class PaymentService extends StripeService implements PaymentServiceInterface
 
     public function createPaymentIntent(Order $order, string $paymentMethodId): PaymentIntent
     {
-        $paymentIntent = $this->stripeClient
-            ->paymentIntents
-            ->create(
-                [
-                    'amount'         => $order->total_price,
-                    'currency'       => Setting::DEFAULT_CURRENCY_VALUE,
-                    'transfer_group' => $order->id,
-                ]
-            );
+        $paymentIntent = $this->stripeClient->paymentIntents->create([
+                                                                         'amount'              => $order->total_price,
+                                                                         'currency'            => Setting::DEFAULT_CURRENCY_VALUE,
+                                                                         'transfer_group'      => $order->id,
+                                                                     ]);
 
         $order->update(['payment_method' => $paymentMethodId]);
 
-        return $this->stripeClient->paymentIntents->confirm(
-            $paymentIntent->id,
+        return $paymentIntent;
+    }
+
+    public function confirmPaymentIntent(string $intentId, string $paymentMethodId): void
+    {
+        $this->stripeClient->paymentIntents->confirm(
+            $intentId,
             ['payment_method' => $paymentMethodId]
         );
     }
-
 
     /**
      * @throws ApiErrorException
@@ -65,17 +69,24 @@ class PaymentService extends StripeService implements PaymentServiceInterface
 
         /** @var OrderItem $item */
         foreach ($orderItems as $item) {
-            $amount         = $item->price * $item->quantity;
+            $amount         = $item->total;
             $sellerStripeId = $item->seller->user->stripe_account_id;
 
             $this->stripeClient
                 ->transfers
                 ->create(
                     [
-                        'amount'         => $this->calculateAmount($amount),
+                        'amount'         => $this->calculateAmount($item->seller, $amount),
                         'currency'       => Setting::DEFAULT_CURRENCY_VALUE,
                         'destination'    => $sellerStripeId,
                         'transfer_group' => $order->id,
+                        'description'    => sprintf(
+                            'Transfer %d for order with id %d to %s that has account id: %s',
+                            $amount,
+                            $order->id,
+                            $item->seller->name,
+                            $sellerStripeId
+                        ),
                     ]
                 );
 
@@ -91,11 +102,11 @@ class PaymentService extends StripeService implements PaymentServiceInterface
         }
     }
 
-    private function calculateAmount(int $amount): int
+    private function calculateAmount(Company $company, int $amount): int
     {
-        $feeAmount = $amount * $this->percentage / 100;
+        $feeAmount = $this->calculateFee($company, $amount);
 
-        return $amount - $feeAmount;
+        return ($amount - $feeAmount);
     }
 
     /**
@@ -149,5 +160,29 @@ class PaymentService extends StripeService implements PaymentServiceInterface
         $this->stripeClient
             ->invoices
             ->finalizeInvoice($invoice->id, []);
+    }
+
+    private function calculateFee(Company $company, int $amount): float|int
+    {
+        $companyCampaigns    = $company->campaigns;
+        $signupBonusCampaign = Campaign::where('name', CampaignServiceInterface::SIGNUP_BONUS)->first();
+
+        if ($companyCampaigns->count() > 0) {
+            $signupBonusCampaignNotFinished = is_null($signupBonusCampaign->end_at) || $signupBonusCampaign->end_at->gt(Carbon::today());
+            foreach ($companyCampaigns as $campaign) {
+
+                $shouldUseSignupBonus = $signupBonusCampaign->id === $campaign->campaign_id &&
+                                        $signupBonusCampaignNotFinished &&
+                                        $signupBonusCampaign->limit > $campaign->count;
+
+                if ($shouldUseSignupBonus) {
+                    $campaign->update(['count' => $campaign->count + 1]);
+
+                    return 0;
+                }
+            }
+        }
+
+        return $amount * $this->percentage / 100;
     }
 }

@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Services\Stripe\StripeService;
 use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
-use Stripe\StripeClient;
 
 class CustomerService extends StripeService implements CustomerServiceInterface
 {
@@ -33,9 +32,7 @@ class CustomerService extends StripeService implements CustomerServiceInterface
     public function create(Order $order): Customer
     {
         $customer = $order->customer;
-
-        /** @var Address $address */
-        $address = $customer->addresses->first();
+        $address = $customer->address;
 
         return $this->stripeClient
             ->customers
@@ -47,7 +44,6 @@ class CustomerService extends StripeService implements CustomerServiceInterface
                     ],
                     'email'   => $customer->email,
                     'name'    => $customer->name,
-
                 ]
             );
     }

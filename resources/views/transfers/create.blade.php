@@ -3,7 +3,7 @@
     <form class="text-center space-y-6" method="post" action="{{ route('transfer.create') }}">
         <input id="order_id" name="order_id" value="{{ $order->id }}" type="hidden">
         @csrf
-        <x-primary-button class="w-full justify-center"> Transfer ${{ $order->total_price }}
+        <x-primary-button class="w-full justify-center"> Transfer ${{ $order->total_price / 100}}
         </x-primary-button>
     </form>
 </x-app-layout>

@@ -19,8 +19,7 @@ class OrdersService implements OrdersServiceInterface
         $order = $this->getCurrentOrder();
         $data  = $this->getItemData($order, $validated);
         $item  = $this->createItem($data);
-
-        $this->increaseTotal($order, $item);
+        $this->increaseTotal($order, $data);
 
         return $item;
     }
@@ -46,9 +45,9 @@ class OrdersService implements OrdersServiceInterface
                     ->first();
     }
 
-    private function increaseTotal(Order $order, OrderItem $item): void
+    private function increaseTotal(Order $order, array $data): void
     {
-        $order->total_price += $item->total;
+        $order->total_price += $data['quantity'] * $data['price'];
         $order->save();
     }
 
@@ -80,15 +79,30 @@ class OrdersService implements OrdersServiceInterface
 
     private function createItem(array $data): OrderItem
     {
-        $item = OrderItem::create($data);
-
-        if (is_null($item)) {
-            throw new Exception('Order item was not created', 422);
+        $existingItem = $this->getExitingOrderItem($data);
+        $item = $existingItem ?? OrderItem::create($data);
+        if (!is_null($existingItem)) {
+            $existingItem->quantity += $data['quantity'];
+            $existingItem->save();
         }
 
         $item->total = $item->price * $item->quantity;
         $item->save();
 
         return $item;
+    }
+
+    private function getExitingOrderItem(array $data): ?OrderItem
+    {
+        return OrderItem::where(
+            [
+                'item_type' => $data['item_type'],
+                'order_id' => $data['order_id'],
+                'seller_id' => $data['seller_id'],
+                'item_id' => $data['item_id'],
+                'price' => $data['price'],
+                'name' => $data['name'],
+            ]
+        )->first();
     }
 }

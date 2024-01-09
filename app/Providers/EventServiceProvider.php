@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Events\CompanyCreated;
-use App\Events\IngredientsFileProcessed;
 use App\Events\OrderCreated;
 use App\Listeners\AdjustIngredientsQuantity;
+use App\Listeners\CreateCompanyCampaign;
 use App\Listeners\CreateStripeAccount;
 use App\Listeners\CreateStripeCustomer;
 use App\Listeners\SendCustomerChargedEmail;
@@ -28,6 +28,7 @@ class EventServiceProvider extends ServiceProvider
         CompanyCreated::class           => [
             CreateStripeAccount::class,
             CreateStripeCustomer::class,
+            CreateCompanyCampaign::class,
         ],
         OrderCreated::class => [
             AdjustIngredientsQuantity::class,

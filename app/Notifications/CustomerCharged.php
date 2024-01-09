@@ -44,7 +44,7 @@ class CustomerCharged extends Notification
             ->line(
                 sprintf(
                     'We have successfuly charged you $%d for order #%d',
-                    $this->order->total_price, $this->order->id
+                    $this->order->total_price / 100, $this->order->id
                 )
             );
 
@@ -55,11 +55,11 @@ class CustomerCharged extends Notification
                     $item->quantity,
                     $item->item_type,
                     $item->name,
-                    $item->price
+                    $item->price / 100
                 )
             );
         }
-        $message->line(sprintf('Total $%d', $this->order->total_price));
+        $message->line(sprintf('Total $%d', $this->order->total_price / 100));
         $message->line('Thank you for using CezAgora!');
 
         return $message;
