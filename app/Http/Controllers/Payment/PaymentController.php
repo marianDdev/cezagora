@@ -54,7 +54,7 @@ class PaymentController extends Controller
     /**
      * @throws ApiErrorException
      */
-    public function createIntent(Request $request, PaymentServiceInterface $paymentService, OrdersServiceInterface $ordersService): JsonResponse
+    public function createIntentAfter3DSecure(Request $request, PaymentServiceInterface $paymentService, OrdersServiceInterface $ordersService): JsonResponse
     {
         $order = $ordersService->getPendingOrder();
 

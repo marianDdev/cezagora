@@ -7,7 +7,6 @@
             <p>Please complete the additional authentication required to finalize your payment.</p>
 
             <div id="card-errors" role="alert" class="text-red-500 mt-2"></div>
-            <!-- Add any additional information or instructions here -->
         </div>
     </div>
 
@@ -17,12 +16,10 @@
         window.onload = function() {
             stripe.confirmCardPayment("{{ $clientSecret }}").then(function(result) {
                 if (result.error) {
-                    // Display error message
                     document.getElementById('card-errors').textContent = result.error.message;
                 } else {
-                    // The payment has been processed, you can redirect or update the UI
                     if (result.paymentIntent.status === 'succeeded') {
-                        window.location.href = "/path-to-success-page"; // Redirect to a success page
+                        window.location.href = "{{ route('dashboard') }}";
                     } else {
                         // Handle other statuses accordingly
                     }
