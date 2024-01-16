@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Events\OrderCreated;
 use App\Models\Order;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Stripe;
@@ -12,7 +14,7 @@ use UnexpectedValueException;
 
 class WebhookController extends Controller
 {
-    public function handlePaymentIntent(Request $request)
+    public function handlePaymentIntent(Request $request): View|JsonResponse
     {
         Stripe::setApiKey(config('stripe.secret'));
         $payload         = $request->getContent();

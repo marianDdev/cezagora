@@ -155,7 +155,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(['prefix' => '/payments'], function () {
         Route::get('/success', [PaymentController::class, 'showSuccessPage'])->name('payment.success');
         Route::post('/', [PaymentController::class, 'chargeCustomer'])->name('payment.charge');
-        Route::post('/create-intent', [PaymentController::class, 'createIntent'])->name('payment.create-intent');
+        Route::post('/create-intent', [PaymentController::class, 'createIntentAfter3DSecure'])->name('payment.create-intent');
 
     });
 
@@ -198,6 +198,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //email previews
     Route::get('preview/{emailName}', [PagesController::class, 'previewEmail'])->name('preview.email');
+    Route::get('send/invitation', [PagesController::class, 'testEmail'])->name('invitation.email');
 
     Route::post('/upload', [FileController::class, 'upload'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('upload');
 

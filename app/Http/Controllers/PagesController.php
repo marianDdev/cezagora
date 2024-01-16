@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductsCategory;
+use App\Notifications\Invitation;
 use App\Services\Pages\PagesServiceInterface;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Traits\AuthUser;
+use Exception;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 
 class PagesController extends Controller
 {
@@ -142,6 +146,11 @@ class PagesController extends Controller
         return view('pages.products_and_services', $data);
     }
 
+    public function showProductsAndServicesCategories(): View
+    {
+        return view('pages.products_services_categories');
+    }
+
     public function previewEmail(string $emailName): View
     {
         $name = $emailName;
@@ -150,8 +159,15 @@ class PagesController extends Controller
         return view(sprintf('vendor.notifications.%s', $name), ['user' => $user]);
     }
 
-    public function showProductsAndServicesCategories(): View
+    public function testEmail(): View|RedirectResponse
     {
-        return view('pages.products_services_categories');
+        $user = $this->authUser();
+
+        try {
+            $user->notify(new Invitation());
+        } catch (Exception $e) {
+            return view('error', ['error' => $e->getMessage()]);
+        }
+        return redirect()->route('dashboard');
     }
 }
