@@ -31,7 +31,7 @@ class Invitation extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
             ->from(env('MAIL_FROM_ADDRESS'), 'CezAgora')
