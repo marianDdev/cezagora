@@ -16,4 +16,6 @@ interface NotificationServiceInterface
     public function notifyUsAboutUserRegistered(User $user): void;
 
     public function notifyUsAboutPaymentErrors(Order $order, string $error): void;
+
+    public function sendMembershipInvitations(array $validated): void;
 }

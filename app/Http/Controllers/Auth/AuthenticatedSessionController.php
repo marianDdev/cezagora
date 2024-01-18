@@ -36,6 +36,10 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('activate.account');
         }
 
+        if ($user->is_admin) {
+            return redirect()->route('admin.index');
+        }
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

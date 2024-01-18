@@ -5,9 +5,15 @@ namespace App\Services\Notification;
 use App\Models\Order;
 use App\Models\User;
 use App\Notifications\CustomerCharged;
+use App\Notifications\MembershipInvitation;
 use App\Notifications\OrderProcessed;
 use App\Notifications\WelcomeEmail;
+use Carbon\Carbon;
+use Illuminate\Notifications\AnonymousNotifiable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Notification;
 use Spatie\SlackAlerts\SlackAlert;
+use App\Models\Notification as NotificationsHistory;
 
 class NotificationService implements NotificationServiceInterface
 {
@@ -110,5 +116,34 @@ class NotificationService implements NotificationServiceInterface
                 ],
             ]
         );
+    }
+
+    public function sendMembershipInvitations(array $validated): void
+    {
+        $pairs = explode(',', $validated['email_company_pairs']);
+
+        foreach ($pairs as $pair) {
+            [$email, $companyName] = explode('-', $pair);
+            $existingNotification = NotificationsHistory::where('receiver_email', $email)->first();
+
+            //don't notify same company more than once in a week
+            if (!is_null($existingNotification) && $existingNotification->created_at->greaterThanOrEqualTo(Carbon::now()->subWeek())) {
+                continue;
+            }
+
+            $notifiable = new AnonymousNotifiable;
+            $notifiable->route('mail', $email);
+            $notifiable->notify(new MembershipInvitation($companyName));
+
+            NotificationsHistory::create(
+                [
+                    'company_id'     => null,
+                    'name'           => 'membership_invitation',
+                    'channel'        => 'email',
+                    'receiver_name'  => $companyName,
+                    'receiver_email' => $email,
+                ]
+            );
+        }
     }
 }

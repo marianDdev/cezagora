@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductsCategory;
-use App\Notifications\Invitation;
+use App\Notifications\MembershipInvitation;
 use App\Services\Pages\PagesServiceInterface;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Traits\AuthUser;
@@ -151,6 +151,8 @@ class PagesController extends Controller
         return view('pages.products_services_categories');
     }
 
+    //ADMIN AREA
+
     public function previewEmail(string $emailName): View
     {
         $name = $emailName;
@@ -164,10 +166,20 @@ class PagesController extends Controller
         $user = $this->authUser();
 
         try {
-            $user->notify(new Invitation());
+            $user->notify(new MembershipInvitation());
         } catch (Exception $e) {
             return view('error', ['error' => $e->getMessage()]);
         }
         return redirect()->route('dashboard');
+    }
+
+    public function showAdminPage(): View
+    {
+        return view('admin.index');
+    }
+
+    public function adminEmailsIndex(): View
+    {
+        return view('admin.emails.index');
     }
 }
