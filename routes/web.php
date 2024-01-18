@@ -7,6 +7,7 @@ use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Order\OrderIngredientController;
 use App\Http\Controllers\Order\OrderItemController;
@@ -242,14 +243,43 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::group(
         [
-            'prefix' => '/campaigns',
-            'middleware' => RedirectIfUserNotAdmin::class
+            'prefix'     => '/admin',
+            'middleware' => RedirectIfUserNotAdmin::class,
         ],
         function () {
-        Route::get('/', [CampaignController::class, 'index'])->name('campaigns.index');
-        Route::get('/create', [CampaignController::class, 'create'])->name('campaign.create');
-        Route::post('/', [CampaignController::class, 'store'])->name('campaign.store');
-    });
+            Route::get('/', [PagesController::class, 'showAdminPage'])->name('admin.index');
+
+            Route::group(
+                [
+                    'prefix' => '/campaigns',
+                ],
+                function () {
+                    Route::get('/', [CampaignController::class, 'index'])->name('campaigns.index');
+                    Route::get('/create', [CampaignController::class, 'create'])->name('campaign.create');
+                    Route::post('/', [CampaignController::class, 'store'])->name('campaign.store');
+                }
+            );
+
+            Route::group(
+                [
+                    'prefix' => '/emails',
+                ],
+                function () {
+                    Route::get('/', [PagesController::class, 'adminEmailsIndex'])->name('admin.emails.index');
+
+                    Route::group(
+                        [
+                            'prefix' => '/invitations',
+                        ],
+                        function () {
+                            Route::get('/create', [NotificationController::class, 'createMembershipInvitation'])->name('membership_invitation.create');
+                            Route::post('/', [NotificationController::class, 'storeMembershipInvitation'])->name('membership_invitation.store');
+                        }
+                    );
+                }
+            );
+        }
+    );
 
     //webhooks
     Route::group(['prefix' => '/webhooks'], function () {
