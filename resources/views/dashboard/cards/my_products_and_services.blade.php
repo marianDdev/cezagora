@@ -23,7 +23,7 @@
                  alt="my products and services image" />
         </a>
         <div class="p-5">
-            <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">
+            <h3 class="text-xl font-bold tracking-tight text-indigo-500 dark:text-white mb-2">
                 <a href="{{ route('my.products.services') }}">{{__('messages.products_services')}}</a>
             </h3>
         </div>

@@ -68,7 +68,7 @@ class CompanyController extends Controller
 
             event(new CompanyCreated($company));
 
-            return redirect()->route('/onboarding');
+            return redirect()->route('onboarding');
         } catch (Exception $e) {
             return view('companies.fail', ['error' => $e]);
         }
