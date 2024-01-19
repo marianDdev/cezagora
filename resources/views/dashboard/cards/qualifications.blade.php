@@ -1,7 +1,8 @@
 @if(is_null($company))
     <div class="items-center bg-gray-200 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
         <a role="link" aria-disabled="true">
-            <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{ $imagePath}}" />
+            <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
+                 src="{{ url('/images/dashboard/qualifications.jpeg')}}" alt="qualifications" />
         </a>
         <div class="p-5">
             <h3 class="text-xl font-bold tracking-tight text-gray-400">
@@ -16,7 +17,8 @@
 @else
     <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
         <a href="#">
-            <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{ $imagePath}}" />
+            <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
+                 src="{{ url('/images/dashboard/qualifications.jpeg')}}" alt="qualifications" />
         </a>
         <div class="p-5">
             <h3 class="text-xl font-bold tracking-tight text-indigo-500">

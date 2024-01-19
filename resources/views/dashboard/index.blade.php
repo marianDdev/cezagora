@@ -25,32 +25,11 @@
 
                 @include('dashboard.cards.my_products_and_services',['company' => $company])
 
-                @include(
-                        'dashboard.cards.orders',
-                        [
-                            'title' => 'Orders',
-                            'imagePath' => 'https://t4.ftcdn.net/jpg/05/45/84/05/240_F_545840555_MUq39bHj21yG6XTpLuzPEpR7BLguhOMF.jpg',
-                             'countOrders' => $company ? $company->orders->count() : 0,
-                            ]
-                        )
+                @include('dashboard.cards.orders',['title' => 'Orders','countOrders' => $company ? $company->orders->count() : 0])
 
-                @include(
-                        'dashboard.cards.sales',
-                        [
-                            'title' => 'Sales',
-                            'imagePath' => 'https://t4.ftcdn.net/jpg/05/21/95/57/240_F_521955761_2fIGXQXbHiwzNribojXzmGFSnO5IyMaz.jpg',
-                             'countSales' => $company ? $company->sales->count() : 0,
-                            ]
-                        )
+                @include('dashboard.cards.sales',['title' => 'Sales','countSales' => $company ? $company->sales->count() : 0])
 
-                @include(
-                        'dashboard.cards.qualifications',
-                        [
-                            'title' => 'Qualifications',
-                            'imagePath' => 'https://t4.ftcdn.net/jpg/03/35/23/21/240_F_335232104_56YtebC4KR78tVt1eYrJiQbAptGMimke.jpg',
-                            'qualificationsCount' => $company ? $company->qualifications->count() : 0,
-                            ]
-                        )
+                @include('dashboard.cards.qualifications',['title' => 'Qualifications','qualificationsCount' => $company ? $company->qualifications->count() : 0])
 
                 @if(!is_null($account))
                     @include('dashboard.cards.stripe_dashboard', ['imagePath' => 'https://t4.ftcdn.net/jpg/05/97/91/83/240_F_597918379_Qz6aOWjXmiyduFxbwKcjYBLHPlY8FMKO.jpg',])
