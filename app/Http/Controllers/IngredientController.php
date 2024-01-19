@@ -64,7 +64,7 @@ class IngredientController extends Controller
             $documentService->create($validated, $ingredient->id);
         }
 
-        if (array_key_exists('other_document', $validated)) {
+        if (isset($validated['other_document'])) {
             $documentService->createOther($validated, $ingredient->id);
         }
 
