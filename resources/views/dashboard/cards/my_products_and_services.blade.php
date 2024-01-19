@@ -2,14 +2,16 @@
     <div class="items-center bg-gray-200 rounded-lg shadow sm:flex">
         <a role="link" aria-disabled="true">
             <img class="w-2/3  rounded-lg sm:rounded-none sm:rounded-l-lg"
-                 src="{{ url('/images/dashboard/products_and_services.png.png') }}"
+                 src="{{ url('/images/dashboard/products_and_services.png') }}"
                  alt="my products and services image" />
         </a>
         <div class="p-5">
             <div class="p-5">
 
                 <h3 class="text-xl font-bold tracking-tight text-gray-400">
-                    <a role="link" aria-disabled="true">        {{__('messages.products_services')}} </a>
+                    <a role="link" aria-disabled="true">
+                        {{__('messages.products_services')}}
+                    </a>
                 </h3>
 
             </div>

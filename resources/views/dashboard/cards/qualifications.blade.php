@@ -16,7 +16,7 @@
     </div>
 @else
     <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
+        <a href="{{ route('my-qualifications') }}">
             <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
                  src="{{ url('/images/dashboard/qualifications.jpeg')}}" alt="qualifications" />
         </a>
