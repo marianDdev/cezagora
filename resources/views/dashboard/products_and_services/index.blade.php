@@ -10,19 +10,8 @@
             </div>
 
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
-                @include(
-                    'dashboard.products_and_services._ingredients',
-                    [
-                        'count' => $ingredientsCount,
-                        ]
-                    )
-                @include(
-                    'dashboard.products_and_services._packaging',
-                    [
-                        'imagePath' => 'https://t4.ftcdn.net/jpg/05/68/81/15/240_F_568811549_cddvPdfy3L8AFGNYsJmS45UwuWs2PNJr.jpg',
-                        'count' => $packagingCount,
-                        ]
-                    )
+                @include('dashboard.products_and_services._ingredients',['count' => $ingredientsCount])
+                @include('dashboard.products_and_services._packaging',['count' => $packagingCount])
 
                 @include(
                    'dashboard.products_and_services._services',
