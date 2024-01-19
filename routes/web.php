@@ -102,9 +102,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //companies
     Route::group(['prefix' => '/companies'], function () {
         Route::get('/', [CompanyController::class, 'index'])->name('companies');
-        Route::patch('/update', [CompanyController::class, 'update'])->name('company.update');
-        Route::post('/', [CompanyController::class, 'store'])->name('company.store');
         Route::get('/{slug}', [CompanyController::class, 'show'])->name('company.show');
+        Route::post('/', [CompanyController::class, 'store'])->name('company.store');
+        Route::patch('/update', [CompanyController::class, 'update'])->name('company.update');
     });
 
     Route::get('my-company', [CompanyController::class, 'showMyCompany'])->name('my-companies');

@@ -12,6 +12,7 @@ use App\Services\Address\AddressServiceInterface;
 use App\Services\Company\CompanyServiceInterface;
 use App\Services\User\UserServiceInterface;
 use App\Traits\AuthUser;
+use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -57,16 +58,21 @@ class CompanyController extends Controller
         CompanyServiceInterface $companyService,
         AddressServiceInterface $addressService,
         UserServiceInterface    $userService,
-    ): RedirectResponse {
-        $validated = $request->validated();
-        $company   = $companyService->create($validated);
-        $addressService->create($validated, $company->id);
-        $userService->setCompany($company->id);
-        $company->update(['has_details_completed' => true]);
+    ): RedirectResponse|View {
+        try {
+            $validated = $request->validated();
+            $company   = $companyService->create($validated);
+            $addressService->create($validated, $company->id);
+            $userService->setCompany($company->id);
+            $company->update(['has_details_completed' => true]);
 
-        event(new CompanyCreated($company));
+            event(new CompanyCreated($company));
 
-        return redirect('/onboarding');
+            return redirect()->route('/onboarding');
+        } catch (Exception $e) {
+            return view('companies.fail', ['error' => $e]);
+        }
+
     }
 
     public function update(UpdateCompanyRequest $request, CompanyServiceInterface $companyService): RedirectResponse
