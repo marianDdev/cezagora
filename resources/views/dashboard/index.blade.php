@@ -23,13 +23,7 @@
                         ]
                     )
 
-                @include(
-                    'dashboard.cards.my_products_and_services',
-                    [
-                        'company' => $company,
-                        'imagePath' => 'https://t4.ftcdn.net/jpg/05/66/13/05/240_F_566130504_Z8omSiCut4psfaLFkYCaNu8XiIkkDQKD.jpg',
-                        ]
-                    )
+                @include('dashboard.cards.my_products_and_services',['company' => $company])
 
                 @include(
                         'dashboard.cards.orders',
