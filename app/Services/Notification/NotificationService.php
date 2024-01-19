@@ -10,8 +10,6 @@ use App\Notifications\OrderProcessed;
 use App\Notifications\WelcomeEmail;
 use Carbon\Carbon;
 use Illuminate\Notifications\AnonymousNotifiable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Notification;
 use Spatie\SlackAlerts\SlackAlert;
 use App\Models\Notification as NotificationsHistory;
 
