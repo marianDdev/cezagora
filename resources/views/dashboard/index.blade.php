@@ -10,13 +10,13 @@
             </div>
 
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
-                @include('cards.dashboard.company',
+                @include('dashboard.cards.cards.company',
                         [
                             'categories' => $categories,
                             'mccs' => $mccs,
                             'company' => $company,
                             'title' => $company->name ?? null,
-                            'imagePath' => 'https://t3.ftcdn.net/jpg/05/73/16/54/240_F_573165412_X2ACbn2ZmngbcY3zDE1GCQrCAMvXM75X.jpg',
+                            'imagePath' => 'https://t3.ftcdn.net/jpg/05/73/16/54/240cards.F_573165412_X2ACbn2ZmngbcY3zDE1GCQrCAMvXM75X.jpg',
                             'email' => $company->email ?? null,
                             'phone' => $company->phone ?? null,
                             'admin' => $user->getFullName(),
@@ -25,7 +25,7 @@
                     )
 
                 @include(
-                    'cards.dashboard.my_products_and_services',
+                    'dashboard.cards.my_products_and_services',
                     [
                         'company' => $company,
                         'imagePath' => 'https://t4.ftcdn.net/jpg/05/66/13/05/240_F_566130504_Z8omSiCut4psfaLFkYCaNu8XiIkkDQKD.jpg',
@@ -33,7 +33,7 @@
                     )
 
                 @include(
-                        'cards.dashboard.orders',
+                        'dashboard.cards.orders',
                         [
                             'title' => 'Orders',
                             'imagePath' => 'https://t4.ftcdn.net/jpg/05/45/84/05/240_F_545840555_MUq39bHj21yG6XTpLuzPEpR7BLguhOMF.jpg',
@@ -42,7 +42,7 @@
                         )
 
                 @include(
-                        'cards.dashboard.sales',
+                        'dashboard.cards.sales',
                         [
                             'title' => 'Sales',
                             'imagePath' => 'https://t4.ftcdn.net/jpg/05/21/95/57/240_F_521955761_2fIGXQXbHiwzNribojXzmGFSnO5IyMaz.jpg',
@@ -51,7 +51,7 @@
                         )
 
                 @include(
-                        'cards.dashboard.qualifications',
+                        'dashboard.cards.qualifications',
                         [
                             'title' => 'Qualifications',
                             'imagePath' => 'https://t4.ftcdn.net/jpg/03/35/23/21/240_F_335232104_56YtebC4KR78tVt1eYrJiQbAptGMimke.jpg',
@@ -60,7 +60,7 @@
                         )
 
                 @if(!is_null($account))
-                    @include('cards.dashboard.stripe_dashboard', ['imagePath' => 'https://t4.ftcdn.net/jpg/05/97/91/83/240_F_597918379_Qz6aOWjXmiyduFxbwKcjYBLHPlY8FMKO.jpg',])
+                    @include('dashboard.cards.stripe_dashboard', ['imagePath' => 'https://t4.ftcdn.net/jpg/05/97/91/83/240_F_597918379_Qz6aOWjXmiyduFxbwKcjYBLHPlY8FMKO.jpg',])
                 @endif
             </div>
         </div>
