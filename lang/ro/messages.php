@@ -156,4 +156,5 @@ return [
     "check_products_services_suppliers"                              => "Verificați întreaga noastră listă de furnizori de produse și servicii",
     "discover_suppliers"                                             => "Descoperiți vasta noastră colecție de furnizori",
     'create_company_before_add_packaging'                            => 'Va rog sa va adaugati datele companiei si sa efectuati onboardingul pentru plati ulterioare pentru a putea adauga ambalaje.',
+    'create_company_before_add'                                      => 'Va rog sa va adaugati datele companiei si sa efectuati onboardingul pentru plati ulterioare pentru a putea adauga servicii.',
 ];

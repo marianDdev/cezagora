@@ -3,7 +3,7 @@
     $userHasSales = $userHasCompany && $company->sales->count() > 0;
 @endphp
 
-@if(!$userHasSales)
+@if(is_null($company))
     <div class="items-center bg-gray-200 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
         <a role="link" aria-disabled="true">
             <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{ $imagePath}}" />
@@ -26,7 +26,12 @@
             <h3 class="text-xl font-bold tracking-tight text-indigo-500">
                 <a href="{{ route('sales') }}">{{ $title }}</a>
             </h3>
-            <span class="text-gray-500 dark:text-gray-400">{{ __('messages.sales_count', ['countSales' => $countSales]) }}</span>
+            @if($company->sales->count() === 0)
+                <span class="text-gray-500 dark:text-gray-400">{{ __('messages.no_sales') }}</span>
+            @else
+                <span
+                    class="text-gray-500 dark:text-gray-400">{{ __('messages.sales_count', ['countSales' => $countSales]) }}</span>
+            @endif
             <span
                 class="text-gray-500 dark:text-gray-400"></span>
         </div>

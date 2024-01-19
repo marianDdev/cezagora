@@ -1,3 +1,6 @@
+@if(is_null($user->company) || ($user->stripe_account_enabled == false))
+{{--    card with add company details warning--}}
+@else
 <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
     <a href="{{ route('my.products.services') }}">
         <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{ $imagePath}}" />
@@ -20,3 +23,4 @@
         </div>
     </a>
 </div>
+@endif

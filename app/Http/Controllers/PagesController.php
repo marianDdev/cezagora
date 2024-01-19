@@ -3,20 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductsCategory;
-use App\Notifications\MembershipInvitation;
-use App\Services\Pages\PagesServiceInterface;
-use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Traits\AuthUser;
-use Exception;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
 
 class PagesController extends Controller
 {
     use AuthUser;
 
-    public function home(): View
+    public function showHome(): View
     {
         return view(
             'pages.home.main',
@@ -26,52 +20,24 @@ class PagesController extends Controller
         );
     }
 
-    public function about(): View
+    public function showAbout(): View
     {
         return view('pages.about.index');
     }
 
-    public function contact(): View
+    public function showContact(): View
     {
         return view('pages.contact');
     }
 
-    public function help(): View
+    public function showHelp(): View
     {
         return view('pages.help.main');
     }
 
-    public function pricing(): View
+    public function showPricing(): View
     {
         return view('pages.pricing');
-    }
-
-    public function dashboard(
-        StripeAccountServiceInterface $stripeAccountService,
-        PagesServiceInterface         $pagesService,
-    ): View
-    {
-        return view('pages.dashboard', $pagesService->getDashboardData($stripeAccountService));
-    }
-
-    public function settings(): View
-    {
-        return view('pages.settings');
-    }
-
-    public function accountDeactivatedConfirmationPage(): View
-    {
-        return view('pages.account-deactivated-confirmation');
-    }
-
-    public function accountReactivatedConfirmationPage(): View
-    {
-        return view('pages.account-reactivated-confirmation');
-    }
-
-    public function activateAccount(): View
-    {
-        return view('pages.activate_account');
     }
 
     public function contactMessageSent(): View
@@ -79,107 +45,68 @@ class PagesController extends Controller
         return view('pages.contact-message-sent');
     }
 
-    public function faq(): View
+    public function showFaq(): View
     {
         return view('pages.help.faq');
     }
 
-    public function guides(): View
+    public function showGuides(): View
     {
         return view('pages.help.guides');
     }
 
-    public function policies(): View
+    public function showPolicies(): View
     {
         return view('pages.help.policies');
     }
 
-    public function advertising(): View
+    public function showAdvertising(): View
     {
         return view('pages.tc_and_policies.advertising.main');
     }
 
-    public function cookie(): View
+    public function showCookie(): View
     {
         return view('pages.tc_and_policies.cookie');
     }
 
-    public function branding(): View
+    public function showBranding(): View
     {
         return view('pages.tc_and_policies.branding');
     }
 
-    public function generalPolicies(): View
+    public function showGeneralPolicies(): View
     {
         return view('pages.tc_and_policies.general');
     }
 
-    public function privacy(): View
+    public function showPrivacy(): View
     {
         return view('pages.tc_and_policies.privacy');
     }
 
-    public function copyright(): View
+    public function showCopyright(): View
     {
         return view('pages.tc_and_policies.copyright');
     }
 
-    public function termsAndConditions(): View
+    public function showTermsAndConditions(): View
     {
         return view('pages.tc_and_policies.terms_conditions');
     }
 
-    public function videoTutorials(): View
+    public function showVideoTutorials(): View
     {
         return view('pages.help.video_tutorials');
     }
 
-    public function userRoles(): View
+    public function showUserRoles(): View
     {
         return view('pages.help.user_roles');
-    }
-
-    public function renderMyProductAndServices(PagesServiceInterface $service): View
-    {
-        $data = $service->getProductAndServicesData();
-
-        return view('pages.products_and_services', $data);
     }
 
     public function showProductsAndServicesCategories(): View
     {
         return view('pages.products_services_categories');
-    }
-
-    //ADMIN AREA
-
-    public function previewEmail(string $emailName): View
-    {
-        $name = $emailName;
-        $user = $this->authUser();
-
-        return view(sprintf('vendor.notifications.%s', $name), ['user' => $user]);
-    }
-
-    public function testEmail(): View|RedirectResponse
-    {
-        $user = $this->authUser();
-
-        try {
-            $user->notify(new MembershipInvitation());
-        } catch (Exception $e) {
-            return view('error', ['error' => $e->getMessage()]);
-        }
-        return redirect()->route('dashboard');
-    }
-
-    public function showAdminPage(): View
-    {
-        return view('admin.index');
-    }
-
-    public function adminEmailsIndex(): View
-    {
-        return view('admin.emails.index');
     }
 }

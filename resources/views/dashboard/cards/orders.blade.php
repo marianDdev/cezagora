@@ -1,9 +1,4 @@
-@php
-    $userHasCompany = !is_null(Auth::user()->company);
-    $userHasOrders = $userHasCompany && Auth::user()->company->orders->count() > 0;
-@endphp
-
-@if(!$userHasOrders)
+@if(is_null($company))
     <div class="items-center bg-gray-200 rounded-lg shadow sm:flex">
         <a role="link" aria-disabled="true">
             <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{ $imagePath}}" />
@@ -26,7 +21,12 @@
             <h3 class="text-xl font-bold tracking-tight text-indigo-500">
                 <a href="{{ route('orders') }}">{{ $title }}</a>
             </h3>
-            <span class="text-gray-500 dark:text-gray-400">You have {{ $countOrders }} {{__('messages.active')}} {{__('messages.orders')}}</span>
+            @if ($company->orders->count() > 0)
+                <span class="text-gray-500">{{ __('messages.no_orders') }}</span>
+            @else
+                <span
+                    class="text-gray-500 dark:text-gray-400">You have {{ $countOrders }} {{__('messages.active')}} {{__('messages.orders')}}</span>
+            @endif
             <span
                 class="text-gray-500 dark:text-gray-400"></span>
         </div>
