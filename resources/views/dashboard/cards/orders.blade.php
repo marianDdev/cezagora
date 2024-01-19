@@ -1,7 +1,7 @@
 @if(is_null($company))
     <div class="items-center bg-gray-200 rounded-lg shadow sm:flex">
         <a role="link" aria-disabled="true">
-            <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{ $imagePath}}" />
+            <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{ url('/images/dashboard/orders.png')}}" />
         </a>
         <div class="p-5">
             <h3 class="text-xl font-bold tracking-tight text-gray-400">
