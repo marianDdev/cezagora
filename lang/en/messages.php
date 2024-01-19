@@ -178,4 +178,6 @@ return [
     'label_printing'                                           => 'Label printing',
     "check_products_services_suppliers"                        => "Check our entire list of products and services suppliers",
     "discover_suppliers"                                       => "Discover our vast collection of suppliers",
+    'create_company_before_add_packaging'                      => 'Please complete your company details and payment onboarding before adding packaging products',
+    'create_company_before_add'
 ];
