@@ -21,7 +21,7 @@
             <h3 class="text-xl font-bold tracking-tight text-indigo-500">
                 <a href="{{ route('orders') }}">{{ $title }}</a>
             </h3>
-            @if ($company->orders->count() > 0)
+            @if ($company->orders->count() === 0)
                 <span class="text-gray-500">{{ __('messages.no_orders') }}</span>
             @else
                 <span
