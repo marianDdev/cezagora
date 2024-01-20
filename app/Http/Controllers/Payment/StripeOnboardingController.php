@@ -20,6 +20,9 @@ class StripeOnboardingController extends Controller
         return view('stripe.onboarding');
     }
 
+    /**
+     * @throws ApiErrorException
+     */
     public function redirect(StripeClient $stripeClient): Application|Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
         $user = $this->authUser();

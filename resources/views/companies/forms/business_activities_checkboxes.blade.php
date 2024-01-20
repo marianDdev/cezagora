@@ -28,5 +28,5 @@
             </li>
         @endforeach
     </div>
-
+    <x-input-error :messages="$errors->get('company_categories')" class="mt-2" />
 </ul>

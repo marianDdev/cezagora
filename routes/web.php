@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\IngredientController;
@@ -31,26 +34,27 @@ use App\Http\Middleware\RedirectIfUserNotAdmin;
 use App\Models\CompanyCategory;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [PagesController::class, 'home'])->name('home');
-Route::get('/about', [PagesController::class, 'about'])->name('about');
-Route::get('/pricing', [PagesController::class, 'pricing'])->name('pricing');
-Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
-Route::get('/help', [PagesController::class, 'help'])->name('help');
-Route::get('/faq', [PagesController::class, 'faq'])->name('faq');
-Route::get('/guides', [PagesController::class, 'guides'])->name('guides');
-Route::get('/video-tutorials', [PagesController::class, 'videoTutorials'])->name('video.tutorials');
-Route::get('/user-roles', [PagesController::class, 'userRoles'])->name('help.user.roles');
-Route::get('/advertising-policy', [PagesController::class, 'advertising'])->name('advertising');
-Route::get('/terms-conditions', [PagesController::class, 'termsAndConditions'])->name('terms.conditions');
-Route::get('/cookie-policy', [PagesController::class, 'cookie'])->name('cookie');
-Route::get('/copyright-policy', [PagesController::class, 'copyright'])->name('copyright');
-Route::get('/branding-policy', [PagesController::class, 'branding'])->name('branding');
-Route::get('/general-policies', [PagesController::class, 'generalPolicies'])->name('general.policies');
-Route::get('/privacy-policy', [PagesController::class, 'privacy'])->name('privacy');
-Route::get('/policies', [PagesController::class, 'policies'])->name('policies');
-Route::get('/settings', [PagesController::class, 'settings'])->name('settings');
-Route::get('/account-deactivated', [PagesController::class, 'accountDeactivatedConfirmationPage'])->name('account.deactivated.page');
-Route::get('/account-reactivated', [PagesController::class, 'accountReactivatedConfirmationPage'])->name('account.reactivated.page');
+Route::get('/', [PagesController::class, 'showHome'])->name('home');
+Route::get('/about', [PagesController::class, 'showAbout'])->name('about');
+Route::get('/pricing', [PagesController::class, 'showPricing'])->name('pricing');
+Route::get('/contact', [PagesController::class, 'showContact'])->name('contact');
+Route::get('/help', [PagesController::class, 'showHelp'])->name('help');
+Route::get('/faq', [PagesController::class, 'showFaq'])->name('faq');
+Route::get('/guides', [PagesController::class, 'showGuides'])->name('guides');
+Route::get('/video-tutorials', [PagesController::class, 'showVideoTutorials'])->name('video.tutorials');
+Route::get('/user-roles', [PagesController::class, 'showUserRoles'])->name('help.user.roles');
+Route::get('/advertising-policy', [PagesController::class, 'showAdvertising'])->name('advertising');
+Route::get('/terms-conditions', [PagesController::class, 'showTermsAndConditions'])->name('terms.conditions');
+Route::get('/cookie-policy', [PagesController::class, 'showCookie'])->name('cookie');
+Route::get('/copyright-policy', [PagesController::class, 'showCopyright'])->name('copyright');
+Route::get('/branding-policy', [PagesController::class, 'showBranding'])->name('branding');
+Route::get('/general-policies', [PagesController::class, 'showGeneralPolicies'])->name('general.policies');
+Route::get('/privacy-policy', [PagesController::class, 'showPrivacy'])->name('privacy');
+Route::get('/policies', [PagesController::class, 'showPolicies'])->name('policies');
+
+Route::get('/account-deactivated', [AccountController::class, 'showAccountDeactivatedConfirmationPage'])->name('account.deactivated.page');
+Route::get('/account-reactivated', [AccountController::class, 'showAccountReactivatedConfirmationPage'])->name('account.reactivated.page');
+
 Route::get('/contact-message-sent', [PagesController::class, 'contactMessageSent'])->name('contact.message.sent');
 Route::get('/products-services-categories', [PagesController::class, 'showProductsAndServicesCategories'])->name('products.services.categories');
 
@@ -76,16 +80,19 @@ Route::post('/contact-message', [ContactMessageController::class, 'store'])->nam
 Route::post('/language-switch', [LanguageController::class, 'switchLanguage'])->name('language.switch');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [PagesController::class, 'dashboard'])
+    //Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])
          ->name('dashboard');
-    Route::get('/my-products-and-services', [PagesController::class, 'renderMyProductAndServices'])
+    Route::get('/my-products-and-services', [DashboardController::class, 'showMyProductsAndServices'])
          ->name('my.products.services');
+    Route::get('/settings', [DashboardController::class, 'showSettings'])->name('settings');
+
     Route::get('/profile', [ProfileController::class, 'edit'])
          ->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/activate-account', [PagesController::class, 'activateAccount'])->name('activate.account');
+    Route::get('/activate-account', [AccountController::class, 'showActivateAccount'])->name('activate.account');
 
     //users
     Route::group(['prefix' => '/users'], function () {
@@ -95,9 +102,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //companies
     Route::group(['prefix' => '/companies'], function () {
         Route::get('/', [CompanyController::class, 'index'])->name('companies');
-        Route::patch('/update', [CompanyController::class, 'update'])->name('company.update');
-        Route::post('/', [CompanyController::class, 'store'])->name('company.store');
         Route::get('/{slug}', [CompanyController::class, 'show'])->name('company.show');
+        Route::post('/', [CompanyController::class, 'store'])->name('company.store');
+        Route::patch('/update', [CompanyController::class, 'update'])->name('company.update');
     });
 
     Route::get('my-company', [CompanyController::class, 'showMyCompany'])->name('my-companies');
@@ -198,8 +205,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/create-customer-portal-session', [StripePortalController::class, 'createSession'])->name('create.stripe.portal.session');
 
     //email previews
-    Route::get('preview/{emailName}', [PagesController::class, 'previewEmail'])->name('preview.email');
-    Route::get('send/invitation', [PagesController::class, 'testEmail'])->name('invitation.email');
+    Route::get('preview/{emailName}', [AdminController::class, 'previewEmail'])->name('preview.email');
+    Route::get('send/invitation', [AdminController::class, 'testEmail'])->name('invitation.email');
 
     Route::post('/upload', [FileController::class, 'upload'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('upload');
 
@@ -247,7 +254,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'middleware' => RedirectIfUserNotAdmin::class,
         ],
         function () {
-            Route::get('/', [PagesController::class, 'showAdminPage'])->name('admin.index');
+            Route::get('/', [AdminController::class, 'showAdminPage'])->name('admin.index');
 
             Route::group(
                 [
@@ -265,7 +272,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     'prefix' => '/emails',
                 ],
                 function () {
-                    Route::get('/', [PagesController::class, 'adminEmailsIndex'])->name('admin.emails.index');
+                    Route::get('/', [AdminController::class, 'adminEmailsIndex'])->name('admin.emails.index');
 
                     Route::group(
                         [

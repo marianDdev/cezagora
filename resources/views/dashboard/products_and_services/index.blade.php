@@ -10,30 +10,11 @@
             </div>
 
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
-                @include(
-                    'cards.products_and_services.ingredients',
-                    [
-                        'count' => $ingredientsCount,
-                        ]
-                    )
-                @include(
-                    'cards.products_and_services.packaging',
-                    [
-                        'imagePath' => 'https://t4.ftcdn.net/jpg/05/68/81/15/240_F_568811549_cddvPdfy3L8AFGNYsJmS45UwuWs2PNJr.jpg',
-                        'count' => $packagingCount,
-                        ]
-                    )
+                @include('dashboard.products_and_services._ingredients',['count' => $ingredientsCount])
+                @include('dashboard.products_and_services._packaging',['count' => $packagingCount])
 
                 @include(
-                    'cards.products_and_services.products',
-                    [
-                        'imagePath' => 'https://t4.ftcdn.net/jpg/02/83/46/39/240_F_283463951_Hdt61pKqT09VoIZEbEsi90LnLe9q0Qo8.jpg',
-                        'count' => $productsCount,
-                        ]
-                    )
-
-                @include(
-                   'cards.products_and_services.services',
+                   'dashboard.products_and_services._services',
                    [
                        'imagePath' => 'https://t3.ftcdn.net/jpg/03/03/54/36/240_F_303543606_tnwHT6FSbrjmSo8TIhKZ3io2pkinyCWi.jpg',
                        'count' => $servicesCount,
@@ -41,7 +22,7 @@
                    )
 
                 @include(
-                  'cards.products_and_services.equipment',
+                  'dashboard.products_and_services._equipment',
                   [
                       'count' => $servicesCount,
                       ]
