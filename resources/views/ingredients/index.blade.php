@@ -27,6 +27,7 @@
                                                 @include('cards.ingredients.single', ['ingredient' => $ingredient])
                                             @endforeach
                                         </div>
+                                        {{ $filteredIngredients->links() }}
                                     </div>
                                 </section>
                             </div>
