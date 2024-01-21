@@ -10,8 +10,9 @@
                 @include('pages.home.laboratory')
                 @include('pages.home.compliance')
             </div>
+
             <a href="{{ route('products.services.categories') }}"
-               class="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center">{{ __('messages.check_products_services_suppliers') }}
+               class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ __('messages.check_products_services_suppliers') }}
                 <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                      viewBox="0 0 14 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
