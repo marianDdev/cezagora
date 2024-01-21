@@ -16,7 +16,7 @@
 @endphp
 
 <div
-    class="{{ $ingredient->availability === \App\Services\Ingredient\IngredientServiceInterface::NOT_AVAILABLE ?  'bg-gray-100' : 'bg-blue-50'}} border border-blue-200 rounded-lg p-2 md:p-2">
+    class="{{ $ingredient->availability === \App\Services\Ingredient\IngredientServiceInterface::NOT_AVAILABLE ?  'bg-gray-100' : 'bg-red-50'}} border border-red-200 rounded-lg p-2 md:p-2">
     @if($ingredient->documents->count() > 0)
         @include('ingredients._documents_info', ['ingredient' => $ingredient])
     @endif

@@ -3,7 +3,7 @@
         <div>
             <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-                    <h1 class="text-4xl font-bold tracking-tight text-gray-900">
+                    <h1 class="text-3xl font-bold tracking-tight text-red-400 sm:text-4xl mb-2">
                         {{ __('messages.discover_ingredients_list') }}
                     </h1>
                 </div>
