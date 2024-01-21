@@ -169,7 +169,7 @@ return [
     'select_equipment_type'                                    => 'Select equipment type',
     'type'                                                     => 'type',
     'additional_info'                                          => 'additional info',
-    'your_services'                                            => 'your services',
+    'your_services'                                            => 'Your services',
     'your_equipment'                                           => 'Your equipment',
     'equipment'                                                => 'equipment',
     'laboratory_equipment'                                     => 'Laboratory equipment',

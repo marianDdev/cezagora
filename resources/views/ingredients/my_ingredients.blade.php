@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <section class="bg-white dark:bg-gray-900">
         <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 text-center">
             <h1 class="text-3xl font-bold tracking-tight text-red-400 sm:text-4xl mb-6">
@@ -9,7 +9,7 @@
             <a class="mr-4 text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                href="{{ route('ingredient.create') }}">{{ __('messages.add_more_ingredients') }}</a>
             <a class="ml-4 text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-               href="{{ route('ingredient.create') }}">Back to your products and services</a>
+               href="{{ route('my.products.services') }}">Back to your products and services</a>
         </div>
     </section>
 
@@ -25,4 +25,4 @@
             </div>
         </div>
     </section>
-</x-guest-layout>
+</x-app-layout>
