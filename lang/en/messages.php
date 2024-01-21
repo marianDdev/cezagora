@@ -169,7 +169,7 @@ return [
     'select_equipment_type'                                    => 'Select equipment type',
     'type'                                                     => 'type',
     'additional_info'                                          => 'additional info',
-    'your_services'                                            => 'your services',
+    'your_services'                                            => 'Your services',
     'your_equipment'                                           => 'Your equipment',
     'equipment'                                                => 'equipment',
     'laboratory_equipment'                                     => 'Laboratory equipment',
@@ -180,4 +180,5 @@ return [
     "discover_suppliers"                                       => "Discover our vast collection of suppliers",
     'create_company_before_add_packaging'                      => 'Please complete your company details and payment onboarding before adding packaging products',
     'create_company_before_add'                                => 'Please complete your company details and payment onboarding before adding services',
+    'get_in_touch'                                             => 'Get in touch',
 ];
