@@ -4,7 +4,7 @@ return [
     'ingredients'                                              => 'Ingredients',
     'products'                                                 => 'products',
     'packaging'                                                => 'packaging',
-    'discover_raw_materials_ingredients_services_in_one_place' => 'Discover cosmetic raw materials, ingredients and services in one place.',
+    'discover_raw_materials_ingredients_services_in_one_place' => 'Discover cosmetic raw materials, packaging and services in one place.',
     'join_manufacturers_suppliers_distributors_retailers'      => 'join our cosmetics community of manufacturers,ingredients and packing suppliers, distributors and retailers.',
     'signup'                                                   => 'signup',
     'now'                                                      => 'now',
