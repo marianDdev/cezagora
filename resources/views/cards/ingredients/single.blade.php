@@ -1,14 +1,14 @@
+
+{{--TODO refactor this piece of shit--}}
 @php
-    $commonName = $ingredient->common_name;
-    $inciName = $ingredient->name;
-    $commonShortName = strlen($commonName) > 30 ? substr($commonName, 0, 30) . '...' : $commonName;
-    $inciShortName = strlen($inciName) > 30 ? substr($inciName, 0, 30) . '...' : $inciName;
+    $commonShortName = strlen($ingredient->common_name) > 30 ? substr($ingredient->common_name, 0, 30) . '...' : $ingredient->common_name;
+    $inciShortName = strlen($ingredient->name) > 30 ? substr($ingredient->name, 0, 30) . '...' : $ingredient->name;
     $authUserOwnsIngredient = null;
     if (\Illuminate\Support\Facades\Auth::check()) {
         $user = \Illuminate\Support\Facades\Auth::user();
         $userHasCompany = !is_null($user->company);
         $authCompany = $userHasCompany === true ? $user->company : null;
-        $authUserOwnsIngredient = !is_null($userHasCompany) && $authCompany->id === $ingredient->company->id;
+        $authUserOwnsIngredient = !is_null($authCompany) && $authCompany->id === $ingredient->company->id;
         $seller = $authUserOwnsIngredient ? 'You are the seller' : $ingredient->company->name;
     } else {
         $seller = $ingredient->company->name;
