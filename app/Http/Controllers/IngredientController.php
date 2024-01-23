@@ -6,9 +6,11 @@ use App\Http\Requests\FilterIngredientsRequest;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
+use App\Models\Document;
 use App\Models\Ingredient;
 use App\Services\Document\DocumentServiceInterface;
 use App\Services\Ingredient\IngredientServiceInterface;
+use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -21,9 +23,9 @@ class IngredientController extends Controller
         $filtersData = $service->getFiltersData();
         $filtered    = $service->filter($validated)->sortByDesc('created_at');
 
-        $page = request('page', 1);
+        $page    = request('page', 1);
         $perPage = 15;
-        $offset = ($page - 1) * $perPage;
+        $offset  = ($page - 1) * $perPage;
 
         $filtered = new LengthAwarePaginator(
             $filtered->slice($offset, $perPage)->values(),
@@ -46,11 +48,15 @@ class IngredientController extends Controller
     {
         $authCompany = $this->authUserCompany();
         $ingredients = $authCompany->ingredients()->orderByDesc('created_at')->paginate(12);
+        $authCompanyDocuments = $authCompany->documents()->pluck('documents.name')->toArray();
+        $documents = array_unique(array_merge($authCompanyDocuments, DocumentServiceInterface::ALL_DOCUMENTS));
 
         return view(
             'ingredients.my_ingredients',
             [
+                'authCompany' => $authCompany,
                 'ingredients' => $ingredients,
+                'documents'   => $documents,
             ]
         );
     }
@@ -84,21 +90,20 @@ class IngredientController extends Controller
                          ->with(['successful_message' => 'Ingredient added successfully!']);
     }
 
-    public function edit(string $slug): View
-    {
-        $ingredient = Ingredient::where('slug', $slug)->first();
-
-        return view('ingredients.edit', ['ingredient' => $ingredient]);
-    }
-
-    public function update(UpdateIngredientRequest $request, string $slug): View
-    {
+    public function update(
+        UpdateIngredientRequest $request,
+        IngredientServiceInterface $service
+    ): RedirectResponse|View {
         $validated  = $request->validated();
-        $ingredient = Ingredient::where('slug', $slug)->first();
 
-        $ingredient->update($validated);
+        try {
+            $service->update($validated);
+        } catch (Exception $e) {
+            return view('ingredients.error', ['error' => $e->getMessage()]);
+        }
 
-        return view('ingredients.show');
+
+        return redirect()->route('my-ingredients');
     }
 
     public function search(SearchRequest $request, IngredientServiceInterface $service): View

@@ -123,7 +123,14 @@ class Company extends Model implements HasMedia
 
     public function documents(): HasManyThrough
     {
-        return $this->hasManyThrough(Document::class, Ingredient::class);
+        return $this->hasManyThrough(
+            Document::class,
+            Ingredient::class,
+            'company_id',
+            'ingredient_id',
+            'id',
+            'id'
+        );
     }
 
     public function receivedRatings(): HasMany

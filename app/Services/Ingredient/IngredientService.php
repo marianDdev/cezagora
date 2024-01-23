@@ -3,15 +3,13 @@
 namespace App\Services\Ingredient;
 
 use App\Models\Company;
+use App\Models\Document;
 use App\Models\Ingredient;
 use App\Models\User;
 use App\Traits\AuthUser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\LazyCollection;
-use Throwable;
 
 class IngredientService implements IngredientServiceInterface
 {
@@ -84,6 +82,33 @@ class IngredientService implements IngredientServiceInterface
     {
         $company = $user->company;
         Ingredient::where('company_id', $company->id)->delete();
+    }
+
+    public function update(array $validated): void
+    {
+        $ingredient = Ingredient::find($validated['id']);
+        $ingredient->update($validated);
+
+        if (array_key_exists('documents', $validated)) {
+            $documentIds = [];
+            foreach ($validated['documents'] as $documentName) {
+                $document = Document::firstOrCreate(
+                    ['name' => $documentName, 'ingredient_id' => $ingredient->id]
+                );
+
+                $documentIds[] = $document->id;
+            }
+
+            $existingDocumentIds = $ingredient->documents()->pluck('id')->toArray();
+            $documentIdsToDelete = array_diff($existingDocumentIds, $documentIds);
+            Document::whereIn('id', $documentIdsToDelete)->delete();
+        }
+
+        if (array_key_exists('other_document', $validated)) {
+            Document::firstOrCreate(
+                ['name' => $validated['other_document'], 'ingredient_id' => $ingredient->id]
+            );
+        }
     }
 
     private function getAllFromActiveCompaniesQuery()

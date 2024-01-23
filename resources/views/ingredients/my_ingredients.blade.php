@@ -17,7 +17,7 @@
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($ingredients as $ingredient)
-                    @include('cards.ingredients.single', ['ingredient' => $ingredient])
+                    @include('ingredients.ingredient', ['ingredient' => $ingredient])
                 @endforeach
             </div>
             <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
