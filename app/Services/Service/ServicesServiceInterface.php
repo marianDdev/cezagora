@@ -17,9 +17,12 @@ interface ServicesServiceInterface
     public const DELIVERY                  = 'delivery';
     public const BUSINESS_STRATEGY         = 'business_strategy';
     public const INNOVATION                = 'innovation';
+    public const PRIVATE_LABEL = 'private_label';
 
     public const TYPES = [
+        self::FORMULATION,
         self::LABORATORY,
+        self::PRIVATE_LABEL,
         self::REGULATORY_CONSULTING,
         self::QUALITY_ASSURANCE,
         self::MARKET_RESEARCH,
@@ -27,7 +30,6 @@ interface ServicesServiceInterface
         self::EXPORT_IMPORT,
         self::SUSTAINABILITY_CONSULTING,
         self::TRAINING,
-        self::FORMULATION,
         self::MARKETING,
         self::DELIVERY,
         self::BUSINESS_STRATEGY,

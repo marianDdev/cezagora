@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ url('/images/favicon-32x32.png') }}">
+        <link rel="icon" type="image/x-icon" href="{{ url('/favicon.ico') }}">
 
         <title>CezAgora</title>
 
