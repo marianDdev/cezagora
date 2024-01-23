@@ -28,6 +28,8 @@ use App\Services\Search\SearchService;
 use App\Services\Search\SearchServiceInterface;
 use App\Services\Equipment\EquipmentService;
 use App\Services\Equipment\EquipmentServiceInterface;
+use App\Services\Service\ServicesService;
+use App\Services\Service\ServicesServiceInterface;
 use App\Services\Stripe\Account\StripeAccountService;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Services\Stripe\BillingPortal\BillingPortalService;
@@ -66,6 +68,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(EquipmentServiceInterface::class, EquipmentService::class);
         $this->app->bind(DocumentServiceInterface::class, DocumentService::class);
         $this->app->bind(CampaignServiceInterface::class, CampaignService::class);
+        $this->app->bind(ServicesServiceInterface::class, ServicesService::class);
     }
 
     /**

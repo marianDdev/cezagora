@@ -4,7 +4,7 @@ return [
     'ingredients'                                                    => 'ingrediente',
     'products'                                                       => 'produse',
     'packaging'                                                      => 'ambalaje',
-    'discover_raw_materials_ingredients_services_in_one_place'       => 'Descoperiți materii prime, ingrediente și servicii cosmetice într-un singur loc.',
+    'discover_raw_materials_ingredients_services_in_one_place'       => 'Descoperiți materii prime, ambalaje și servicii cosmetice într-un singur loc.',
     'join_manufacturers_suppliers_distributors_retailers'            => 'alăturați-vă comunității noastre de producători, furnizori de ingrediente și ambalaje, distribuitori și comercianți cu amănuntul de produse cosmetice.',
     'signup'                                                         => 'inscrieți-vă',
     'now'                                                            => 'acum',
