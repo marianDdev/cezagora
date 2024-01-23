@@ -62,7 +62,7 @@ class StripeAccountService extends StripeService implements StripeAccountService
 
     public function getShortMccList(): Collection
     {
-        $allowedCodes = [5047, 5122, 5999, 7230, 7299, 5411, 5172, 5968, 5045, 7311, 7392];
+        $allowedCodes = [5047, 5122, 5169, 59777, 5999, 7230, 7299, 5411, 5172, 5968, 5045, 7311, 7392, 8734];
 
         return MerchantCategoryCode::whereIn('code', $allowedCodes)->get();
     }
