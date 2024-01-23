@@ -11,8 +11,10 @@
     <div>
         @foreach($leftDocuments as $document)
             <li class="flex items-center w-full">
-                <input id="{{ $document }}" value="{{ $document }}" name="documents[]" type="checkbox"
-                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500 m-3">
+                <input id="{{ $document }}" value="{{ $document }}" name="documents[]" type="checkbox" {{ $ingredient->documents->contains(function ($doc) use ($document) {
+        return $doc->name == $document;
+    }) ? 'checked' : '' }}
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500 m-3">
                 <label for="{{ $document }}"
                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $document }}</label>
             </li>

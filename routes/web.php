@@ -113,8 +113,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(['prefix' => '/ingredients'], function () {
         Route::get('/create', [IngredientController::class, 'create'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.create');
         Route::post('/', [IngredientController::class, 'store'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.store');
-        Route::get('/{id}/edit', [IngredientController::class, 'edit'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.edit');
-        Route::put('/update', [IngredientController::class, 'update'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.update');
+        Route::patch('/update', [IngredientController::class, 'update'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.update');
         Route::post('/upload', [IngredientController::class, 'insertIngredientsFromFile'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredients.upload');
     });
 
