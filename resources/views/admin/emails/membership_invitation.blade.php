@@ -7,16 +7,23 @@
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                         Send membership invitations
                     </h1>
-                    <form class="space-y-4 md:space-y-6" method="POST" action="{{ route('membership_invitation.store') }}">
+                    <form class="space-y-4 md:space-y-6" method="POST" action="{{ route('membership_invitation.store') }}" enctype="multipart/form-data">
                         @csrf
-                        <div>
-                            <x-input-label for="email_company_pairs" :value="__('Email-Company pairs separated by comma. Eg: aa@gmail.com-company A,bb@gmail.com-company B')" />
-                            <x-text-input id="email_company_pairs" type="text" name="email_company_pairs" :value="old('email_company_pairs')" autofocus autocomplete="email_company_pairs" placeholder="aa@gmail.com-company A,bb@gmail.com-company B" />
-                            <x-input-error :messages="$errors->get('email_company_pairs')" class="mt-2" />
+                        <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
+                            <div>
+                                <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
+                                     src="{{ url('/images/upload.png') }}" />
+                            </div>
+                            <div class="p-5">
+                                    @csrf
+                                    <input
+                                        class="mb-2 block text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" type="file" name="invitation">
+                                    <button type="submit"
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ __('messages.upload') }}
+                                    </button>
+                            </div>
                         </div>
-                        <x-primary-button class="ml-4">
-                            {{ __('Send invitations') }}
-                        </x-primary-button>
+                        <x-input-error :messages="$errors->get('invitation')" class="mt-2" />
                     </form>
                 </div>
             </div>

@@ -116,32 +116,20 @@ class NotificationService implements NotificationServiceInterface
         );
     }
 
-    public function sendMembershipInvitations(array $validated): void
+    public function sendMembershipInvitations(array $data): void
     {
-        $pairs = explode(',', $validated['email_company_pairs']);
+        $notifiable = new AnonymousNotifiable;
+        $notifiable->route('mail', $data['email']);
+        $notifiable->notify(new MembershipInvitation($data['name']));
 
-        foreach ($pairs as $pair) {
-            [$email, $companyName] = explode('-', $pair);
-            $existingNotification = NotificationsHistory::where('receiver_email', $email)->first();
-
-            //don't notify same company more than once in a week
-            if (!is_null($existingNotification) && $existingNotification->created_at->greaterThanOrEqualTo(Carbon::now()->subWeek())) {
-                continue;
-            }
-
-            $notifiable = new AnonymousNotifiable;
-            $notifiable->route('mail', $email);
-            $notifiable->notify(new MembershipInvitation($companyName));
-
-            NotificationsHistory::create(
-                [
-                    'company_id'     => null,
-                    'name'           => 'membership_invitation',
-                    'channel'        => 'email',
-                    'receiver_name'  => $companyName,
-                    'receiver_email' => $email,
-                ]
-            );
-        }
+        NotificationsHistory::create(
+            [
+                'company_id'     => null,
+                'name'           => 'membership_invitation',
+                'channel'        => 'email',
+                'receiver_name'  => $data['name'],
+                'receiver_email' => $data['email'],
+            ]
+        );
     }
 }
