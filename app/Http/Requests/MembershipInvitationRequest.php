@@ -16,7 +16,7 @@ class MembershipInvitationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email_company_pairs' => ['required', 'string', new EmailCompanyFormat()],
+            'invitation.xlsx' => 'required|file|mimetypes:xlsx,xls,csv'
         ];
     }
 }

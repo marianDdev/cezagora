@@ -247,6 +247,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [RatingController::class, 'submitRating'])->name('rating.submit');
     });
 
+
+    //ADMIN
     Route::group(
         [
             'prefix'     => '/admin',
