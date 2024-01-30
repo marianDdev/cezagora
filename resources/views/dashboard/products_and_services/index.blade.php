@@ -9,6 +9,8 @@
                 @endif
             </div>
 
+            @include('components.back-to', ['name' => 'dashboard', 'route' => 'dashboard'])
+
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
                 @include('dashboard.products_and_services._ingredients',['count' => $ingredientsCount])
                 @include('dashboard.products_and_services._packaging',['count' => $packagingCount])

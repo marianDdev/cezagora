@@ -2,6 +2,8 @@
 
 namespace App\Services\Notification;
 
+use App\Models\Notification;
+use App\Models\Notification as NotificationsHistory;
 use App\Models\Order;
 use App\Models\User;
 use App\Notifications\CustomerCharged;
@@ -10,8 +12,8 @@ use App\Notifications\OrderProcessed;
 use App\Notifications\WelcomeEmail;
 use Carbon\Carbon;
 use Illuminate\Notifications\AnonymousNotifiable;
+use Illuminate\Support\Collection;
 use Spatie\SlackAlerts\SlackAlert;
-use App\Models\Notification as NotificationsHistory;
 
 class NotificationService implements NotificationServiceInterface
 {
@@ -116,19 +118,61 @@ class NotificationService implements NotificationServiceInterface
         );
     }
 
-    public function sendMembershipInvitations(array $data): void
+    public function createBulkNotificationsHistory(Collection $emailsChunks): void
     {
-        $notifiable = new AnonymousNotifiable;
-        $notifiable->route('mail', $data['email']);
-        $notifiable->notify(new MembershipInvitation($data['name']));
+        foreach ($emailsChunks as $chunk) {
+            foreach ($chunk as $emailData) {
+                if (is_null($emailData['email'])) {
+                    continue;
+                }
 
+                $existingNotification = Notification::where(
+                    [
+                        'name'           => self::MEMBERSHIP_INVITATION,
+                        'receiver_email' => $emailData['email'],
+                    ]
+                )->first();
+
+                if (!is_null($existingNotification)) {
+                    continue;
+                }
+
+                $this->createNotificationHistory($emailData);
+            }
+        }
+    }
+
+    public function sendMembershipInvitations(): void
+    {
+        Notification::where(
+            [
+                'name'    => self::MEMBERSHIP_INVITATION,
+                'channel' => self::CHANNEL_EMAIL,
+                'status'  => self::STATUS_PENDING,
+            ]
+        )->chunk(self::MEMBERSHIP_INVITATION_BATCH_LIMIT, function ($unsentInvitations) {
+            foreach ($unsentInvitations as $invitation) {
+                $notifiable = new AnonymousNotifiable;
+                $notifiable->route('mail', $invitation->receiver_email);
+                $notifiable->notify(new MembershipInvitation($invitation->receiver_name));
+
+                $invitation->update(['status' => self::STATUS_SENT]);
+            }
+        });
+    }
+
+    private function createNotificationHistory(array $data): void
+    {
         NotificationsHistory::create(
             [
                 'company_id'     => null,
-                'name'           => 'membership_invitation',
+                'name'           => self::MEMBERSHIP_INVITATION,
                 'channel'        => 'email',
                 'receiver_name'  => $data['name'],
                 'receiver_email' => $data['email'],
+                'country'        => $data['country'] ?? null,
+                'phone'          => $data['phone'] ?? null,
+                'status'         => self::STATUS_PENDING,
             ]
         );
     }
