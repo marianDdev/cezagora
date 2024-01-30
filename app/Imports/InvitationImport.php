@@ -23,8 +23,10 @@ class InvitationImport implements ToCollection, WithHeadingRow
         foreach ($collection as $row) {
             $this->emails->push(
                 [
-                    'name'  => $row['name'],
-                    'email' => $row['email'],
+                    'name'    => $row['name'],
+                    'email'   => $row['email'],
+                    'country' => $row['country'] ?? null,
+                    'phone'   => $row['phone'] ?? null,
                 ]
             );
         }

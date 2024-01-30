@@ -1,4 +1,4 @@
-<div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
+<div class="items-center bg-red-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
     <a href="{{ route('my.products.services') }}">
         <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
              src="{{ $packaging->getFirstMediaUrl('packagings') ?? 'https://t4.ftcdn.net/jpg/03/21/80/19/240_F_321801983_nc5GX5xGwaXxn5W6d9edJQOq3XVmochS.jpg'}}" />

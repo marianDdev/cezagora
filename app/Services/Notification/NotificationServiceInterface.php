@@ -2,7 +2,6 @@
 
 namespace App\Services\Notification;
 
-use App\Models\Notification;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Collection;
@@ -15,6 +14,10 @@ interface NotificationServiceInterface
 
     public const STATUS_PENDING = 'pending';
     public const STATUS_SENT = 'sent';
+
+    public const MEMBERSHIP_INVITATION_BATCH_LIMIT = 50;
+
+    public const MEMBERSHIP_INVITATION_START_HOUR = 5;
 
     public function sendWelcomeEmail(User $user): void;
 

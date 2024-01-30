@@ -4,12 +4,12 @@ namespace App\Console;
 
 use App\Console\Commands\SendEmailCommand;
 use App\Console\Commands\SendMembershipInvitationsCommand;
+use App\Services\Notification\NotificationServiceInterface;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    private const MEMBERSHIP_INVITATION_START_HOUR = 5;
     protected $commands = [
         SendEmailCommand::class,
         SendMembershipInvitationsCommand::class,
@@ -22,14 +22,14 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('app:send-email')
                  ->daily()
-                 ->at('21:08')
+                 ->at('04:30')
                  ->timezone('Europe/Bucharest');
 
         $schedule->command('send:membership-invitations')
                  ->everyTenMinutes()
                  ->timezone('Europe/Bucharest')
                  ->when(function () {
-                     return now()->hour >= self::MEMBERSHIP_INVITATION_START_HOUR;
+                     return now()->hour >= NotificationServiceInterface::MEMBERSHIP_INVITATION_START_HOUR;
                  });
     }
 

@@ -144,20 +144,21 @@ class NotificationService implements NotificationServiceInterface
 
     public function sendMembershipInvitations(): void
     {
-        Notification::where([
-                                'name'    => self::MEMBERSHIP_INVITATION,
-                                'channel' => self::CHANNEL_EMAIL,
-                                'status'  => self::STATUS_PENDING,
-                            ])
-                    ->chunk(50, function ($unsentInvitations) {
-                        foreach ($unsentInvitations as $invitation) {
-                            $notifiable = new AnonymousNotifiable;
-                            $notifiable->route('mail', $invitation->receiver_email);
-                            $notifiable->notify(new MembershipInvitation($invitation->receiver_name));
+        Notification::where(
+            [
+                'name'    => self::MEMBERSHIP_INVITATION,
+                'channel' => self::CHANNEL_EMAIL,
+                'status'  => self::STATUS_PENDING,
+            ]
+        )->chunk(self::MEMBERSHIP_INVITATION_BATCH_LIMIT, function ($unsentInvitations) {
+            foreach ($unsentInvitations as $invitation) {
+                $notifiable = new AnonymousNotifiable;
+                $notifiable->route('mail', $invitation->receiver_email);
+                $notifiable->notify(new MembershipInvitation($invitation->receiver_name));
 
-                            $invitation->update(['status' => self::STATUS_SENT]);
-                        }
-                    });
+                $invitation->update(['status' => self::STATUS_SENT]);
+            }
+        });
     }
 
     private function createNotificationHistory(array $data): void
@@ -169,6 +170,9 @@ class NotificationService implements NotificationServiceInterface
                 'channel'        => 'email',
                 'receiver_name'  => $data['name'],
                 'receiver_email' => $data['email'],
+                'country'        => $data['country'] ?? null,
+                'phone'          => $data['phone'] ?? null,
+                'status'         => self::STATUS_PENDING,
             ]
         );
     }

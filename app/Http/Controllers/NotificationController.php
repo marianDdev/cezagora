@@ -13,7 +13,7 @@ class NotificationController extends Controller
 {
     public function createMembershipInvitation(): View
     {
-        $invitations = Notification::orderBy('created_at', 'desc')->paginate(50);
+        $invitations = Notification::orderBy('status', 'asc')->paginate(50);
 
         return view(
             'admin.emails.membership_invitation',

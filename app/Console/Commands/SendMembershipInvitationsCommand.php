@@ -17,7 +17,7 @@ class SendMembershipInvitationsCommand extends Command
         $this->notificationService = $notificationService;
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->notificationService->sendMembershipInvitations();
         $this->info('Membership invitations sent.');
