@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+/**
+ * @property string $receiver_email
+ * @property string  $receiver_name
+ */
 class Notification extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
