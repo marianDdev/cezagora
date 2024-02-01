@@ -68,6 +68,7 @@ Route::group(['prefix' => '/packaging'], function () {
 });
 
 Route::group(['prefix' => '/search'], function () {
+    Route::get('/results', [SearchController::class, 'showResults'])->name('search.results');
     Route::post('/global', [SearchController::class, 'globalSearch'])->name('search.global');
 });
 
@@ -286,6 +287,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     );
                 }
             );
+
+            Route::get('searches', [SearchController::class, 'index'])->name('searches.index');
         }
     );
 

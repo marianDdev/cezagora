@@ -147,4 +147,12 @@ class Company extends Model implements HasMedia
     {
         return $this->hasMany(CompanyCampaign::class);
     }
+
+    /**
+     * only searches without results
+     */
+    public function searches(): HasMany
+    {
+        return $this->hasMany(Search::class);
+    }
 }
