@@ -55,6 +55,22 @@
                         </div>
                     </a>
                 </div>
+                <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
+                    <a href="{{ route('searches.index') }}">
+                        <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
+                             src="{{ url('/images/admin/search.png') }}"
+                             alt="email image" />
+                        <div class="p-5">
+                            <div class="p-5">
+                                <a href="{{ route('searches.index') }}">
+                                    <h3 class="text-xl font-bold tracking-tight text-indigo-500">
+                                        Searches with no results
+                                    </h3>
+                                </a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
