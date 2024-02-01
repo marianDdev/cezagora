@@ -17,7 +17,7 @@
             </a>
         </div>
         <div class="hidden lg:mt-0 lg:col-span-5 lg:flex rounded">
-            <img src="{{ url('/images/homepage/hero.png') }}" alt="hero image">
+            <img src="https://cezagora.fra1.cdn.digitaloceanspaces.com/homepage/hero.png" alt="hero image">
         </div>
     </div>
 </section>

@@ -1,7 +1,7 @@
 <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
     <div>
         <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
-             src="{{ url('/images/upload.png') }}" />
+             src="https://cezagora.fra1.cdn.digitaloceanspaces.com/upload.png" />
     </div>
     <div class="p-5">
         <form action="{{ route('upload') }}" method="POST" enctype="multipart/form-data">
