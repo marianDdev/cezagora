@@ -60,7 +60,7 @@
         <div class="email-container">
             <div class="email-header">
                 <a href="{{ route('home') }}">
-                    <img src="{{ url('images/logo.png') }}" alt="CezAgora Logo" width="200">
+                    <img src="https://cezagora.fra1.cdn.digitaloceanspaces.com/logo.png" alt="CezAgora Logo" width="200">
                 </a>
             </div>
             <div class="email-content">

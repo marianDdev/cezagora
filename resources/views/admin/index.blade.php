@@ -58,7 +58,7 @@
                 <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
                     <a href="{{ route('searches.index') }}">
                         <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
-                             src="{{ url('/images/admin/search.png') }}"
+                             src="https://cezagora.fra1.cdn.digitaloceanspaces.com/admin/search.png"
                              alt="email image" />
                         <div class="p-5">
                             <div class="p-5">
