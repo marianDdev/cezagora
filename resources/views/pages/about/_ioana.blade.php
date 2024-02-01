@@ -1,5 +1,5 @@
 <div class="items-center bg-gray-50 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <img class="w-full h-3/5 rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{ url('/images/ioana.jpeg') }}">
+    <img class="w-full h-3/5 rounded-lg sm:rounded-none sm:rounded-l-lg" src="https://cezagora.fra1.cdn.digitaloceanspaces.com/ioana.jpeg">
     <div class="p-5">
         <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
             Ioana Comandariu

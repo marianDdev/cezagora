@@ -2,7 +2,7 @@
     class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12">
     <h2 class="text-red-400 dark:text-white text-3xl font-extrabold mb-2">Branding</h2>
     <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
-        <img src="{{ url('/images/homepage/branding.png') }}">
+        <img src="https://cezagora.fra1.cdn.digitaloceanspaces.com/homepage/branding.png">
     </div>
     <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-4">Elevate your cosmetic brand with expert branding solutions. Achieve a distinct and memorable identity in the competitive market. Connect with top industry professionals today.</p>
     <a href="{{ route('services.index', ['type' => \App\Services\Service\ServicesServiceInterface::BRANDING]) }}"

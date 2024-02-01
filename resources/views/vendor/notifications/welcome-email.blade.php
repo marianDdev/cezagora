@@ -11,7 +11,7 @@
         <section style="max-width: 640px; padding: 24px; margin: auto; background-color: white;">
             <header style="text-align: center; margin-bottom: 24px;">
                 <a href="https://www.cezagora.com">
-                    <img style="width: 288px; height: auto;" src="{{ url('/images/logo.png') }}" alt="CezAgora Logo">
+                    <img style="width: 288px; height: auto;" src="https://cezagora.fra1.cdn.digitaloceanspaces.com/logo.png" alt="CezAgora Logo">
                 </a>
 
                 <nav style="margin-top: 24px;">

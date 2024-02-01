@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
-                <img src="{{ url('/images/stripe.png') }}">
+                <img src="https://cezagora.fra1.cdn.digitaloceanspaces.com/stripe.png" alt="strip homepage image">
             </div>
         </div>
     </section>
