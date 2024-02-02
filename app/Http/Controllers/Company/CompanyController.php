@@ -10,11 +10,13 @@ use App\Models\Company;
 use App\Models\Pivots\CompanyCompanyCategory;
 use App\Services\Address\AddressServiceInterface;
 use App\Services\Company\CompanyServiceInterface;
+use App\Services\File\FileServiceInterface;
 use App\Services\User\UserServiceInterface;
 use App\Traits\AuthUser;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
@@ -81,5 +83,16 @@ class CompanyController extends Controller
         $companyService->update($validated);
 
         return redirect()->route('dashboard');
+    }
+
+    public function uploadLogo(Request $request, FileServiceInterface $fileService): RedirectResponse
+    {
+        try {
+            $fileService->uploadCompanyLogo($request);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error_message' => $e->getMessage()]);
+        }
+
+        return redirect()->back()->with('success', 'Profile image uploaded successfully.');
     }
 }

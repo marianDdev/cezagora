@@ -8,6 +8,7 @@ use App\Services\Ingredient\IngredientServiceInterface;
 use App\Services\Product\ProductServiceInterface;
 use App\Traits\AuthUser;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\LazyCollection;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
@@ -43,6 +44,58 @@ class FileService implements FileServiceInterface
         $this->validateFileHeader($file, $entityName);
         $fileRows = $this->extractRows($file);
         $this->bulkInsert($fileRows, $entityName);
+    }
+
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     * @throws Exception
+     */
+    public function uploadProfilePicture(Request $request): void
+    {
+        $user = $this->authUser();
+
+        if ($request->hasFile('profile_picture') && $request->file('profile_picture')->isValid()) {
+            if (!is_null($user->getMedia('profile_pictures'))) {
+                /** @var Media $media */
+                foreach ($user->getMedia('profile_pictures') as $media) {
+                    $media->delete();
+                }
+            }
+
+            $user->addMediaFromRequest('profile_picture')->toMediaCollection('profile_pictures');
+
+            $user->save();
+
+        } else {
+            throw new Exception('Your profile picture not uploaded.');
+        }
+    }
+
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     * @throws Exception
+     */
+    public function uploadCompanyLogo(Request $request): void
+    {
+        $user = $this->authUser();
+
+        if ($request->hasFile('company_logo') && $request->file('company_logo')->isValid()) {
+            if (!is_null($user->getMedia('company_logos'))) {
+                /** @var Media $media */
+                foreach ($user->getMedia('company_logos') as $media) {
+                    $media->delete();
+                }
+            }
+
+            $user->addMediaFromRequest('company_logo')->toMediaCollection('company_logos');
+
+            $user->save();
+
+        } else {
+            throw new Exception('Your profile picture not uploaded.');
+        }
     }
 
     /**
