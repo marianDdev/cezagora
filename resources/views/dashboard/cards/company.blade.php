@@ -1,6 +1,7 @@
+
 <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
     <a href="#">
-        <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="https://cezagora.fra1.cdn.digitaloceanspaces.com/dashboard/cezagora_company.png"  alt="company image"/>
+        <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{ $user->getFirstMediaUrl('company_logos') ? $user->getFirstMediaUrl('company_logos') : 'https://cezagora.fra1.cdn.digitaloceanspaces.com/dashboard/cezagora_company.png'}}"  alt="company image"/>
     </a>
     <div class="p-5">
         @if(!is_null($company))

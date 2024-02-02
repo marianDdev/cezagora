@@ -2,6 +2,7 @@
 
 namespace App\Services\File;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\LazyCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -44,4 +45,7 @@ interface FileServiceInterface
     public const PACKAGING    = 'packaging';
 
     public function upload(string $entityName): void;
+    public function uploadProfilePicture(Request $request): void;
+
+    public function uploadCompanyLogo(Request $request): void;
 }

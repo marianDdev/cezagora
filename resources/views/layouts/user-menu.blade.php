@@ -11,9 +11,22 @@
             data-dropdown-placement="bottom">
         <span class="sr-only">Open user menu</span>
         @if(Auth::check())
-            <div class="relative inline-flex items-center justify-center w-16 h-16 overflow-hidden bg-red-300 rounded-full dark:bg-gray-600">
-                <span class="text-xl font-bold text-gray-600 dark:text-gray-300">{{ $initials }}</span>
-            </div>
+            @if(!is_null($user->getFirstMediaUrl('profile_pictures')))
+
+                <div class="flex items-center gap-4">
+                    <img class="w-10 h-10 rounded-full" src="{{ $user->getFirstMediaUrl('profile_pictures') }}" alt="">
+                    <div class="font-medium dark:text-white">
+                        <div>{{ $user->getFullName() }}</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">from {{ $user->company->name }}</div>
+                    </div>
+                </div>
+
+            @else
+                <div
+                    class="relative inline-flex items-center justify-center w-16 h-16 overflow-hidden bg-red-300 rounded-full dark:bg-gray-600">
+                    <span class="text-xl font-bold text-gray-600 dark:text-gray-300">{{ $initials }}</span>
+                </div>
+            @endif
         @else
             <div class="relative w-10 h-10 overflow-hidden bg-red-100 rounded-full dark:bg-gray-600">
                 <svg class="absolute w-12 h-12 text-red-400 -left-1" fill="currentColor" viewBox="0 0 20 20"

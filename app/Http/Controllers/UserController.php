@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ToggleUserActiveRequest;
 use App\Models\User;
 use App\Services\Company\CompanyServiceInterface;
+use App\Services\File\FileServiceInterface;
 use App\Services\Ingredient\IngredientServiceInterface;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -33,5 +35,16 @@ class UserController extends Controller
         Session::flush();
 
         return redirect()->route('account.deactivated.page');
+    }
+
+    public function uploadProfileImage(Request $request, FileServiceInterface $fileService): RedirectResponse
+    {
+        try {
+            $fileService->uploadProfilePicture($request);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+
+        return redirect()->back()->with('success', 'Profile image uploaded successfully.');
     }
 }
