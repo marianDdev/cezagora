@@ -1,5 +1,5 @@
 <div class="relative group">
-    <button type="button" data-modal-target="docs-info-modal" data-modal-toggle="docs-info-modal"
+    <button type="button" data-modal-target="docs-info-modal-{{ $ingredient->id }}" data-modal-toggle="docs-info-modal-{{ $ingredient->id }}"
             class="text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm p-2 inline-flex items-center justify-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700">
         <svg class="w-5 h-5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -12,7 +12,7 @@
 </div>
 
 <!-- Main modal -->
-<div id="docs-info-modal" tabindex="-1" aria-hidden="true"
+<div id="docs-info-modal-{{ $ingredient->id }}" tabindex="-1" aria-hidden="true"
      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-md max-h-full">
         <!-- Modal content -->
@@ -20,7 +20,7 @@
             <div class="flex justify-end p-2">
                 <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-full text-sm h-8 w-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                        data-modal-toggle="docs-info-modal">
+                        data-modal-toggle="docs-info-modal-{{ $ingredient->id }}">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                          viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
