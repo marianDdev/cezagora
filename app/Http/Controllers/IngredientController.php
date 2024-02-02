@@ -46,10 +46,10 @@ class IngredientController extends Controller
 
     public function listMyIngredients(): View
     {
-        $authCompany = $this->authUserCompany();
-        $ingredients = $authCompany->ingredients()->orderByDesc('created_at')->paginate(12);
+        $authCompany          = $this->authUserCompany();
+        $ingredients          = $authCompany->ingredients()->orderByDesc('created_at')->paginate(12);
         $authCompanyDocuments = $authCompany->documents()->pluck('documents.name')->toArray();
-        $documents = array_unique(array_merge($authCompanyDocuments, DocumentServiceInterface::ALL_DOCUMENTS));
+        $documents            = array_unique(array_merge($authCompanyDocuments, DocumentServiceInterface::ALL_DOCUMENTS));
 
         return view(
             'ingredients.my_ingredients',
@@ -68,7 +68,10 @@ class IngredientController extends Controller
         return view('ingredients.forms.create', ['documents' => $documents]);
     }
 
-    public function store(StoreIngredientRequest $request, DocumentServiceInterface $documentService): RedirectResponse
+    public function store(
+        StoreIngredientRequest   $request,
+        DocumentServiceInterface $documentService
+    ): RedirectResponse
     {
         $validated  = $request->validated();
         $ingredient = Ingredient::create($validated);
@@ -91,10 +94,11 @@ class IngredientController extends Controller
     }
 
     public function update(
-        UpdateIngredientRequest $request,
+        UpdateIngredientRequest    $request,
         IngredientServiceInterface $service
-    ): RedirectResponse|View {
-        $validated  = $request->validated();
+    ): RedirectResponse|View
+    {
+        $validated = $request->validated();
 
         try {
             $service->update($validated);
