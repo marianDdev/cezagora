@@ -90,25 +90,30 @@ class IngredientService implements IngredientServiceInterface
         $ingredient->update($validated);
 
         if (array_key_exists('documents', $validated)) {
-            $documentIds = [];
-            foreach ($validated['documents'] as $documentName) {
-                $document = Document::firstOrCreate(
-                    ['name' => $documentName, 'ingredient_id' => $ingredient->id]
-                );
-
-                $documentIds[] = $document->id;
-            }
-
-            $existingDocumentIds = $ingredient->documents()->pluck('id')->toArray();
-            $documentIdsToDelete = array_diff($existingDocumentIds, $documentIds);
-            Document::whereIn('id', $documentIdsToDelete)->delete();
+            $this->updateDocuments($ingredient, $validated);
         }
 
-        if (array_key_exists('other_document', $validated)) {
+        if (isset($validated['other_document'])) {
             Document::firstOrCreate(
                 ['name' => $validated['other_document'], 'ingredient_id' => $ingredient->id]
             );
         }
+    }
+
+    private function updateDocuments(Ingredient $ingredient, array $validated): void
+    {
+        $documentIds = [];
+        foreach ($validated['documents'] as $documentName) {
+            $document = Document::firstOrCreate(
+                ['name' => $documentName, 'ingredient_id' => $ingredient->id]
+            );
+
+            $documentIds[] = $document->id;
+        }
+
+        $existingDocumentIds = $ingredient->documents()->pluck('id')->toArray();
+        $documentIdsToDelete = array_diff($existingDocumentIds, $documentIds);
+        Document::whereIn('id', $documentIdsToDelete)->delete();
     }
 
     private function getAllFromActiveCompaniesQuery()
