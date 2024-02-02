@@ -97,6 +97,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //users
     Route::group(['prefix' => '/users'], function () {
+        Route::post('/upload-profile-image', [UserController::class, 'uploadProfileImage'])->name('profile-image.store');
         Route::patch('/{id}', [UserController::class, 'toggleActive'])->name('user.toggle.activate');
     });
 
@@ -105,6 +106,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('companies');
         Route::get('/{slug}', [CompanyController::class, 'show'])->name('company.show');
         Route::post('/', [CompanyController::class, 'store'])->name('company.store');
+        Route::post('/upload-logo-image', [CompanyController::class, 'uploadLogo'])->name('logo-image.store');
         Route::patch('/update', [CompanyController::class, 'update'])->name('company.update');
     });
 
