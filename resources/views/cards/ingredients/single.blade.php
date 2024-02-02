@@ -66,7 +66,8 @@
         @if($ingredient->availability === \App\Services\Ingredient\IngredientServiceInterface::NOT_AVAILABLE)
             <p class="text-red-500 dark:text-gray-400 mb-2">Out of stock</p>
         @else
-            @include('ingredients.forms.add_to_cart', ['ingredient' => $ingredient])
+{{--            @include('ingredients.forms.add_to_cart', ['ingredient' => $ingredient])--}}
+            @include('cart._add_modal', ['item' => $ingredient])
         @endif
     @endif
 </div>
