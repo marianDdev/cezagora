@@ -4,5 +4,7 @@
         @include('search.search-bar')
         @include('layouts.user-menu')
         @include('layouts.navigation-list')
+        @include('users.forms.upload_profile_image_modal')
+        @include('companies.forms.upload_logo_modal')
     </div>
 </nav>

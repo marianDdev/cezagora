@@ -6,21 +6,21 @@
 @endphp
 <div class="flex items-center md:order-2">
     <button type="button"
-            class="flex mr-3 text-sm bg-gray-200 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            class="flex mr-3 text-sm md:mr-0"
             id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
             data-dropdown-placement="bottom">
         <span class="sr-only">Open user menu</span>
         @if(Auth::check())
             @if(!is_null($user->getFirstMediaUrl('profile_pictures')))
-
-                <div class="flex items-center gap-4">
-                    <img class="w-10 h-10 rounded-full" src="{{ $user->getFirstMediaUrl('profile_pictures') }}" alt="">
-                    <div class="font-medium dark:text-white">
-                        <div>{{ $user->getFullName() }}</div>
-                        <div class="text-sm text-gray-500 dark:text-gray-400">from {{ $user->company->name }}</div>
-                    </div>
+                <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com -->
+                <div class="text-center">
+                    <img
+                        src="{{ $user->getFirstMediaUrl('profile_pictures') }}"
+                        class="mx-auto mb-4 w-16 h-16 rounded-full"
+                        alt="Avatar" />
+                    <h5 class="mb-2 text-sm font-medium leading-tight">{{ $user->getFullName() }}</h5>
+                    <p class="text-neutral-500 dark:text-neutral-400">@ {{ $user->company->name }}</p>
                 </div>
-
             @else
                 <div
                     class="relative inline-flex items-center justify-center w-16 h-16 overflow-hidden bg-red-300 rounded-full dark:bg-gray-600">

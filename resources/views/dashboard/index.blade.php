@@ -1,28 +1,5 @@
 <x-app-layout>
     <section class="bg-white dark:bg-gray-900">
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <form action="{{ route('profile-image.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label for="image">Profile Image:</label>
-                <input type="file" class="form-control" name="profile_picture" id="image" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Upload</button>
-        </form>
-
-            <form action="{{ route('logo-image.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                    <label for="image">Company Logo:</label>
-                    <input type="file" class="form-control" name="company_logo" id="logo" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Upload</button>
-            </form>
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
             <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-red-400 dark:text-white">{{__('messages.user_dashboard', ['user_full_name' => $user->getFullName()])}}</h2>

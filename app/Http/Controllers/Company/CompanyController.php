@@ -90,7 +90,7 @@ class CompanyController extends Controller
         try {
             $fileService->uploadCompanyLogo($request);
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error_message' => $e->getMessage()]);
         }
 
         return redirect()->back()->with('success', 'Profile image uploaded successfully.');
