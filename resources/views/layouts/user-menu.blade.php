@@ -18,10 +18,13 @@
                         class="mx-auto mb-4 w-16 h-16 rounded-full"
                         alt="Avatar" />
                     <h5 class="mb-2 text-sm font-medium leading-tight">{{ $user->getFullName() }}</h5>
-                    <p class="text-neutral-500 dark:text-neutral-400">{{ '@' . $user->company->name }}</p>
+                    @if(!is_null($user->company))
+                        <p class="text-neutral-500 dark:text-neutral-400">{{ '@' . $user->company->name }}</p>
+                    @endif
                 </div>
             @else
-                <div class="relative inline-flex items-center justify-center w-16 h-16 overflow-hidden bg-red-300 rounded-full dark:bg-gray-600">
+                <div
+                    class="relative inline-flex items-center justify-center w-16 h-16 overflow-hidden bg-red-300 rounded-full dark:bg-gray-600">
                     <span class="text-xl font-bold text-gray-600 dark:text-gray-300">{{ $initials }}</span>
                 </div>
             @endif

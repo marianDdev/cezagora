@@ -1,7 +1,9 @@
 <ul class="py-2" aria-labelledby="user-menu-button">
-    <li class="mb-4">
-        @include('users.forms.upload_profile_picture_button')
-    </li>
+    @if(!is_null($user->company))
+        <li class="mb-4">
+            @include('users.forms.upload_profile_picture_button')
+        </li>
+    @endif
     <li>
         <a href="{{ route('dashboard') }}"
            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
