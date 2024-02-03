@@ -9,7 +9,7 @@ class CustomPathGenerator implements PathGenerator
 {
     public function getPath(Media $media): string
     {
-        $companyName = strtolower($media->model->company->name);
+        $companyName = !is_null($media->model->company) ? strtolower($media->model->company->name) : strtolower($media->model->getFullName());
 
         return sprintf('customers/%s/%s/', $companyName,  $media->collection_name);
     }
