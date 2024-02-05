@@ -181,5 +181,6 @@ return [
     'create_company_before_add_packaging'                      => 'Please complete your company details and payment onboarding before adding packaging products',
     'create_company_before_add'                                => 'Please complete your company details and payment onboarding before adding services',
     'get_in_touch'                                             => 'Get in touch',
-    'private_label' => 'Private Label',
+    'private_label'                                            => 'Private Label',
+    'home'                                                     => 'Home',
 ];
