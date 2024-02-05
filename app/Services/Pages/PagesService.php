@@ -4,6 +4,7 @@ namespace App\Services\Pages;
 
 use App\Models\CompanyCategory;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
+use App\Services\User\UserServiceInterface;
 use App\Traits\AuthUser;
 
 class PagesService implements PagesServiceInterface
@@ -45,6 +46,8 @@ class PagesService implements PagesServiceInterface
             'categories'         => CompanyCategory::all(),
             'mccs'               => $stripeAccountService->getShortMccList(),
             'companyCategoryIds' => $categoriesIds,
+            'hasSellerRole'      => $user->hasRole(UserServiceInterface::ROLE_SELLER),
+            'hasBuyerRole'       => $user->hasRole(UserServiceInterface::ROLE_BUYER),
         ];
     }
 

@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Services\User\UserServiceInterface;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 
 class RegisterRequest extends FormRequest
 {
@@ -14,6 +17,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'role'       => ['required', 'string', Rule::exists(Role::class, 'name')],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name'  => ['required', 'string', 'max:255'],
             'email'      => ['required', 'email', 'unique:users'],
@@ -25,7 +29,7 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-          'password.regex' => 'The :attribute must be 8–30 characters, and include a number, a symbol, a lower and a upper case letter'
+            'password.regex' => 'The :attribute must be 8–30 characters, and include a number, a symbol, a lower and a upper case letter',
         ];
     }
 }

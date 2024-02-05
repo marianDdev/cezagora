@@ -3,15 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductsCategory;
+use App\Services\Pages\PagesServiceInterface;
+use App\Services\Stripe\Account\StripeAccountServiceInterface;
+use App\Services\User\UserServiceInterface;
 use App\Traits\AuthUser;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
     use AuthUser;
 
-    public function showHome(): View
+    public function showHome(
+        StripeAccountServiceInterface $stripeAccountService,
+        PagesServiceInterface         $pagesService
+    ): View
     {
+        if (Auth::check() && $this->authUser()->hasRole(UserServiceInterface::ROLE_SELLER)) {
+            return view('dashboard.index', $pagesService->getDashboardData($stripeAccountService));
+        }
+
+        if (Auth::check() && $this->authUser()->hasRole(UserServiceInterface::ROLE_SELLER)) {
+            return view('pages.products_services_categories');
+        }
+
         return view(
             'pages.home.main',
             [
@@ -32,7 +47,7 @@ class PagesController extends Controller
 
     public function showHelp(): View
     {
-        return view('pages.help.main');
+        return view('pages.help.index');
     }
 
     public function showPricing(): View
