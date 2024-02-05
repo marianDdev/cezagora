@@ -5,7 +5,7 @@
              alt="logo" />
         @if(!is_null($user->company))
             <div
-                class="absolute inset-0 w-full h-full bg-black bg-opacity-50 opacity-0 hover:opacity-100 flex items-center justify-center space-x-2 text-white font-bold text-xl transition-opacity duration-300 ease-in-out">
+                    class="absolute inset-0 w-full h-full bg-black bg-opacity-50 opacity-0 hover:opacity-100 flex items-center justify-center space-x-2 text-white font-bold text-xl transition-opacity duration-300 ease-in-out">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                      stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -19,7 +19,7 @@
         @if(!is_null($company))
             @include('companies.forms.edit')
         @else
-            @include('companies.forms.create')
+            @include($user->hasRole(\App\Services\User\UserServiceInterface::ROLE_SELLER) ? 'companies.forms.create_seller' : 'companies.forms.create_buyer')
         @endif
     </div>
 </div>

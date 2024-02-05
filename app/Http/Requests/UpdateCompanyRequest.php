@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Company;
 use App\Models\CompanyCategory;
+use App\Services\User\UserServiceInterface;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -17,12 +18,14 @@ class UpdateCompanyRequest extends FormRequest
 
     public function rules(): array
     {
+        $isRequired = $this->authUser()->hasRole(UserServiceInterface::ROLE_SELLER) ? 'required' : 'nullable';
+
         return [
             'company_id'          => ['required', 'integer', Rule::exists(Company::class, 'id')],
             'company_categories'  => ['nullable', 'array'],
             'name'                => ['nullable', 'string', 'max:256'],
             'email'               => ['nullable', 'email'],
-            'phone'               => ['required', 'regex:/^(?:\+|\b00)[1-9]\d{8,}$/'],
+            'phone'               => ['nullable', 'regex:/^(?:\+|\b00)[1-9]\d{8,}$/'],
             'country'             => ['nullable', 'string', 'max:256'],
             'city'                => ['nullable', 'string', 'max:256'],
             'state'               => ['nullable', 'string', 'max:256'],
