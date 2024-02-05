@@ -27,7 +27,7 @@ class CompanyController extends Controller
         return view(
             'companies.index',
             [
-                'companies' => Company::all()
+                'companies' => Company::all(),
             ]
         );
     }
@@ -41,10 +41,10 @@ class CompanyController extends Controller
         }
 
         return view('companies.show', [
-            'company' => $company,
+            'company'     => $company,
             'ingredients' => $company->ingredients ?? null,
-            'products' => $company->products ?? null,
-            'services' => $company->services ?? null,
+            'products'    => $company->products ?? null,
+            'services'    => $company->services ?? null,
         ]);
     }
 
@@ -60,7 +60,8 @@ class CompanyController extends Controller
         CompanyServiceInterface $companyService,
         AddressServiceInterface $addressService,
         UserServiceInterface    $userService,
-    ): RedirectResponse|View {
+    ): RedirectResponse|View
+    {
         try {
             $validated = $request->validated();
             $company   = $companyService->create($validated);
@@ -70,11 +71,14 @@ class CompanyController extends Controller
 
             event(new CompanyCreated($company));
 
-            return redirect()->route('onboarding');
+            if ($this->authUser()->hasRole(UserServiceInterface::ROLE_SELLER)) {
+                return redirect()->route('onboarding');
+            }
+
+            return redirect()->route('dashboard');
         } catch (Exception $e) {
             return view('companies.fail', ['error' => $e]);
         }
-
     }
 
     public function update(UpdateCompanyRequest $request, CompanyServiceInterface $companyService): RedirectResponse
