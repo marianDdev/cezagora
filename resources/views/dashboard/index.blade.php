@@ -9,29 +9,19 @@
             </div>
 
             <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
-                @include('dashboard.cards.company',
-                        [
-                            'categories' => $categories,
-                            'mccs' => $mccs,
-                            'company' => $company,
-                            'title' => $company->name ?? null,
-                            'email' => $company->email ?? null,
-                            'phone' => $company->phone ?? null,
-                            'admin' => $user->getFullName(),
-                            'description' => $company->product_description ?? '',
-                        ]
-                    )
+                @include('dashboard.cards.company', ['company' => $company])
 
-                @include('dashboard.cards.my_products_and_services',['company' => $company])
+                @if($hasBuyerRole)
+                    @include('dashboard.cards.orders',['title' => 'Orders','countOrders' => $company ? $company->orders->count() : 0])
+                @endif
 
-                @include('dashboard.cards.orders',['title' => 'Orders','countOrders' => $company ? $company->orders->count() : 0])
-
-                @include('dashboard.cards.sales',['title' => 'Sales','countSales' => $company ? $company->sales->count() : 0])
-
-                @include('dashboard.cards.qualifications',['title' => 'Qualifications','qualificationsCount' => $company ? $company->qualifications->count() : 0])
-
-                @if(!is_null($account))
-                    @include('dashboard.cards.stripe_dashboard', ['imagePath' => 'https://t4.ftcdn.net/jpg/05/97/91/83/240_F_597918379_Qz6aOWjXmiyduFxbwKcjYBLHPlY8FMKO.jpg',])
+                @if($hasSellerRole)
+                    @include('dashboard.cards.my_products_and_services',['company' => $company])
+                    @include('dashboard.cards.sales',['title' => 'Sales','countSales' => $company ? $company->sales->count() : 0])
+                    @include('dashboard.cards.qualifications',['title' => 'Qualifications','qualificationsCount' => $company ? $company->qualifications->count() : 0])
+                    @if(!is_null($account))
+                        @include('dashboard.cards.stripe_dashboard', ['imagePath' => 'https://t4.ftcdn.net/jpg/05/97/91/83/240_F_597918379_Qz6aOWjXmiyduFxbwKcjYBLHPlY8FMKO.jpg',])
+                    @endif
                 @endif
             </div>
         </div>

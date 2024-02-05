@@ -1,10 +1,10 @@
 <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">
     {{__('messages.my_company')}}
 </h3>
-<p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Name:</span> {{ $title }}</p>
-<p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Email:</span> {{ $email }}</p>
-<p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Phone:</span> {{ $phone }}</p>
-<p class="text-gray-500 dark:text-gray-400"><span class="font-bold">CezAgora user:</span> {{ $admin }}</p>
+<p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Name:</span> {{ $company->name ?? '' }}</p>
+<p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Email:</span> {{ $company->email ?? '' }}</p>
+<p class="text-gray-500 dark:text-gray-400"><span class="font-bold">Phone:</span> {{ $company->phone ?? '' }}</p>
+<p class="text-gray-500 dark:text-gray-400"><span class="font-bold">CezAgora user:</span> {{ $user->getFullName() }}</p>
 
 <!-- Modal toggle -->
 <button data-modal-target="edit-company" data-modal-toggle="edit-company"
@@ -26,8 +26,10 @@
                 <button type="button"
                         class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                         data-modal-hide="edit-company">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                         viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
@@ -63,14 +65,16 @@
                         <select id="mcc" name="mcc"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             @foreach($mccs as $mcc)
-                                <option value="{{ $mcc->code }}" {{ $company->mcc == $mcc->code ? 'selected' : '' }}>{{ $mcc->code }} - {{ $mcc->description }}</option>
+                                <option
+                                    value="{{ $mcc->code }}" {{ $company->mcc == $mcc->code ? 'selected' : '' }}>{{ $mcc->code }} - {{ $mcc->description }}</option>
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('mcc')" class="mt-2" />
                     </div>
                     <div class="mb-6">
                         <x-text-input id="product_description" type="text" name="product_description"
-                                      value="{{ $company->product_description }}" autofocus autocomplete="product_description"
+                                      value="{{ $company->product_description }}" autofocus
+                                      autocomplete="product_description"
                                       placeholder="Short description of your products or services" />
                         <x-input-error :messages="$errors->get('product_description')" class="mt-2" />
                     </div>
@@ -91,7 +95,8 @@
                         <x-input-error :messages="$errors->get('vat_id')" class="mt-2" />
                     </div>
                     <livewire:country-dropdown />
-                    <x-primary-button class="mb-10" :data-modal-hide="!$errors->any() ? 'edit-company' : 'do not close'">
+                    <x-primary-button class="mb-10"
+                                      :data-modal-hide="!$errors->any() ? 'edit-company' : 'do not close'">
                         {{ __('Update company') }}
                     </x-primary-button>
                 </form>
