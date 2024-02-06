@@ -141,7 +141,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/ingredient/store', [OrderIngredientController::class, 'store'])
              ->middleware(
                  [
-                     RedirectIfUserHasNotEnabledStripe::class,
                      RedirectIfUserHasNotAddedCompanyDetails::class,
                  ]
              )
