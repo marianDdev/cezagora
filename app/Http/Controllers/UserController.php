@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ToggleRoleRequest;
 use App\Http\Requests\ToggleUserActiveRequest;
 use App\Models\User;
 use App\Services\Company\CompanyServiceInterface;
@@ -46,5 +47,26 @@ class UserController extends Controller
         }
 
         return redirect()->back()->with('success', 'Profile image uploaded successfully.');
+    }
+
+    public function toggleRole(ToggleRoleRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+        $user = $this->authUser();
+        $currentRole = $user->getRoleNames()->first();
+        $newRole = $validated['role'];
+
+        if ($newRole === $currentRole) {
+            return redirect()->back();
+        }
+
+        $user->removeRole($currentRole);
+        $user->assignRole($newRole);
+
+        if ($newRole === UserServiceInterface::ROLE_SELLER && !$user->stripe_account_enabled) {
+            return redirect()->route('onboarding');
+        }
+
+        return redirect()->back();
     }
 }
