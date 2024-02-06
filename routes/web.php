@@ -98,6 +98,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //users
     Route::group(['prefix' => '/users'], function () {
         Route::post('/upload-profile-image', [UserController::class, 'uploadProfileImage'])->name('profile-image.store');
+        Route::post('/toggle-role', [UserController::class, 'toggleRole'])->name('user.toggle-role');
         Route::patch('/{id}', [UserController::class, 'toggleActive'])->name('user.toggle.activate');
     });
 
