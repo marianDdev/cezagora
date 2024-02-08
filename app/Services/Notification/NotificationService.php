@@ -10,6 +10,7 @@ use App\Notifications\CustomerCharged;
 use App\Notifications\MembershipInvitation;
 use App\Notifications\OrderProcessed;
 use App\Notifications\WelcomeEmail;
+use Exception;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Collection;
 use Spatie\SlackAlerts\SlackAlert;
@@ -157,7 +158,7 @@ class NotificationService implements NotificationServiceInterface
 
                 try {
                     $notifiable->notify(new MembershipInvitation($invitation->receiver_name));
-                } catch (TransportException $e) {
+                } catch (Exception $e) {
                     continue;
                 }
 
