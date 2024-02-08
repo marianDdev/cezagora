@@ -66,8 +66,7 @@
             <div class="email-content">
                 <h1>Alatura-te comunitatii CezAgora,</h1>
                 <h2>Fii printre primii care se inregistreaza in marketplace-ul dedicat industriei de cosmetice!</h2>
-{{--                <h3><b>Salutare, {{ $companyName }}</b>,</h3>--}}
-                <h3><b>Salutare, Elmiplant</b>,</h3>
+                <h3><b>Salutare, {{ $companyName }}</b>,</h3>
 
                 <p>Ca membru apreciat al marketplace-ului CezAgora, te vom conecta atat cu producatori de cosmetice cat si cu furnizori de produse si servicii relevante, iti vom creste oportunitatile de vanzare si iti vom oferi mai multa vizibilitate si expunere.</p>
                 <p>Iti oferim posibilitatea de a vinde si de a cumpara materii prime, ingrediente si amblaje, servicii de laborator, formulare si private label, toate intr-un singur loc.</p>
