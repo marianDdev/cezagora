@@ -67,7 +67,8 @@
                 <h1>You're invited to join CezAgora,</h1>
                 <h3>Your dedicated B2B marketplace tailored for the cosmetic industry!</h3>
                 <p><b>Dear Esteemed, {{ $companyName }}</b>,</p>
-                <p>As a valued member of our community, you will discover and sell raw materials, ingredients, services and more in one place and you'll get the chance to connect with a wide network of suppliers and cosmetics manufacturers.</p>
+                <p>As a valued member of our community, you will sell raw materials, ingredients, laboratory and formulation services and more in one place. Also, you'll get the chance to connect with a wide network of cosmetics manufacturers and make them your potential customers.</p>
+                <p>Registration is free, listing your products and services is also free! No hidden monthly fees, You will pay a small of commission of 10% only when you make a successful sale on our platform.</p>
                 <p class="special-offer"><b>Special Offer:</b> To celebrate your arrival, we are thrilled to offer
                     <b>zero fees on your first two sales!</b> This is our way of welcoming you to experience the full advantages of CezAgora, completely fee-free.
                 </p>
@@ -81,7 +82,6 @@
                 <p>If you have any questions, feel free to contact us at <a href="mailto:support@cezagora.com">support@cezagora.com</a>.</p>
             </div>
         </div>
-
     </body>
 </html>
 

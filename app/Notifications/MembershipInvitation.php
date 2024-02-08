@@ -24,7 +24,7 @@ class MembershipInvitation extends Notification
         return (new MailMessage)
             ->from(env('MAIL_FROM_ADDRESS'), 'CezAgora')
             ->subject(sprintf('Hello %s, You are invited to CezAgora B2B Cosmetics Marketplace', $this->companyName))
-            ->view('vendor.notifications.membership_invitation', [
+            ->view('vendor.notifications.membership_invitation_for_sellers', [
                 'companyName' => $this->companyName,
             ]);
     }
