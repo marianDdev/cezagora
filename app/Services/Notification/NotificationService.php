@@ -10,7 +10,6 @@ use App\Notifications\CustomerCharged;
 use App\Notifications\MembershipInvitation;
 use App\Notifications\OrderProcessed;
 use App\Notifications\WelcomeEmail;
-use Carbon\Carbon;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Collection;
 use Spatie\SlackAlerts\SlackAlert;
