@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Collection;
 use Spatie\SlackAlerts\SlackAlert;
+use Symfony\Component\Mailer\Exception\TransportException;
 
 class NotificationService implements NotificationServiceInterface
 {
@@ -154,7 +155,12 @@ class NotificationService implements NotificationServiceInterface
             foreach ($unsentInvitations as $invitation) {
                 $notifiable = new AnonymousNotifiable;
                 $notifiable->route('mail', $invitation->receiver_email);
-                $notifiable->notify(new MembershipInvitation($invitation->receiver_name));
+
+                try {
+                    $notifiable->notify(new MembershipInvitation($invitation->receiver_name));
+                } catch (TransportException $e) {
+                    continue;
+                }
 
                 $invitation->update(['status' => self::STATUS_SENT]);
             }
