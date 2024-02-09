@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
-use App\Models\Pivots\CompanyCompanyCategory;
 use App\Services\Address\AddressServiceInterface;
 use App\Services\Company\CompanyServiceInterface;
 use App\Services\File\FileServiceInterface;

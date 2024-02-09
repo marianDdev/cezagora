@@ -221,4 +221,6 @@ return [
 			'table_name' => 'languages',
 		],
 	],
+
+    'connection' => env('WORLD_DB_CONNECTION', env('DB_CONNECTION')),
 ];

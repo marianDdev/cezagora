@@ -27,6 +27,10 @@ class PagesController extends Controller
             return view('pages.products_services_categories');
         }
 
+        if (Auth::check() && $this->authUser()->hasRole(UserServiceInterface::ROLE_ADMIN)) {
+            return view('admin.index');
+        }
+
         return view(
             'pages.home.main',
             [
