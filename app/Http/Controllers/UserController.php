@@ -13,19 +13,22 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function index(): View
     {
-        $buyers  = User::role('buyer')->paginate(20);
-        $sellers = User::role('seller')->paginate(20);
+        $buyerRoleExists = Role::where('name', 'buyer')->exists();
+        $sellerRoleExists = Role::where('name', 'seller')->exists();
+        $buyers  = $buyerRoleExists ? User::role('buyer')->paginate(20) : collect();
+        $sellers = $sellerRoleExists ? User::role('seller')->paginate(20) : collect();
 
         return view(
             'admin.users.index',
             [
-                'buyers'  => $buyers,
-                'sellers' => $sellers,
+                'buyers' => $buyers,
+                'sellers' => $sellers
             ]
         );
     }
@@ -38,7 +41,7 @@ class UserController extends Controller
     ): RedirectResponse
     {
         $validated = $request->validated();
-        $user      = User::find($id);
+        $user = User::find($id);
         $userService->toggleActive($user, $validated['activate'], $validated['deleted_at']);
         $companyService->toggleActive($user, $validated['activate']);
 
@@ -65,10 +68,10 @@ class UserController extends Controller
 
     public function toggleRole(ToggleRoleRequest $request): RedirectResponse
     {
-        $validated   = $request->validated();
-        $user        = $this->authUser();
+        $validated = $request->validated();
+        $user = $this->authUser();
         $currentRole = $user->getRoleNames()->first();
-        $newRole     = $validated['role'];
+        $newRole = $validated['role'];
 
         if ($newRole === $currentRole) {
             return redirect()->back();
