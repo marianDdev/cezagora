@@ -7,8 +7,8 @@ use App\Http\Requests\ToggleUserActiveRequest;
 use App\Models\User;
 use App\Services\Company\CompanyServiceInterface;
 use App\Services\File\FileServiceInterface;
-use App\Services\Ingredient\IngredientServiceInterface;
 use App\Services\User\UserServiceInterface;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +16,20 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
+    public function index(): View
+    {
+        $buyers  = User::role('buyer')->paginate(20);
+        $sellers = User::role('seller')->paginate(20);
+
+        return view(
+            'admin.users.index',
+            [
+                'buyers'  => $buyers,
+                'sellers' => $sellers,
+            ]
+        );
+    }
+
     public function toggleActive(
         ToggleUserActiveRequest $request,
         UserServiceInterface    $userService,
@@ -24,7 +38,7 @@ class UserController extends Controller
     ): RedirectResponse
     {
         $validated = $request->validated();
-        $user = User::find($id);
+        $user      = User::find($id);
         $userService->toggleActive($user, $validated['activate'], $validated['deleted_at']);
         $companyService->toggleActive($user, $validated['activate']);
 
@@ -51,10 +65,10 @@ class UserController extends Controller
 
     public function toggleRole(ToggleRoleRequest $request): RedirectResponse
     {
-        $validated = $request->validated();
-        $user = $this->authUser();
+        $validated   = $request->validated();
+        $user        = $this->authUser();
         $currentRole = $user->getRoleNames()->first();
-        $newRole = $validated['role'];
+        $newRole     = $validated['role'];
 
         if ($newRole === $currentRole) {
             return redirect()->back();

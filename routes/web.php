@@ -250,7 +250,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [RatingController::class, 'submitRating'])->name('rating.submit');
     });
 
-
     //ADMIN
     Route::group(
         [
@@ -290,6 +289,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 }
             );
 
+            Route::get('users', [UserController::class, 'index'])->name('admin.users.index');
             Route::get('searches', [SearchController::class, 'index'])->name('searches.index');
         }
     );
