@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.298.4",
+            "version": "3.298.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "c61e8f8640352c4cad1ec364c0801b8adae8adb9"
+                "reference": "0afccba68a96c0cbc10f6fc5b08c5a0e09774220"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/c61e8f8640352c4cad1ec364c0801b8adae8adb9",
-                "reference": "c61e8f8640352c4cad1ec364c0801b8adae8adb9",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0afccba68a96c0cbc10f6fc5b08c5a0e09774220",
+                "reference": "0afccba68a96c0cbc10f6fc5b08c5a0e09774220",
                 "shasum": ""
             },
             "require": {
@@ -151,9 +151,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.298.4"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.298.6"
             },
-            "time": "2024-02-06T19:09:25+00:00"
+            "time": "2024-02-08T19:03:23+00:00"
         },
         {
             "name": "brick/math",
@@ -1290,16 +1290,16 @@
         },
         {
             "name": "google/gax",
-            "version": "v1.26.3",
+            "version": "v1.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/gax-php.git",
-                "reference": "b7c782dcc40957ad84c9da947cc201f42e97859e"
+                "reference": "7d2533e84480018a351e9c3e20a284342ea7a75e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/b7c782dcc40957ad84c9da947cc201f42e97859e",
-                "reference": "b7c782dcc40957ad84c9da947cc201f42e97859e",
+                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/7d2533e84480018a351e9c3e20a284342ea7a75e",
+                "reference": "7d2533e84480018a351e9c3e20a284342ea7a75e",
                 "shasum": ""
             },
             "require": {
@@ -1339,9 +1339,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/gax-php/issues",
-                "source": "https://github.com/googleapis/gax-php/tree/v1.26.3"
+                "source": "https://github.com/googleapis/gax-php/tree/v1.27.0"
             },
-            "time": "2024-01-18T20:24:45+00:00"
+            "time": "2024-02-07T23:12:02+00:00"
         },
         {
             "name": "google/grpc-gcp",
@@ -3197,16 +3197,16 @@
         },
         {
             "name": "maatwebsite/excel",
-            "version": "3.1.52",
+            "version": "3.1.53",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SpartnerNL/Laravel-Excel.git",
-                "reference": "4471416045dbb869d0a218d2e88441adc362e2b0"
+                "reference": "f5175b19389f51bf489a1558eb0efc0a59ec4b67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SpartnerNL/Laravel-Excel/zipball/4471416045dbb869d0a218d2e88441adc362e2b0",
-                "reference": "4471416045dbb869d0a218d2e88441adc362e2b0",
+                "url": "https://api.github.com/repos/SpartnerNL/Laravel-Excel/zipball/f5175b19389f51bf489a1558eb0efc0a59ec4b67",
+                "reference": "f5175b19389f51bf489a1558eb0efc0a59ec4b67",
                 "shasum": ""
             },
             "require": {
@@ -3262,7 +3262,7 @@
             ],
             "support": {
                 "issues": "https://github.com/SpartnerNL/Laravel-Excel/issues",
-                "source": "https://github.com/SpartnerNL/Laravel-Excel/tree/3.1.52"
+                "source": "https://github.com/SpartnerNL/Laravel-Excel/tree/3.1.53"
             },
             "funding": [
                 {
@@ -3274,7 +3274,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-16T10:41:30+00:00"
+            "time": "2024-02-05T08:53:46+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -4101,16 +4101,16 @@
         },
         {
             "name": "nnjeim/world",
-            "version": "1.1.29",
+            "version": "1.1.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nnjeim/world.git",
-                "reference": "6f8d7b49fa805dc2d7b4169819d4dc96e885f03e"
+                "reference": "10ca54b0152a1d9fa55a4beed0d3764b5822c564"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nnjeim/world/zipball/6f8d7b49fa805dc2d7b4169819d4dc96e885f03e",
-                "reference": "6f8d7b49fa805dc2d7b4169819d4dc96e885f03e",
+                "url": "https://api.github.com/repos/nnjeim/world/zipball/10ca54b0152a1d9fa55a4beed0d3764b5822c564",
+                "reference": "10ca54b0152a1d9fa55a4beed0d3764b5822c564",
                 "shasum": ""
             },
             "require": {
@@ -4161,9 +4161,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nnjeim/world/issues",
-                "source": "https://github.com/nnjeim/world/tree/1.1.29"
+                "source": "https://github.com/nnjeim/world/tree/1.1.30"
             },
-            "time": "2023-12-18T08:09:38+00:00"
+            "time": "2024-02-08T17:03:36+00:00"
         },
         {
             "name": "nunomaduro/termwind",
@@ -4390,16 +4390,16 @@
         },
         {
             "name": "phenx/php-svg-lib",
-            "version": "0.5.1",
+            "version": "0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dompdf/php-svg-lib.git",
-                "reference": "8a8a1ebcf6aea861ef30197999f096f7bd4b4456"
+                "reference": "732faa9fb4309221e2bd9b2fda5de44f947133aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dompdf/php-svg-lib/zipball/8a8a1ebcf6aea861ef30197999f096f7bd4b4456",
-                "reference": "8a8a1ebcf6aea861ef30197999f096f7bd4b4456",
+                "url": "https://api.github.com/repos/dompdf/php-svg-lib/zipball/732faa9fb4309221e2bd9b2fda5de44f947133aa",
+                "reference": "732faa9fb4309221e2bd9b2fda5de44f947133aa",
                 "shasum": ""
             },
             "require": {
@@ -4430,9 +4430,9 @@
             "homepage": "https://github.com/PhenX/php-svg-lib",
             "support": {
                 "issues": "https://github.com/dompdf/php-svg-lib/issues",
-                "source": "https://github.com/dompdf/php-svg-lib/tree/0.5.1"
+                "source": "https://github.com/dompdf/php-svg-lib/tree/0.5.2"
             },
-            "time": "2023-12-11T20:56:08+00:00"
+            "time": "2024-02-07T12:49:40+00:00"
         },
         {
             "name": "phpoffice/phpspreadsheet",
@@ -5446,12 +5446,12 @@
             "version": "8.5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
+                "url": "https://github.com/MyIntervals/PHP-CSS-Parser.git",
                 "reference": "4e9a54c2a368fcd73ecc6b45f98c7714b54a7db0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/4e9a54c2a368fcd73ecc6b45f98c7714b54a7db0",
+                "url": "https://api.github.com/repos/MyIntervals/PHP-CSS-Parser/zipball/4e9a54c2a368fcd73ecc6b45f98c7714b54a7db0",
                 "reference": "4e9a54c2a368fcd73ecc6b45f98c7714b54a7db0",
                 "shasum": ""
             },
@@ -5494,8 +5494,8 @@
                 "stylesheet"
             ],
             "support": {
-                "issues": "https://github.com/sabberworm/PHP-CSS-Parser/issues",
-                "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/8.5.0"
+                "issues": "https://github.com/MyIntervals/PHP-CSS-Parser/issues",
+                "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/8.5.0"
             },
             "time": "2024-02-01T00:40:08+00:00"
         },
@@ -5966,32 +5966,32 @@
         },
         {
             "name": "spatie/laravel-slack-alerts",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-slack-alerts.git",
-                "reference": "a8df0887aa337fa094d3feb33a5664b280eff097"
+                "reference": "ac626d35bd1b0023bc19b65dafe3c3895efaeb1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-slack-alerts/zipball/a8df0887aa337fa094d3feb33a5664b280eff097",
-                "reference": "a8df0887aa337fa094d3feb33a5664b280eff097",
+                "url": "https://api.github.com/repos/spatie/laravel-slack-alerts/zipball/ac626d35bd1b0023bc19b65dafe3c3895efaeb1d",
+                "reference": "ac626d35bd1b0023bc19b65dafe3c3895efaeb1d",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^8.73|^9.0|^10.0",
+                "illuminate/contracts": "^8.73|^9.0|^10.0|^11.0",
                 "php": "^8.0",
                 "spatie/laravel-package-tools": "^1.9.2"
             },
             "require-dev": {
-                "nunomaduro/collision": "^5.10|^6.0",
-                "orchestra/testbench": "^6.22|^7.0|^8.0",
-                "pestphp/pest": "^1.21",
-                "pestphp/pest-plugin-laravel": "^1.1",
+                "nunomaduro/collision": "^5.10|^6.0|^8.0",
+                "orchestra/testbench": "^6.22|^7.0|^8.0|^9.0",
+                "pestphp/pest": "^1.21|^2.0",
+                "pestphp/pest-plugin-laravel": "^1.1|^2.0",
                 "phpstan/extension-installer": "^1.1",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-phpunit": "^1.0",
-                "phpunit/phpunit": "^9.5",
+                "phpunit/phpunit": "^9.5|^10.5",
                 "spatie/laravel-ray": "^1.26"
             },
             "type": "library",
@@ -6036,7 +6036,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-slack-alerts/issues",
-                "source": "https://github.com/spatie/laravel-slack-alerts/tree/1.3.0"
+                "source": "https://github.com/spatie/laravel-slack-alerts/tree/1.3.1"
             },
             "funding": [
                 {
@@ -6044,7 +6044,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-06-27T08:03:42+00:00"
+            "time": "2024-02-09T09:36:31+00:00"
         },
         {
             "name": "spatie/laravel-stripe-webhooks",
