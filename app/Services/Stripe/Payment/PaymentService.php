@@ -28,11 +28,13 @@ class PaymentService extends StripeService implements PaymentServiceInterface
 
     public function createPaymentIntent(Order $order, string $paymentMethodId): PaymentIntent
     {
-        $paymentIntent = $this->stripeClient->paymentIntents->create([
-                                                                         'amount'              => $order->total_price,
-                                                                         'currency'            => Setting::DEFAULT_CURRENCY_VALUE,
-                                                                         'transfer_group'      => $order->id,
-                                                                     ]);
+        $paymentData = [
+            'amount'         => $order->total_price,
+            'currency'       => Setting::DEFAULT_CURRENCY_VALUE,
+            'transfer_group' => $order->id,
+        ];
+
+        $paymentIntent = $this->stripeClient->paymentIntents->create($paymentData);
 
         $order->update(['payment_method' => $paymentMethodId]);
 
@@ -71,31 +73,11 @@ class PaymentService extends StripeService implements PaymentServiceInterface
         foreach ($orderItems as $item) {
             $amount         = $item->total;
             $sellerStripeId = $item->seller->user->stripe_account_id;
+            $transferData   = $this->getTransferData($item->seller, $sellerStripeId, $order->id, $amount);
 
-            $this->stripeClient
-                ->transfers
-                ->create(
-                    [
-                        'amount'         => $this->calculateAmount($item->seller, $amount),
-                        'currency'       => Setting::DEFAULT_CURRENCY_VALUE,
-                        'destination'    => $sellerStripeId,
-                        'transfer_group' => $order->id,
-                        'description'    => sprintf(
-                            'Transfer %d for order with id %d to %s that has account id: %s',
-                            $amount,
-                            $order->id,
-                            $item->seller->name,
-                            $sellerStripeId
-                        ),
-                    ]
-                );
+            $this->stripeClient->transfers->create($transferData);
 
-            $this->createInvoice(
-                $item,
-                $sellerStripeId,
-                $stripeCustomer->id,
-                $amount
-            );
+            $this->createInvoice($item, $sellerStripeId, $stripeCustomer->id, $amount);
 
             $order->status = Order::STATUS_COMPLETED;
             $order->save();
@@ -184,5 +166,22 @@ class PaymentService extends StripeService implements PaymentServiceInterface
         }
 
         return $amount * $this->percentage / 100;
+    }
+
+    private function getTransferData(Company $company, string $sellerStripeId, int $orderId, int $amount): array
+    {
+        return [
+            'amount'         => $this->calculateAmount($company, $amount),
+            'currency'       => Setting::DEFAULT_CURRENCY_VALUE,
+            'destination'    => $sellerStripeId,
+            'transfer_group' => $orderId,
+            'description'    => sprintf(
+                'Transfer %d for order with id %d to %s that has account id: %s',
+                $amount,
+                $orderId,
+                $company->name,
+                $sellerStripeId
+            ),
+        ];
     }
 }
