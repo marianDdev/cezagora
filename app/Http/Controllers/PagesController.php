@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductsCategory;
+use App\Services\Carrier\CarrierServiceInterface;
 use App\Services\Pages\PagesServiceInterface;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Services\User\UserServiceInterface;
@@ -16,14 +17,16 @@ class PagesController extends Controller
 
     public function showHome(
         StripeAccountServiceInterface $stripeAccountService,
-        PagesServiceInterface         $pagesService
+        PagesServiceInterface         $pagesService,
+        CarrierServiceInterface $carrierService
     ): View
     {
         if (Auth::check() && $this->authUser()->hasRole(UserServiceInterface::ROLE_SELLER)) {
             return view('dashboard.index', $pagesService->getDashboardData($stripeAccountService));
         }
 
-        if (Auth::check() && $this->authUser()->hasRole(UserServiceInterface::ROLE_SELLER)) {
+        if (Auth::check() && $this->authUser()->hasRole(UserServiceInterface::ROLE_BUYER)) {
+            dd($carrierService->getAuthToken());
             return view('pages.products_services_categories');
         }
 

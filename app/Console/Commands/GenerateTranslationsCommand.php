@@ -2,13 +2,11 @@
 
 namespace App\Console\Commands;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Console\Command;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Nnjeim\World\Models\Country;
-use Nnjeim\World\Models\Language;
 
 class GenerateTranslationsCommand extends Command
 {
