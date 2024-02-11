@@ -157,7 +157,7 @@ class NotificationService implements NotificationServiceInterface
                 $notifiable->route('mail', $invitation->receiver_email);
 
                 try {
-                    $notifiable->notify(new MembershipInvitation($invitation->receiver_name));
+                    $notifiable->notify(new MembershipInvitation($invitation));
                 } catch (Exception $e) {
                     continue;
                 }

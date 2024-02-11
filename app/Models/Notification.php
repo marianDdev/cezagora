@@ -11,6 +11,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 /**
  * @property string $receiver_email
  * @property string $receiver_name
+ * @property string  $country
  */
 class Notification extends Model implements HasMedia
 {
