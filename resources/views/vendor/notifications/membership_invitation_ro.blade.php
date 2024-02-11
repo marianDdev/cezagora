@@ -23,7 +23,7 @@
                 padding-bottom: 20px;
             }
             .email-content {
-                text-align: center;
+                text-align: left;
             }
             .email-footer {
                 text-align: center;
@@ -59,27 +59,30 @@
     <body>
         <div class="email-container">
             <div class="email-header">
-                <a href="{{ route('home') }}">
+                <a href="https://www.cezagora.com">
                     <img src="https://cezagora.fra1.cdn.digitaloceanspaces.com/logo.png" alt="CezAgora Logo" width="200">
                 </a>
             </div>
             <div class="email-content">
-                <h1>You're invited to join CezAgora,</h1>
-                <h3>Your dedicated B2B marketplace tailored for the cosmetic industry!</h3>
-                <p><b>Dear Esteemed, {{ $companyName }}</b>,</p>
-                <p>As a valued member of our community, you will sell raw materials, ingredients, laboratory and formulation services and more in one place. Also, you'll get the chance to connect with a wide network of cosmetics manufacturers and make them your potential customers.</p>
-                <p>Registration is free, listing your products and services is also free! No hidden monthly fees, You will pay a small of commission of 10% only when you make a successful sale on our platform.</p>
-                <p class="special-offer"><b>Special Offer:</b> To celebrate your arrival, we are thrilled to offer
-                    <b>zero fees on your first two sales!</b> This is our way of welcoming you to experience the full advantages of CezAgora, completely fee-free.
+                <h1>Alatura-te comunitatii CezAgora,</h1>
+                <h2>Fii printre primii care se inregistreaza in marketplace-ul dedicat industriei de cosmetice!</h2>
+                <h3><b>Salutare, {{ $companyName }}</b>,</h3>
+
+                <p>Ca membru apreciat al marketplace-ului CezAgora, te vom conecta atat cu producatori de cosmetice cat si cu furnizori de produse si servicii relevante, iti vom creste oportunitatile de vanzare si iti vom oferi mai multa vizibilitate si expunere.</p>
+                <p>Iti oferim posibilitatea de a vinde si de a cumpara materii prime, ingrediente si amblaje, servicii de laborator, formulare si private label, toate intr-un singur loc.</p>
+
+                <p class="special-offer">Inscrierea este gratuita! Platesti doar comision la vanzare.</p>
+
+                <p class="special-offer"><b>Oferta speciala pentru vanzatori:</b> Pentru a sarbatori sosirea ta in comunitatea noastra profesionala, iti acordam
+                    <b>primele doua vanzari fara comision!</b> Acesta este modul nostru de a-ti oferi posibilitatea sa experimentezi multiplele avantaje ale platformei noastre.
                 </p>
-                <p>Ready to embark on this journey with us? Simply click the button below to start exploring a world where your products find their perfect match.</p>
-                <a href="{{ route('register') }}" class="button">Join CezAgora now</a>
-                <p>Curious about how CezAgora can further elevate your business? <a href="{{ route('about') }}">Learn more</a> about our platform's benefits.</p>
+
+                <a href="https://www.cezagora.com/register" class="button">Inregistreaza-te acum</a>
             </div>
-            <p>Warm regards,</p>
-            <p>CezAgora Team</p>
+            <p>Cu drag,</p>
+            <p>Echipa CezAgora</p>
             <div class="email-footer">
-                <p>If you have any questions, feel free to contact us at <a href="mailto:support@cezagora.com">support@cezagora.com</a>.</p>
+                <p>Daca ai intrebari sau doresti informatii suplimentare, contacteaza-ne <a href="mailto:support@cezagora.com">support@cezagora.com</a>.</p>
             </div>
         </div>
     </body>
