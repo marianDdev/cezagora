@@ -250,6 +250,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [RatingController::class, 'submitRating'])->name('rating.submit');
     });
 
+    Route::get('/carriers/dummy-data', [\App\Http\Controllers\CarrierController::class, 'showDummyCarrierData']);
+
     //ADMIN
     Route::group(
         [

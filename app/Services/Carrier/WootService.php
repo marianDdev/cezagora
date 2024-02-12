@@ -14,7 +14,7 @@ class WootService implements CarrierServiceInterface
             'error'  => null,
         ];
 
-        $response = Http::post(sprintf('%s/login', config('woot.base_url')), [
+        $response = Http::post(sprintf('%s/latest/account/login', config('woot.base_url')), [
             "email"    => config('woot.email'),
             "password" => config('woot.password'),
             "remember" => 1,
@@ -30,5 +30,45 @@ class WootService implements CarrierServiceInterface
         }
 
         return $tokenData;
+    }
+
+    public function  getCouriers(): array
+    {
+        $response = Http::get(sprintf('%s/latest/general/couriers', config('woot.base_url')));
+
+        return $response->json();
+    }
+
+    public function  getServices(): array
+    {
+        $response = Http::get(sprintf('%s/latest/general/services', config('woot.base_url')));
+
+        return $response->json();
+    }
+
+    public function  getSenderAddresses(): array
+    {
+        $tokenData = $this->getAuthToken();
+        $bearerToken = $tokenData['token'];
+        $response = Http::get(sprintf('%s/latest/addresses/sender?page=1&limit=20', config('woot.base_url')));
+        $response = Http::withHeaders([
+                                          'Authorization' => 'Bearer ' . $bearerToken,
+                                      ])->get(sprintf('%s/latest/addresses/sender?page=1&limit=20', config('woot.base_url')));
+
+        return $response->json();
+    }
+
+    public function getCountries(): array
+    {
+        $response = Http::get(sprintf('%s/latest/general/countries', config('woot.base_url')));
+
+        return $response->json();
+    }
+
+    public function getCounties(): array
+    {
+        $response = Http::get(sprintf('%s/latest/general/counties', config('woot.base_url')));
+
+        return $response->json();
     }
 }

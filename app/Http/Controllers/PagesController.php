@@ -26,7 +26,6 @@ class PagesController extends Controller
         }
 
         if (Auth::check() && $this->authUser()->hasRole(UserServiceInterface::ROLE_BUYER)) {
-            dd($carrierService->getAuthToken());
             return view('pages.products_services_categories');
         }
 
