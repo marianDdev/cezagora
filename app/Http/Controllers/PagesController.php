@@ -46,11 +46,6 @@ class PagesController extends Controller
         return view('pages.about.index');
     }
 
-    public function showContact(): View
-    {
-        return view('pages.contact');
-    }
-
     public function showHelp(): View
     {
         return view('pages.help.index');
@@ -59,11 +54,6 @@ class PagesController extends Controller
     public function showPricing(): View
     {
         return view('pages.pricing');
-    }
-
-    public function contactMessageSent(): View
-    {
-        return view('pages.contact-message-sent');
     }
 
     public function showFaq(): View
