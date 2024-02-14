@@ -6,9 +6,11 @@ use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\IngredientVariantController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Order\OrderController;
@@ -37,7 +39,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PagesController::class, 'showHome'])->name('home');
 Route::get('/about', [PagesController::class, 'showAbout'])->name('about');
 Route::get('/pricing', [PagesController::class, 'showPricing'])->name('pricing');
-Route::get('/contact', [PagesController::class, 'showContact'])->name('contact');
 Route::get('/help', [PagesController::class, 'showHelp'])->name('help');
 Route::get('/faq', [PagesController::class, 'showFaq'])->name('faq');
 Route::get('/guides', [PagesController::class, 'showGuides'])->name('guides');
@@ -55,8 +56,16 @@ Route::get('/policies', [PagesController::class, 'showPolicies'])->name('policie
 Route::get('/account-deactivated', [AccountController::class, 'showAccountDeactivatedConfirmationPage'])->name('account.deactivated.page');
 Route::get('/account-reactivated', [AccountController::class, 'showAccountReactivatedConfirmationPage'])->name('account.reactivated.page');
 
-Route::get('/contact-message-sent', [PagesController::class, 'contactMessageSent'])->name('contact.message.sent');
+Route::get('/contact', [ContactMessageController::class, 'index'])->name('contact');
+Route::get('/contact-message-sent', [ContactMessageController::class, 'showMessageSent'])->name('contact.message.sent');
+
 Route::get('/products-services-categories', [PagesController::class, 'showProductsAndServicesCategories'])->name('products.services.categories');
+
+//ingredients variants
+Route::group(['prefix' => '/ingredients-variants'], function () {
+    Route::get('/create/{ingredientId}', [IngredientVariantController::class, 'create'])->name('ingredient.variant.create');
+    Route::post('/', [IngredientVariantController::class, 'store'])->name('ingredient.variant.store');
+});
 
 Route::group(['prefix' => '/ingredients'], function () {
     Route::get('/', [IngredientController::class, 'index'])->name('ingredients');
@@ -115,6 +124,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //ingredients
     Route::group(['prefix' => '/ingredients'], function () {
+        Route::get('/create/forms', [IngredientController::class, 'showCreateForms'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.create.forms');
         Route::get('/create', [IngredientController::class, 'create'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.create');
         Route::post('/', [IngredientController::class, 'store'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.store');
         Route::patch('/update', [IngredientController::class, 'update'])->middleware(RedirectIfUserHasNotEnabledStripe::class)->name('ingredient.update');
@@ -191,6 +201,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
          )
          ->name('my-packaging');
 
+    //documents
+    Route::group(['prefix' => '/documents'], function () {
+        Route::get('/create/{ingredientId}', [DocumentController::class, 'create'])->name('document.create');
+        Route::post('/', [DocumentController::class, 'store'])->name('document.store');
+    });
+
     //qualifications
     Route::group(['prefix' => '/qualifications'], function () {
         Route::get('/{companyId}', [QualificationController::class, 'listByCompanyId'])->name('qualifications.list_by_company');
@@ -250,6 +266,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [RatingController::class, 'submitRating'])->name('rating.submit');
     });
 
+    Route::get('/carriers/dummy-data', [\App\Http\Controllers\CarrierController::class, 'showDummyCarrierData']);
+
     //ADMIN
     Route::group(
         [
@@ -290,7 +308,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             );
 
             Route::get('users', [UserController::class, 'index'])->name('admin.users.index');
+
             Route::get('searches', [SearchController::class, 'index'])->name('searches.index');
+
+            Route::get('messages', [ContactMessageController::class, 'adminIndex'])->name('contact.messages.admin.index');
         }
     );
 

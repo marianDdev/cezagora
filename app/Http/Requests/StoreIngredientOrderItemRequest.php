@@ -23,6 +23,8 @@ class StoreIngredientOrderItemRequest extends FormRequest
             'price'       => ['required', 'integer'],
             'quantity'    => ['required', 'integer'],
             'name'        => ['required', 'string'],
+            'weight'      => ['nullable', 'integer'],
+            'unit'        => ['required', 'string'],
         ];
     }
 }

@@ -9,10 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int     $id
- * @property int     $quantity
- * @property string  $available_at
  * @property Company $company
- * @property string  $availability
  */
 class Ingredient extends Model
 {
@@ -24,11 +21,6 @@ class Ingredient extends Model
         'common_name',
         'description',
         'function',
-        'slug',
-        'price',
-        'quantity',
-        'availability',
-        'available_at',
     ];
 
     public function hasAttribute(string $key): bool
@@ -49,6 +41,11 @@ class Ingredient extends Model
     public function documents(): HasMany
     {
         return $this->hasMany(Document::class);
+    }
+
+    public function variants(): HasMany
+    {
+        return $this->hasMany(IngredientVariant::class);
     }
 }
 

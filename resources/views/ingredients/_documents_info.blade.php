@@ -29,6 +29,8 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
+
+            @if($ingredient->documents->count() > 0)
             <div class="p-4 md:p-5">
                 <p class="text-lg font-semibold">Delivery Documents</p>
             </div>
@@ -45,6 +47,11 @@
                     @endforeach
                 </ul>
             </div>
+            @else
+                <div class="p-4 md:p-5">
+                    <p class="text-lg font-semibold">No delivery documents available</p>
+                </div>
+            @endif
         </div>
     </div>
 </div>

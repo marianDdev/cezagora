@@ -6,7 +6,6 @@ use App\Http\Requests\FilterIngredientsRequest;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
-use App\Models\Document;
 use App\Models\Ingredient;
 use App\Services\Document\DocumentServiceInterface;
 use App\Services\Ingredient\IngredientServiceInterface;
@@ -52,7 +51,7 @@ class IngredientController extends Controller
         $documents            = array_unique(array_merge($authCompanyDocuments, DocumentServiceInterface::ALL_DOCUMENTS));
 
         return view(
-            'ingredients.my_ingredients',
+            'ingredients.my_ingredients.index',
             [
                 'authCompany' => $authCompany,
                 'ingredients' => $ingredients,
@@ -61,17 +60,19 @@ class IngredientController extends Controller
         );
     }
 
-    public function create(): View
+    public function showCreateForms(): View
     {
         $documents = DocumentServiceInterface::ALL_DOCUMENTS;
 
-        return view('ingredients.forms.create', ['documents' => $documents]);
+        return view('ingredients.forms.create.index', ['documents' => $documents]);
     }
 
-    public function store(
-        StoreIngredientRequest   $request,
-        DocumentServiceInterface $documentService
-    ): RedirectResponse
+    public function create(): View
+    {
+        return view('ingredients.forms.create._manually');
+    }
+
+    public function store(StoreIngredientRequest   $request): RedirectResponse
     {
         $validated  = $request->validated();
         $ingredient = Ingredient::create($validated);
@@ -81,16 +82,7 @@ class IngredientController extends Controller
                              ->with(['error_message' => 'Something went wrong']);
         }
 
-        if (array_key_exists('documents', $validated)) {
-            $documentService->create($validated, $ingredient->id);
-        }
-
-        if (isset($validated['other_document'])) {
-            $documentService->createOther($validated, $ingredient->id);
-        }
-
-        return redirect()->route('my-ingredients')
-                         ->with(['successful_message' => 'Ingredient added successfully!']);
+        return redirect()->route('document.create', ['ingredientId' => $ingredient->id]);
     }
 
     public function update(

@@ -45,6 +45,8 @@ class OrderItem extends Model
         'name',
         'total',
         'status',
+        'unit',
+        'weight',
     ];
 
     protected function total(): Attribute

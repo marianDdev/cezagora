@@ -6,6 +6,8 @@ use App\Services\Address\AddressService;
 use App\Services\Address\AddressServiceInterface;
 use App\Services\Campaign\CampaignService;
 use App\Services\Campaign\CampaignServiceInterface;
+use App\Services\Carrier\WootService;
+use App\Services\Carrier\CarrierServiceInterface;
 use App\Services\Checkout\CheckoutService;
 use App\Services\Checkout\CheckoutServiceInterface;
 use App\Services\Company\CompanyService;
@@ -69,6 +71,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(DocumentServiceInterface::class, DocumentService::class);
         $this->app->bind(CampaignServiceInterface::class, CampaignService::class);
         $this->app->bind(ServicesServiceInterface::class, ServicesService::class);
+        $this->app->bind(CarrierServiceInterface::class, WootService::class);
     }
 
     /**

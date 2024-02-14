@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductsCategory;
+use App\Services\Carrier\CarrierServiceInterface;
 use App\Services\Pages\PagesServiceInterface;
 use App\Services\Stripe\Account\StripeAccountServiceInterface;
 use App\Services\User\UserServiceInterface;
@@ -16,14 +17,15 @@ class PagesController extends Controller
 
     public function showHome(
         StripeAccountServiceInterface $stripeAccountService,
-        PagesServiceInterface         $pagesService
+        PagesServiceInterface         $pagesService,
+        CarrierServiceInterface $carrierService
     ): View
     {
         if (Auth::check() && $this->authUser()->hasRole(UserServiceInterface::ROLE_SELLER)) {
             return view('dashboard.index', $pagesService->getDashboardData($stripeAccountService));
         }
 
-        if (Auth::check() && $this->authUser()->hasRole(UserServiceInterface::ROLE_SELLER)) {
+        if (Auth::check() && $this->authUser()->hasRole(UserServiceInterface::ROLE_BUYER)) {
             return view('pages.products_services_categories');
         }
 
@@ -44,11 +46,6 @@ class PagesController extends Controller
         return view('pages.about.index');
     }
 
-    public function showContact(): View
-    {
-        return view('pages.contact');
-    }
-
     public function showHelp(): View
     {
         return view('pages.help.index');
@@ -57,11 +54,6 @@ class PagesController extends Controller
     public function showPricing(): View
     {
         return view('pages.pricing');
-    }
-
-    public function contactMessageSent(): View
-    {
-        return view('pages.contact-message-sent');
     }
 
     public function showFaq(): View

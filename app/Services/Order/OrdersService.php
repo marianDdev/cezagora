@@ -4,6 +4,7 @@ namespace App\Services\Order;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Services\Ingredient\IngredientServiceInterface;
 use App\Traits\AuthUser;
 use Exception;
 
@@ -19,7 +20,8 @@ class OrdersService implements OrdersServiceInterface
         $order = $this->getCurrentOrder();
         $data  = $this->getItemData($order, $validated);
         $item  = $this->createItem($data);
-        $this->increaseTotal($order, $data);
+        $this->increaseTotalPrice($order, $data);
+        $this->increaseTotalWeight($order, $data);
 
         return $item;
     }
@@ -45,9 +47,20 @@ class OrdersService implements OrdersServiceInterface
                     ->first();
     }
 
-    private function increaseTotal(Order $order, array $data): void
+    private function increaseTotalPrice(Order $order, array $data): void
     {
         $order->total_price += $data['quantity'] * $data['price'];
+        $order->save();
+    }
+
+    private function increaseTotalWeight(Order $order, array $data): void
+    {
+        $weight = $data['weight'];
+        if (in_array($data['unit'], IngredientServiceInterface::VARIANT_UNITS_MACRO)) {
+            $weight = $weight * 1000;
+        }
+
+        $order->total_weight += $weight * $data['quantity'];
         $order->save();
     }
 
@@ -68,11 +81,13 @@ class OrdersService implements OrdersServiceInterface
 
     private function getItemData(Order $order, array $validated): array
     {
+
         return array_merge(
             $validated, [
                           'item_type' => OrderItem::INGREDIENT_TYPE,
                           'order_id'  => $order->id,
                           'total'     => $validated['price'] * $validated['quantity'],
+                          'weight'    => $validated['weight'],
                       ]
         );
     }
@@ -80,7 +95,7 @@ class OrdersService implements OrdersServiceInterface
     private function createItem(array $data): OrderItem
     {
         $existingItem = $this->getExitingOrderItem($data);
-        $item = $existingItem ?? OrderItem::create($data);
+        $item         = $existingItem ?? OrderItem::create($data);
         if (!is_null($existingItem)) {
             $existingItem->quantity += $data['quantity'];
             $existingItem->save();
@@ -97,11 +112,11 @@ class OrdersService implements OrdersServiceInterface
         return OrderItem::where(
             [
                 'item_type' => $data['item_type'],
-                'order_id' => $data['order_id'],
+                'order_id'  => $data['order_id'],
                 'seller_id' => $data['seller_id'],
-                'item_id' => $data['item_id'],
-                'price' => $data['price'],
-                'name' => $data['name'],
+                'item_id'   => $data['item_id'],
+                'price'     => $data['price'],
+                'name'      => $data['name'],
             ]
         )->first();
     }
