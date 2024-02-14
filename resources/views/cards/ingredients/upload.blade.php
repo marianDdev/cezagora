@@ -4,6 +4,6 @@
              src="https://t4.ftcdn.net/jpg/02/95/09/37/240_F_295093725_LltVZ9dJ8gagY12DFTGbMYwzUlFUTIWf.jpg" />
     </div>
     <div class="p-5">
-        @include('ingredients.forms.upload')
+        @include('ingredients.forms.create.upload')
     </div>
 </div>

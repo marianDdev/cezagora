@@ -20,18 +20,11 @@ class StoreIngredientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'documents'      => ['nullable', 'array'],
-            'documents.*'    => ['required_if:documents, true', 'string', Rule::in(DocumentServiceInterface::ALL_DOCUMENTS)],
-            'other_document' => ['nullable', 'string'],
             'company_id'     => ['required', 'integer', Rule::exists(Company::class, 'id')],
             'name'           => ['required', 'string'],
             'common_name'    => ['required', 'string'],
             'description'    => ['required', 'string'],
             'function'       => ['required', 'string'],
-            'price'          => ['required', 'integer'],
-            'quantity'       => ['required', 'integer', 'max:99999'],
-            'availability'   => ['required', 'string', Rule::in(IngredientServiceInterface::AVAILABILITY_TYPES)],
-            'available_at'   => ['required_if:availability,on_demand', 'date', 'after_or_equal:' . Carbon::today()],
         ];
     }
 }

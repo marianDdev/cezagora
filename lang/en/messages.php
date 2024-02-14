@@ -7,7 +7,7 @@ return [
     'discover_raw_materials_ingredients_services_in_one_place' => 'Discover cosmetic raw materials, packaging and services in one place.',
     'join_manufacturers_suppliers_distributors_retailers'      => 'join our cosmetics community of manufacturers,ingredients and packing suppliers, distributors and retailers.',
     'signup'                                                   => 'signup',
-    'now'                                                      => 'now',
+    'now'                                                      => 'Now',
     'get_access_to_service_provider'                           => 'Get access to a wide variety of service providers, such as laboratories,compliance consultants, marketing agencies, couriers and many other relevant categories of CezAgora users.',
     'contact_us'                                               => 'Contact us',
     'raw_materials'                                            => 'Raw materials',
@@ -183,4 +183,5 @@ return [
     'get_in_touch'                                             => 'Get in touch',
     'private_label'                                            => 'Private Label',
     'home'                                                     => 'Home',
+    'add_to_cart' => 'Add to cart',
 ];

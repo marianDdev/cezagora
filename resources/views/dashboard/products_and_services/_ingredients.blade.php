@@ -23,7 +23,7 @@
                 <h3 class="text-xl font-bold tracking-tight text-gray-500">
                     {{ ucfirst(__('messages.ingredients')) }}
                 </h3>
-                <a href="{{ route('ingredient.create') }}"
+                <a href="{{ route('ingredient.create.forms') }}"
                    class="text-indigo-500">{{ __('messages.add_first_ingredients') }}</a>
             @else
                 <a href="{{ route('my-ingredients') }}">

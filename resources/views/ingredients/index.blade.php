@@ -2,9 +2,9 @@
     <div class="bg-white">
         <div>
             <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <h1 class="text-3xl font-bold tracking-tight text-red-400 sm:text-4xl mb-2 text-center">
-                        {{ __('messages.discover_ingredients_list') }}
-                    </h1>
+                <h1 class="text-3xl font-bold tracking-tight text-red-400 sm:text-4xl mb-2 text-center">
+                    {{ __('messages.discover_ingredients_list') }}
+                </h1>
 
                 @include('components.cant-find')
 
@@ -24,7 +24,7 @@
                                     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
                                         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                                             @foreach($filteredIngredients as $ingredient)
-                                                @include('cards.ingredients.single', ['ingredient' => $ingredient])
+                                                @include('ingredients._ingredient', ['ingredient' => $ingredient])
                                             @endforeach
                                         </div>
                                         {{ $filteredIngredients->links() }}
