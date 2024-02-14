@@ -4,6 +4,7 @@ namespace App\Services\Order;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Services\Ingredient\IngredientServiceInterface;
 use App\Traits\AuthUser;
 use Exception;
 
@@ -54,7 +55,12 @@ class OrdersService implements OrdersServiceInterface
 
     private function increaseTotalWeight(Order $order, array $data): void
     {
-        $order->total_weight += $data['weight']  * $data['quantity'];
+        $weight = $data['weight'];
+        if (in_array($data['unit'], IngredientServiceInterface::VARIANT_UNITS_MACRO)) {
+            $weight = $weight * 1000;
+        }
+
+        $order->total_weight += $weight * $data['quantity'];
         $order->save();
     }
 
@@ -75,19 +81,13 @@ class OrdersService implements OrdersServiceInterface
 
     private function getItemData(Order $order, array $validated): array
     {
-        $weight = $validated['weight'];
-
-        //convert to grams of milliliters
-        if ($validated['unit'] === 'kg' || $validated['unit'] === 'l') {
-            $weight = $weight * 1000;
-        }
 
         return array_merge(
             $validated, [
                           'item_type' => OrderItem::INGREDIENT_TYPE,
                           'order_id'  => $order->id,
                           'total'     => $validated['price'] * $validated['quantity'],
-                          'weight' => $weight
+                          'weight'    => $validated['weight'],
                       ]
         );
     }

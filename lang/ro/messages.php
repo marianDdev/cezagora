@@ -159,4 +159,5 @@ return [
     'create_company_before_add'                                      => 'Va rog sa va adaugati datele companiei si sa efectuati onboardingul pentru plati ulterioare pentru a putea adauga servicii.',
     'get_in_touch'                                                   => 'Contacteaza-ne',
     'home'                                                           => 'Acasa',
+    'add_to_cart'                                                    => 'Adauga in cos',
 ];

@@ -183,4 +183,5 @@ return [
     'get_in_touch'                                             => 'Get in touch',
     'private_label'                                            => 'Private Label',
     'home'                                                     => 'Home',
+    'add_to_cart' => 'Add to cart',
 ];
