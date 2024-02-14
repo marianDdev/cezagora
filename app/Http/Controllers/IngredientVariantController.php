@@ -15,13 +15,28 @@ class IngredientVariantController extends Controller
     }
 
     public function store(
-        StoreIngredientVariantRequest   $request,
+        StoreIngredientVariantRequest $request,
     ): RedirectResponse
     {
-        $validated  = $request->validated();
-        IngredientVariant::create($validated);
+        $validated = $request->validated();
+        $variant   = IngredientVariant::create($validated);
 
-        return redirect()->route('my-ingredients')
-                         ->with(['successful_message' => 'Ingredient added successfully!']);
+        if ($validated['button_name'] === 'add_another') {
+            $message = sprintf(
+                'Variant %d %s at price %s Euro of ingredient %s was successfully added',
+                $variant->size,
+                $variant->unit,
+                $variant->price / 100,
+                $variant->ingredient->common_name ?? $variant->ingredient->name,
+            );
+
+            return redirect()
+                ->route('ingredient.variant.create', ['ingredientId' => $validated['ingredient_id']])
+                ->with(['successful_message' => $message]);
+        }
+
+        return redirect()
+            ->route('my-ingredients')
+            ->with(['successful_message' => 'Ingredient added successfully!']);
     }
 }
