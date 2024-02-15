@@ -74,32 +74,34 @@
                         <livewire:show-available-at />
 
                         <div class="flex">
-                        <button type="submit"
-                                class="mr-2 flex w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600"
-                                name="button_name"
-                                value="add_another"
-                        >
-                            Add another one
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor" class="w-5 h-5">
-                                <path d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
-                        </button>
-                        <button type="submit"
-                                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600"
-                                name="button_name"
-                                value="finish"
-                        >
-                            Finish
-                        </button>
+                            <button type="submit"
+                                    class="mr-2 flex w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600"
+                                    name="button_name"
+                                    value="add_another"
+                            >
+                                Add & create another one
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor" class="w-5 h-5">
+                                    <path d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                            <button type="submit"
+                                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600"
+                                    name="button_name"
+                                    value="finish"
+                            >
+                                Add & Finish
+                            </button>
                         </div>
 
-                        <div class="mt-6">
-                        <a href="{{ route('my-ingredients') }}"
-                           class="mt-6 w-full text-white bg-green-400 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600">
-                            Done
-                        </a>
-                        </div>
+                        @if($variantsExists)
+                            <div class="mt-6">
+                                <a href="{{ route('my-ingredients') }}"
+                                   class="mt-6 w-full text-white bg-green-400 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600">
+                                    Done
+                                </a>
+                            </div>
+                        @endif
                     </form>
                 </div>
                 <div>
