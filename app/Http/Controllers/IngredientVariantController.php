@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIngredientVariantRequest;
+use App\Models\Ingredient;
 use App\Models\IngredientVariant;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -11,7 +12,16 @@ class IngredientVariantController extends Controller
 {
     public function create(int $ingredientId): View
     {
-        return view('ingredients.forms.create._variants', ['ingredientId' => $ingredientId]);
+        $ingredient = Ingredient::find($ingredientId);
+        $variantsExists = $ingredient->variants()->exists();
+
+        return view(
+            'ingredients.forms.create._variants',
+            [
+                'ingredientId' => $ingredientId,
+                'variantsExists' => $variantsExists,
+            ]
+        );
     }
 
     public function store(
