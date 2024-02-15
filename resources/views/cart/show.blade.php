@@ -7,42 +7,52 @@
                 <p class="text-gray-500 dark:text-gray-400">Your cart is empty.</p>
             </div>
         @else
+            <div class="flex-1 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-lg font-medium mb-4">Your Order</h2>
+            </div>
             <div class="flex flex-col md:flex-row gap-6">
-                <!-- Order Items (Left Part) -->
-                <div class="flex-1 bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-lg font-medium mb-4">Your Order</h2>
+                <div class="w-2/3">
+                    @foreach($groupedItems as $groupedItem)
+                        <div class="m-6 gap-6 flex-1 bg-white p-6 rounded-lg shadow-md">
+                            <p class="text-lg font-medium mb-4">Seller {{ $groupedItem['seller']->name }}</p>
+                            <p class="text-lg font-medium mb-4">Total price {{ \App\Models\Setting::DEFAULT_CURRENCY_SYMBOL . $groupedItem['total_price'] }}</p>
+                            <p class="text-lg font-medium mb-4">Order weight: {{ $groupedItem['total_weight'] }}</p>
 
-                    <table class="w-full text-sm text-gray-500 dark:text-gray-400">
-                        <thead class="text-sm text-blue-500 uppercase bg-gray-200">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">Seller</th>
-                                <th scope="col" class="px-6 py-3">Product type</th>
-                                <th scope="col" class="px-6 py-3">Product name</th>
-                                <th scope="col" class="px-6 py-3">Quantity</th>
-                                <th scope="col" class="px-6 py-3">Price</th>
-                                <th scope="col" class="px-6 py-3">Total</th>
-                                <th scope="col" class="px-6 py-3">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($order->items as $item)
-                                <tr class="border-b dark:border-gray-700">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->seller->name }}</th>
-                                    <td class="px-6 py-4 text-indigo-500">{{ $item->item_type }}</td>
-                                    <td class="px-6 py-4">{{ $item->name }}</td>
-                                    <td class="px-6 py-4">{{ $item->quantity }}</td>
-                                    <td class="px-6 py-4">{{ \App\Models\Setting::DEFAULT_CURRENCY_SYMBOL . $item->price / 100}}</td>
-                                    <td class="px-6 py-4">{{ \App\Models\Setting::DEFAULT_CURRENCY_SYMBOL . ($item->total / 100)}}</td>
-                                    <td class="px-6 py-4">
-                                        @include('cart._delete_modal')
-                                    </td>
-                                </tr>
+                            @foreach($groupedItem['order_prices'] as $orderPrice)
+                                @foreach($orderPrice as $key => $value)
+                                    <p>{{ $key }}: {{ $value }}</p>
+                                @endforeach
                             @endforeach
-                        </tbody>
-                    </table>
-                </div>
 
+                            <table class="w-full text-sm text-gray-500 dark:text-gray-400">
+                                <thead class="text-sm text-blue-500 uppercase bg-gray-200">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">Product type</th>
+                                        <th scope="col" class="px-6 py-3">Product name</th>
+                                        <th scope="col" class="px-6 py-3">Quantity</th>
+                                        <th scope="col" class="px-6 py-3">Price</th>
+                                        <th scope="col" class="px-6 py-3">Total</th>
+                                        <th scope="col" class="px-6 py-3">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($groupedItem['items'] as $item)
+                                        <tr class="border-b dark:border-gray-700">
+                                            <td class="px-6 py-4 text-indigo-500">{{ $item->item_type }}</td>
+                                            <td class="px-6 py-4">{{ $item->name }}</td>
+                                            <td class="px-6 py-4">{{ $item->quantity }}</td>
+                                            <td class="px-6 py-4">{{ \App\Models\Setting::DEFAULT_CURRENCY_SYMBOL . $item->price / 100}}</td>
+                                            <td class="px-6 py-4">{{ \App\Models\Setting::DEFAULT_CURRENCY_SYMBOL . ($item->total / 100)}}</td>
+                                            <td class="px-6 py-4">
+                                                @include('cart._delete_modal')
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endforeach
+                </div>
                 <div class="flex-1 bg-white p-6 rounded-lg shadow-md">
                     <h2 class="text-lg font-medium mb-4">Payment</h2>
 
@@ -91,14 +101,14 @@
                         document.getElementById('card-errors').textContent = error.message;
                     } else {
                         fetch('/payments/create-intent', {
-                            method : 'POST',
+                            method  : 'POST',
                             headers : {
                                 'Content-Type' : 'application/json',
                                 'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                             },
-                            body : JSON.stringify({
-                                                      paymentMethodId : paymentMethod.id,
-                                                  })
+                            body    : JSON.stringify({
+                                                         paymentMethodId : paymentMethod.id,
+                                                     })
                         })
                             .then(response => response.json())
                             .then(data => {

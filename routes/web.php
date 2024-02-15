@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\CarrierController;
 use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\DashboardController;
@@ -266,7 +267,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [RatingController::class, 'submitRating'])->name('rating.submit');
     });
 
-    Route::get('/carriers/dummy-data', [\App\Http\Controllers\CarrierController::class, 'showDummyCarrierData']);
+    Route::get('/carriers/dummy-data', [CarrierController::class, 'showDummyCarrierData']);
 
     //ADMIN
     Route::group(
