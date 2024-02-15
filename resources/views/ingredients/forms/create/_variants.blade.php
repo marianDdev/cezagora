@@ -25,11 +25,13 @@
                     </button>
                 </div>
             @endif
+
+            @include('ingredients.forms.create.steppers._variant_stepper')
             <div
                 class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-                        Add ingredient package details
+                        Add price, weight and other details
                     </h1>
                     <form class="space-y-6" method="POST" action="{{ route('ingredient.variant.store') }}">
                         @csrf
@@ -70,8 +72,10 @@
                             <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
                         </div>
                         <livewire:show-available-at />
+
+                        <div class="flex">
                         <button type="submit"
-                                class="flex w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600"
+                                class="mr-2 flex w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600"
                                 name="button_name"
                                 value="add_another"
                         >
@@ -88,6 +92,14 @@
                         >
                             Finish
                         </button>
+                        </div>
+
+                        <div class="mt-6">
+                        <a href="{{ route('my-ingredients') }}"
+                           class="mt-6 w-full text-white bg-green-400 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600">
+                            Done
+                        </a>
+                        </div>
                     </form>
                 </div>
                 <div>
