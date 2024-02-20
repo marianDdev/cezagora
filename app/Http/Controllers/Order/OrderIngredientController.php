@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreIngredientOrderItemRequest;
 use App\Models\Ingredient;
 use App\Models\OrderItem;
+use App\Services\Carrier\CarrierServiceInterface;
 use App\Services\Order\OrdersServiceInterface;
 use App\Traits\AuthUser;
 use Exception;
@@ -21,12 +22,13 @@ class OrderIngredientController extends Controller
     public function store(
         StoreIngredientOrderItemRequest $request,
         OrdersServiceInterface          $ordersService,
+        CarrierServiceInterface $carrierService
     ): RedirectResponse
     {
         $validated = $request->validated();
 
         if ($validated['quantity'] > 0) {
-            $ordersService->createOrderItem($validated);
+            $ordersService->createOrderItem($validated, $carrierService);
         }
 
         return redirect(route('ingredients'));

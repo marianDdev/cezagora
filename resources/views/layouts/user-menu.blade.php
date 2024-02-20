@@ -11,7 +11,18 @@
             data-dropdown-placement="bottom">
         <span class="sr-only">Open user menu</span>
         @if(Auth::check())
-            @if($user->getMedia('profile_pictures')->count() > 0)
+            @if($user->isAdmin())
+                <div class="text-center">
+                    <img
+                        src="https://cezagora.fra1.cdn.digitaloceanspaces.com/logo.png"
+                        class="mx-auto mb-4 w-16 h-16 rounded-full"
+                        alt="Avatar" />
+                    <h5 class="mb-2 text-sm font-medium leading-tight">CezAgora Admin</h5>
+                    @if(!is_null($user->company))
+                        <p class="text-neutral-500 dark:text-neutral-400">@ CezAgora</p>
+                    @endif
+                </div>
+            @elseif($user->getMedia('profile_pictures')->count() > 0)
                 <div class="text-center">
                     <img
                         src="{{ $user->getFirstMediaUrl('profile_pictures') }}"
