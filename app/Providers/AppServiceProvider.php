@@ -12,6 +12,8 @@ use App\Services\Checkout\CheckoutService;
 use App\Services\Checkout\CheckoutServiceInterface;
 use App\Services\Company\CompanyService;
 use App\Services\Company\CompanyServiceInterface;
+use App\Services\Delivery\DeliveryService;
+use App\Services\Delivery\DeliveryServiceInterface;
 use App\Services\Document\DocumentService;
 use App\Services\Document\DocumentServiceInterface;
 use App\Services\File\FileService;
@@ -72,6 +74,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CampaignServiceInterface::class, CampaignService::class);
         $this->app->bind(ServicesServiceInterface::class, ServicesService::class);
         $this->app->bind(CarrierServiceInterface::class, WootService::class);
+        $this->app->bind(DeliveryServiceInterface::class, DeliveryService::class);
     }
 
     /**

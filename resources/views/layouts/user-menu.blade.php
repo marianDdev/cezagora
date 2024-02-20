@@ -1,5 +1,6 @@
 @php
     if(\Illuminate\Support\Facades\Auth::check()) {
+        /** @var \App\Models\User $user */
         $user     = \Illuminate\Support\Facades\Auth::user();
         $initials = mb_substr($user->first_name, 0, 1) . mb_substr($user->last_name, 0, 1);
     }

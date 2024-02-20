@@ -4,6 +4,9 @@ namespace App\Services\Carrier;
 
 use App\Models\Company;
 
+/**
+ *@deprecated  replaced with DeliveryServiceInterface
+ */
 interface CarrierServiceInterface
 {
     public function getAuthToken(): array;

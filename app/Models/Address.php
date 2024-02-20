@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $country
  * @property string $state
  * @property string $country_code
+ * @property string $zipcode
+ * @property string  $street
  */
 class Address extends Model
 {
@@ -24,6 +26,9 @@ class Address extends Model
         'city',
         'continent',
         'region',
+        'street',
+        'zipcode',
+        'building',
     ];
 
     public function company(): BelongsTo

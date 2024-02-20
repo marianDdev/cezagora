@@ -5,6 +5,9 @@ namespace App\Services\Carrier;
 use App\Models\Company;
 use Illuminate\Support\Facades\Http;
 
+/**
+ * @deprecated
+ */
 class WootService implements CarrierServiceInterface
 {
     protected ?string $bearerToken = null;
