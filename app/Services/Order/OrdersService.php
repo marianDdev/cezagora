@@ -2,8 +2,10 @@
 
 namespace App\Services\Order;
 
+use App\Models\Company;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Services\Carrier\CarrierServiceInterface;
 use App\Services\Ingredient\IngredientServiceInterface;
 use App\Traits\AuthUser;
 use Exception;
@@ -15,7 +17,7 @@ class OrdersService implements OrdersServiceInterface
     /**
      * @throws Exception
      */
-    public function createOrderItem(array $validated): OrderItem
+    public function createOrderItem(array $validated, CarrierServiceInterface $carrierService): OrderItem
     {
         $order = $this->getCurrentOrder();
         $data  = $this->getItemData($order, $validated);
@@ -81,7 +83,6 @@ class OrdersService implements OrdersServiceInterface
 
     private function getItemData(Order $order, array $validated): array
     {
-
         return array_merge(
             $validated, [
                           'item_type' => OrderItem::INGREDIENT_TYPE,
