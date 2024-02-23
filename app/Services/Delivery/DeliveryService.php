@@ -49,5 +49,4 @@ class DeliveryService implements DeliveryServiceInterface
 
         return $response->json();
     }
-
 }

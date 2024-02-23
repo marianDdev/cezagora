@@ -13,6 +13,7 @@
             <div class="flex flex-col md:flex-row gap-6">
                 <div class="w-2/3">
                     @foreach($groupedItems as $groupedItem)
+                        {{ dd($groupedItem['order_prices']) }}
                         <div class="m-6 gap-6 flex-1 bg-white p-6 rounded-lg shadow-md">
                             <p class="text-lg font-medium mb-4">Seller {{ $groupedItem['seller']->name }}</p>
                             <p class="text-lg font-medium mb-4">Total price {{ \App\Models\Setting::DEFAULT_CURRENCY_SYMBOL . $groupedItem['total_price'] }}</p>
