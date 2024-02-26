@@ -1,0 +1,63 @@
+{
+    "shipment": {
+        "pickupAddress": {
+            "country": "RO",
+            "zip": "400003",
+            "city": "Cluj-Napoca",
+            "cityId": 7875,
+            "street": "9 Rue du Laboratoire",
+            "additionalInfo": null,
+            "region": "Cluj",
+            "regionCode": null,
+            "regionId": 38,
+            "timeZoneName": "Europe/Bucharest",
+            "customFields": []
+        },
+        "deliveryAddress": {
+            "country": "RO",
+            "zip": "010013",
+            "city": "Bucharest",
+            "cityId": 17032,
+            "street": "Mizil",
+            "additionalInfo": null,
+            "region": "Bucharest",
+            "regionCode": null,
+            "regionId": 68,
+            "timeZoneName": "Europe/Bucharest",
+            "customFields": []
+        },
+        "pickupDate": "2024-04-04T00:00:00Z",
+        "pickupContact": {
+            "name": "Eurosender SARL",
+            "phone": "+442031292884"
+        },
+        "deliveryContact": {
+            "name": "Eurosender SARL",
+            "phone": "+442031292884"
+        },
+        "addOns": []
+    },
+    "parcels": {
+        "envelopes": [],
+        "packages": [
+            {
+                "parcelId": "A00001",
+                "quantity": 1,
+                "width": 14,
+                "height": 14,
+                "length": 15,
+                "weight": 2,
+                "content": "books",
+                "value": 150
+            }
+        ],
+        "pallets": []
+    },
+    "paymentMethod": "credit",
+    "currencyCode": "EUR",
+    "serviceType": "selection",
+    "courierTag": null,
+    "preferredCouriersOnly": false,
+    "courierId": null,
+    "insuranceId": null
+}

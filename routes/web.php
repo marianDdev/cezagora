@@ -7,6 +7,7 @@ use App\Http\Controllers\CarrierController;
 use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DeliveryAddressController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\FileController;
@@ -269,6 +270,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/carriers/dummy-data', [CarrierController::class, 'showDummyCarrierData']);
 
+    Route::group(['prefix' => '/delivery-addresses'], function () {
+        Route::get('/create', [DeliveryAddressController::class, 'create'])->name('delivery.address.create');
+        Route::post('/', [DeliveryAddressController::class, 'store'])->name('delivery.address.store');
+    });
+
+    //webhooks
+    Route::group(['prefix' => '/webhooks'], function () {
+        Route::post('/payment-intent', [WebhookController::class, 'handlePaymentIntent'])->name('webhook.paymentIntent');
+        Route::post('/transfers', [WebhookController::class, 'handleTransfers'])->name('webhook.trasfers');
+    });
+
     //ADMIN
     Route::group(
         [
@@ -315,13 +327,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('messages', [ContactMessageController::class, 'adminIndex'])->name('contact.messages.admin.index');
         }
     );
-
-    //webhooks
-    Route::group(['prefix' => '/webhooks'], function () {
-        Route::post('/payment-intent', [WebhookController::class, 'handlePaymentIntent'])->name('webhook.paymentIntent');
-        Route::post('/transfers', [WebhookController::class, 'handleTransfers'])->name('webhook.trasfers');
-    });
-
 });
 
 require __DIR__ . '/auth.php';

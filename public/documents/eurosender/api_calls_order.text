@@ -1,0 +1,3 @@
+1. https://sandbox-api.eurosender.com/v1/quotes with serviceType as selection
+2. https://sandbox-api.eurosender.com/v1/quotes with the selected option as the serviceType
+3. https://sandbox-api.eurosender.com/v1/orders/validate_creation for validating the creation of a new request

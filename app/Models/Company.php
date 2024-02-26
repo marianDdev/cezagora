@@ -155,4 +155,9 @@ class Company extends Model implements HasMedia
     {
         return $this->hasMany(Search::class);
     }
+
+    public function deliveryAddress(): HasOne
+    {
+        return $this->hasOne(DeliveryAddress::class);
+    }
 }
