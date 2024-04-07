@@ -40,15 +40,16 @@ class SearchService implements SearchServiceInterface
         return $data;
     }
 
+    //todo refactor this big pile of shit
     public function create(string $keyword, ?Company $company): void
     {
         $existingSearch = Search::where(['keyword' => $keyword])->first();
 
-        if (!is_null($company)) {
+        if (!is_null($company && $existingSearch)) {
             $existingSearch = $existingSearch->where(['company_id' => $company->id])->first();
         }
 
-        if (is_null($existingSearch)) {
+        if (!$existingSearch) {
             Search::create(['keyword' => $keyword, 'company_id' => $company?->id]);
         } else {
             $existingSearch->update(['count' => $existingSearch->count + 1]);
