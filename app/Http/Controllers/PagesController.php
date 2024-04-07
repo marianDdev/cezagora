@@ -120,4 +120,9 @@ class PagesController extends Controller
     {
         return view('pages.products_services_categories');
     }
+
+    public function showGenericError(): View
+    {
+        return view('generic_error');
+    }
 }
