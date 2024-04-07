@@ -28,7 +28,7 @@
 
                                                     <p class="text-gray-500 dark:text-gray-400 mb-2">Item type: {{ $item->item_type }} </p>
 
-                                                    <p class="text-gray-500 dark:text-gray-400 mb-2">Item name: {{ $item->name }} - {{ $item-> }}</p>
+                                                    <p class="text-gray-500 dark:text-gray-400 mb-2">Item name: {{ $item->name }}</p>
 
                                                     <p class="text-gray-500 dark:text-gray-400 mb-2">Item quantity: {{ $item->quantity }}
                                                     </p>
