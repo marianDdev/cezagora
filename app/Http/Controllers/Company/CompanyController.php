@@ -82,10 +82,14 @@ class CompanyController extends Controller
 
     public function update(UpdateCompanyRequest $request, CompanyServiceInterface $companyService): RedirectResponse
     {
-        $validated = $request->validated();
-        $companyService->update($validated);
+        try {
+            $validated = $request->validated();
+            $companyService->update($validated);
 
-        return redirect()->route('dashboard');
+            return redirect()->route('dashboard');
+        } catch (\Exception $e) {
+            return redirect()->route('generic-error');
+        }
     }
 
     public function uploadLogo(Request $request, FileServiceInterface $fileService): RedirectResponse

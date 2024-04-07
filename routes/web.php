@@ -54,6 +54,8 @@ Route::get('/general-policies', [PagesController::class, 'showGeneralPolicies'])
 Route::get('/privacy-policy', [PagesController::class, 'showPrivacy'])->name('privacy');
 Route::get('/policies', [PagesController::class, 'showPolicies'])->name('policies');
 
+Route::get('/error', [PagesController::class, 'showGenericError'])->name('generic-error');
+
 Route::get('/account-deactivated', [AccountController::class, 'showAccountDeactivatedConfirmationPage'])->name('account.deactivated.page');
 Route::get('/account-reactivated', [AccountController::class, 'showAccountReactivatedConfirmationPage'])->name('account.reactivated.page');
 
