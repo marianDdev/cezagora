@@ -17,19 +17,26 @@
                     <li class="mb-4">
                         <a role="link" aria-disabled="true" class="hover:underline">Blog</a>
                     </li>
+                    <li class="mb-4">
+                        <a href="{{ route('contact') }}" class="hover:underline">Contact Us</a>
+                    </li>
                 </ul>
             </div>
             <div>
-                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Help center</h2>
+                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Social Links</h2>
                 <ul class="text-gray-500 dark:text-gray-400 font-medium">
+
+                    <li class="mb-4">
+                        <a href="https://www.facebook.com/profile.php?id=61553602880313" target="_blank" class="hover:underline">Facebook</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="https://www.instagram.com/cezagora_marketplace" target="_blank" class="hover:underline">Instagram</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="https://www.linkedin.com/company/cezagora" target="_blank" class="hover:underline">Linkedin</a>
+                    </li>
                     <li class="mb-4">
                         <a role="link" aria-disabled="true" class="hover:underline">Twitter</a>
-                    </li>
-                    <li class="mb-4">
-                        <a role="link" aria-disabled="true" class="hover:underline">Facebook</a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="{{ route('contact') }}" class="hover:underline">Contact Us</a>
                     </li>
                 </ul>
             </div>
