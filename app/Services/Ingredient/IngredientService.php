@@ -44,15 +44,20 @@ class IngredientService implements IngredientServiceInterface
                            ->when(!empty($filters['max_price']), function (Builder $query) use ($filters) {
                                $maxPrice = $filters['max_price'] * 100;
 
-                               return $query->where('price', '<=', $maxPrice);
+                               return $query->whereHas('variants', function (Builder $subQuery) use ($maxPrice) {
+                                   $subQuery->where('price', '<=', $maxPrice);
+                               });
                            })
                            ->when(!empty($filters['availability']), function (Builder $query) use ($filters) {
-                               return $query->where('availability', $filters['availability']);
+                               return $query->whereHas('variants', function (Builder $subQuery) use ($filters) {
+                                   $subQuery->where('availability', $filters['availability']);
+                               });
                            })
                            ->when(!empty($filters['available_at']), function (Builder $query) use ($filters) {
-                               $maxDate = Carbon::parse($filters['available_at'])->format('Y-m-d');
-
-                               return $query->where('available_at', '<=', $maxDate);
+                               return $query->whereHas('variants', function (Builder $subQuery) use ($filters) {
+                                   $maxDate = Carbon::parse($filters['available_at'])->format('Y-m-d');
+                                   $subQuery->where('available_at', '<=', $maxDate);
+                               });
                            })
                            ->get();
     }

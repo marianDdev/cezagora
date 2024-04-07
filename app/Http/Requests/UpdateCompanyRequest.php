@@ -18,8 +18,6 @@ class UpdateCompanyRequest extends FormRequest
 
     public function rules(): array
     {
-        $isRequired = $this->authUser()->hasRole(UserServiceInterface::ROLE_SELLER) ? 'required' : 'nullable';
-
         return [
             'company_id'          => ['required', 'integer', Rule::exists(Company::class, 'id')],
             'company_categories'  => ['nullable', 'array'],
