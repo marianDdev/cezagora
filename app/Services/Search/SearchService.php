@@ -13,10 +13,11 @@ class SearchService implements SearchServiceInterface
     private IngredientServiceInterface $ingredientService;
 
     public function __construct(
-        CompanyServiceInterface $companyService,
+        CompanyServiceInterface    $companyService,
         IngredientServiceInterface $ingredientService
-    ) {
-        $this->companyService = $companyService;
+    )
+    {
+        $this->companyService    = $companyService;
         $this->ingredientService = $ingredientService;
     }
 
@@ -26,7 +27,7 @@ class SearchService implements SearchServiceInterface
             'keyword' => $keyword,
         ];
 
-        $companies = $this->companyService->search($keyword);
+        $companies   = $this->companyService->search($keyword);
         $ingredients = $this->ingredientService->search($keyword);
 
         if ($companies->count() > 0) {
@@ -40,19 +41,22 @@ class SearchService implements SearchServiceInterface
         return $data;
     }
 
-    //todo refactor this big pile of shit
     public function create(string $keyword, ?Company $company): void
     {
-        $existingSearch = Search::where(['keyword' => $keyword])->first();
+        $conditions               = ['keyword' => $keyword];
+        $conditions['company_id'] = $company?->id;
 
-        if (!is_null($company && $existingSearch)) {
-            $existingSearch = $existingSearch->where(['company_id' => $company->id])->first();
-        }
+        $existingSearch = Search::where($conditions)->first();
 
-        if (!$existingSearch) {
-            Search::create(['keyword' => $keyword, 'company_id' => $company?->id]);
+        if ($existingSearch) {
+            $existingSearch->increment('count');
         } else {
-            $existingSearch->update(['count' => $existingSearch->count + 1]);
+            Search::create(
+                [
+                    'keyword'    => $keyword,
+                    'company_id' => $company?->id,
+                ]
+            );
         }
     }
 }
