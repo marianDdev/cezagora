@@ -7,6 +7,16 @@
 
         <link rel="icon" type="image/x-icon" href="{{ url('/favicon.ico') }}">
 
+        <meta name="description" content="Marketplace dedicated to the cosmetics industry where manufacturers can easily find suppliers for ingredients, raw materials, packaging, testing laboratories, private label, formulation services, marketing services.">
+
+        @if(env('APP_ENV') === 'staging')
+            <meta name="robots" content="noindex, nofollow">
+        @endif
+
+        @if(env('APP_ENV') === 'production')
+            <meta name="robots" content="index, follow">
+        @endif
+
         <title>CezAgora</title>
 
         @vite(['resources/css/app.css','resources/js/app.js'])
