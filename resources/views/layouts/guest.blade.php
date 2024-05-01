@@ -4,8 +4,19 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="google-site-verification" content="4AYr64nDRX-2E-mgrgGUyWYubVq6wP8-msulnnfnfyk" />
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+
+        <meta name="description" content="Marketplace dedicated to the cosmetics industry where manufacturers can easily find suppliers for ingredients, raw materials, packaging, testing laboratories, private label, formulation services, marketing services.">
+
+        @if(env('APP_ENV') === 'staging')
+            <meta name="robots" content="noindex, nofollow">
+        @endif
+
+        @if(env('APP_ENV') === 'production')
+            <meta name="robots" content="index, follow">
+        @endif
 
         <title>CezAgora</title>
         @vite(['resources/css/app.css','resources/js/app.js'])
