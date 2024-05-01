@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\AuthUser;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property int             $id
@@ -38,7 +41,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property Collection      $qualifications
  * @property Collection      $campaigns
  */
-class Company extends Model implements HasMedia
+class Company extends Model implements HasMedia, Sitemapable
 {
     use HasFactory, InteractsWithMedia, AuthUser;
 
@@ -154,5 +157,13 @@ class Company extends Model implements HasMedia
     public function searches(): HasMany
     {
         return $this->hasMany(Search::class);
+    }
+
+    public function toSitemapTag(): Url|string|array
+    {
+        return Url::create(route('category.show', ['id' => $this->id]))
+                  ->setLastModificationDate(Carbon::create($this->updated_at))
+                  ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
+                  ->setPriority(0.1);
     }
 }

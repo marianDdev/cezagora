@@ -27,6 +27,7 @@ use App\Http\Controllers\Payment\TransferController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QualificationController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Service\ServiceController;
 use App\Http\Controllers\UserController;
@@ -36,6 +37,8 @@ use App\Http\Middleware\RedirectIfUserHasNotEnabledStripe;
 use App\Http\Middleware\RedirectIfUserNotAdmin;
 use App\Models\CompanyCategory;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/robots.txt', [RobotsController::class, 'index']);
 
 Route::get('/', [PagesController::class, 'showHome'])->name('home');
 Route::get('/about', [PagesController::class, 'showAbout'])->name('about');
