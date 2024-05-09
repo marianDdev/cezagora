@@ -3,32 +3,20 @@
 namespace App\Services\Search;
 
 use App\Models\Company;
+use App\Models\Ingredient;
 use App\Models\Search;
-use App\Services\Company\CompanyServiceInterface;
-use App\Services\Ingredient\IngredientServiceInterface;
+use Illuminate\Support\Collection;
 
 class SearchService implements SearchServiceInterface
 {
-    private CompanyServiceInterface    $companyService;
-    private IngredientServiceInterface $ingredientService;
-
-    public function __construct(
-        CompanyServiceInterface    $companyService,
-        IngredientServiceInterface $ingredientService
-    )
-    {
-        $this->companyService    = $companyService;
-        $this->ingredientService = $ingredientService;
-    }
-
     public function globalSearch(string $keyword): array
     {
         $data = [
             'keyword' => $keyword,
         ];
 
-        $companies   = $this->companyService->search($keyword);
-        $ingredients = $this->ingredientService->search($keyword);
+        $companies   = $this->searchCompanies($keyword);
+        $ingredients = $this->searchIngredients($keyword);
 
         if ($companies->count() > 0) {
             $data['companies'] = $companies;
@@ -58,5 +46,15 @@ class SearchService implements SearchServiceInterface
                 ]
             );
         }
+    }
+
+    public function searchCompanies(string $keyword): Collection
+    {
+        return Company::search($keyword)->get();
+    }
+
+    public function searchIngredients(string $keyword): Collection
+    {
+        return Ingredient::search($keyword)->get();
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Scout\Searchable;
 
 /**
  * @property int     $id
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Ingredient extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = [
         'company_id',
@@ -22,11 +23,6 @@ class Ingredient extends Model
         'description',
         'function',
     ];
-
-    public function hasAttribute(string $key): bool
-    {
-        return array_key_exists($key, $this->getAttributes());
-    }
 
     public function company(): BelongsTo
     {
@@ -46,6 +42,16 @@ class Ingredient extends Model
     public function variants(): HasMany
     {
         return $this->hasMany(IngredientVariant::class);
+    }
+
+    public function searchableAs(): string
+    {
+        return 'ingredients_index';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return $this->toArray();
     }
 }
 

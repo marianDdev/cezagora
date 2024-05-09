@@ -75,14 +75,6 @@ class IngredientService implements IngredientServiceInterface
         ];
     }
 
-    public function search(string $keyword): Collection
-    {
-        return Ingredient::where('name', 'LIKE', "%{$keyword}%")
-                         ->orWhere('common_name', 'LIKE', "%{$keyword}%")
-                         ->orWhere('function', 'LIKE', "%{$keyword}%")
-                         ->get();
-    }
-
     public function deleteAll(User $user): void
     {
         $company = $user->company;

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
+use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sitemap\Contracts\Sitemapable;
@@ -43,7 +44,7 @@ use Spatie\Sitemap\Tags\Url;
  */
 class Company extends Model implements HasMedia, Sitemapable
 {
-    use HasFactory, InteractsWithMedia, AuthUser;
+    use HasFactory, InteractsWithMedia, AuthUser, Searchable;
 
     protected $fillable = [
         'name',
@@ -62,11 +63,6 @@ class Company extends Model implements HasMedia, Sitemapable
     public function user(): HasOne
     {
         return $this->hasOne(User::class);
-    }
-
-    public function hasAttribute(string $key): bool
-    {
-        return array_key_exists($key, $this->getAttributes());
     }
 
     public function categories(): BelongsToMany
@@ -165,5 +161,15 @@ class Company extends Model implements HasMedia, Sitemapable
                   ->setLastModificationDate(Carbon::create($this->updated_at))
                   ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
                   ->setPriority(0.1);
+    }
+
+    public function searchableAs(): string
+    {
+        return 'companies_index';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return $this->toArray();
     }
 }

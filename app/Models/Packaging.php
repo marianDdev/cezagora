@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Packaging extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, Searchable;
 
     protected $fillable = [
         'company_id',
@@ -36,5 +37,15 @@ class Packaging extends Model implements HasMedia
     public function category(): BelongsTo
     {
         return $this->belongsTo(PackagingCategory::class, 'packaging_category_id');
+    }
+
+    public function searchableAs(): string
+    {
+        return 'packaging_index';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return $this->toArray();
     }
 }
