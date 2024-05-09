@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="google-site-verification" content="4AYr64nDRX-2E-mgrgGUyWYubVq6wP8-msulnnfnfyk" />
 
         <link rel="icon" type="image/x-icon" href="{{ url('/favicon.ico') }}">
 

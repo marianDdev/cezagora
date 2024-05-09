@@ -24,7 +24,5 @@ interface IngredientServiceInterface
 
     public function getFiltersData(): array;
 
-    public function search(string $keyword): Collection;
-
     public function deleteAll(User $user): void;
 }
