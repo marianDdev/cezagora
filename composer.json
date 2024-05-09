@@ -5,7 +5,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "algolia/scout-extended": "^3.1",
         "cknow/laravel-money": "^v8.1.0",
         "dompdf/dompdf": "^2.0",
@@ -74,6 +74,7 @@
         }
     },
     "config": {
+        "platform-check": false,
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
